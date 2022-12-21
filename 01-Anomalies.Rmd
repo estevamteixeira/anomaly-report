@@ -1,0 +1,587 @@
+---
+fig.caption: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  message = FALSE, 
+  warning = FALSE,
+  fig.pos = "h", 
+  out.extra = "",
+  out.width = '90%',
+  fig.align = 'center',
+  eval.after = "fig.cap",
+  fig.caption= TRUE)
+
+pckgs <- c('tidyverse', 'knitr', 'scales','janitor',
+           'kableExtra', 'data.table','reactablefmtr',
+           'forcats','lubridate', 'anytime','reactable',
+           'htmltools', 'plotly','purrr', 'fontawesome')
+# for (pp in `pckgs`) { if (!require(pp)) install.packages(pp); library(pp, character.only = T)  }
+
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(pckgs, character.only = TRUE)
+## data input
+
+# add data
+# anomaly
+cd_anom <- read.csv("data/cd_anomaly.csv", header = TRUE, stringsAsFactors = TRUE) |> 
+  dplyr::mutate(CD_UID = as.character(CD_UID),
+                Birth_Date = as.Date(as.character(Birth_Date))) |>
+  ## filtering only NS counties
+  dplyr::filter(dplyr::between(CD_UID, 1201, 1299)) |> 
+  data.table::setDT()
+
+# births
+cd_birth <- read.csv("data/cd_birth.csv", header = TRUE, stringsAsFactors = TRUE) |> 
+  dplyr::mutate(CD_UID = as.character(CD_UID)) |> 
+  data.table::setDT()
+
+anom_ind <- unique(cd_anom[,
+                .(CaseID, CD_UID, BrthYear, Diags)]) %>% 
+  .[,`:=` (cat = fcase(
+    grepl("^Q00", Diags), "Anencephaly",
+    grepl("^Q01", Diags), "Encephalocele",
+    grepl("^Q05|Q760", Diags), "Spina bifida",
+    grepl("^Q02", Diags), "Microcephaly",
+    grepl("^Q03", Diags), "Congenital hydrocephalus",
+    grepl("^Q041|Q042", Diags), "Arhinencephaly/Holoprosencephaly",
+    grepl("^Q110|Q111|Q112", Diags), "Anophtalmos/Microphtalmos",
+    grepl("^Q160|Q172", Diags), "Anotia/Microtia",
+    grepl("^Q30", Diags), "Choanal atresia",
+    grepl("^Q200", Diags), "Commom truncus",
+    grepl("^Q2030|Q2031|Q2032|Q2038", Diags), "Discordant ventriculoarterial connection",
+    grepl("^Q212", Diags), "Atrioventricular septal defect",
+    grepl("^Q213", Diags), "Tetralogy of Fallot",
+    grepl("^Q234", Diags), "Hypoplastic left heart syndrome",
+    grepl("^Q251", Diags), "Coarctation of aorta",
+    grepl("^Q35", Diags), "Cleft palate",
+    grepl("^Q36", Diags), "Cleft lip",
+    grepl("^Q37", Diags), "Cleft palate with cleft lip",
+    grepl("^Q390|Q391|Q392|Q393|Q394", Diags), "Oesophageal atresia/stenosis, tracheoesophageal fistula",
+    grepl("^Q41", Diags), "Small intestine absence/atresia/stenosis",
+    grepl("^Q420|Q421|Q422|Q423", Diags), "Ano-rectal absence/atresia/stenosis",
+    grepl("^Q431", Diags), "Hirschsprung disease",
+    grepl("^Q442", Diags), "Atresia of bile ducts",
+    grepl("^Q531|Q532|Q539", Diags), "Cryptorchidism/undescended testicles",
+    grepl("Q54|Q540|Q541|Q542|Q543|
+          Q545|Q546|Q547|Q548|Q549", Diags), "Hypospadias",
+    grepl("^Q56", Diags), "Indeterminate sex and pseudohermaphroditism",
+    grepl("^Q640", Diags), "Epispadias",
+    grepl("^Q600|Q601|Q602", Diags), "Renal agenesis",
+    grepl("^Q611|Q612|Q613|Q614|
+          Q615|Q618|Q619", Diags), "Cystic kidney",
+    grepl("^Q641", Diags), "Bladder and cloacal exstroph",
+    grepl("^Q642|Q643", Diags), "Lower urinary tract obstruction",
+    grepl("^Q65", Diags), "Hip dysplasia",
+    grepl("^Q71|Q72|Q73", Diags), "Limb deficiency defects",
+    grepl("^Q792", Diags), "Omphalocele/Exomphalos",
+    grepl("^Q793", Diags), "Gastroschisis",
+    grepl("^Q90", Diags), "Down Syndrome",
+    grepl("^Q914|Q915|Q916|Q917", Diags), "Trisomy 13 - Patau",
+    grepl("^Q910|Q911|Q912|Q913", Diags), "Trisomy 18 - Edwards",
+    grepl("^Q96", Diags), "Turner syndrome",
+    default = "Other"
+  ))] %>%
+  .[!Diags %in% c("Q544")] %>%
+  .[,`:=` (qcode = stringr::str_c(unique(Diags), collapse="|")),
+    by = .(cat)] %>% 
+  .[,`:=` (count_anom = .N),
+    by = .(BrthYear, cat)] %>%
+  .[,.(BrthYear, cat, qcode, count_anom)] %>% 
+  unique() %>% 
+  .[,`:=` (total_anom = sum(count_anom,
+                            na.rm = TRUE)),
+    by = .(BrthYear, cat)] %>%
+  .[,.(BrthYear, cat, qcode,total_anom)] %>% 
+  unique() %>% 
+  .[order(cat, BrthYear)] 
+
+anom_grp <- unique(cd_anom[,
+                .(CaseID, CD_UID, BrthYear, Diags)]) %>% 
+  .[,`:=` (cat = fcase(
+   grepl("^Q00", Diags), "Neural tube defects",
+   grepl("^Q01", Diags), "Neural tube defects",
+   grepl("^Q05|Q760", Diags), "Neural tube defects",
+   grepl("^Q02", Diags), "Selected central nervous system defects",
+   grepl("^Q03", Diags), "Selected central nervous system defects",
+   grepl("^Q041|Q042", Diags), "Selected central nervous system defects",
+   grepl("^Q110|Q111|Q112", Diags), "Selected sense organ defects",
+   grepl("^Q160|Q172", Diags), "Selected sense organ defects",
+   grepl("^Q30", Diags), "Selected sense organ defects",
+   grepl("^Q20", Diags), "Selected congenital heart defects",
+   grepl("^Q2030|Q2031|Q2032|Q2038", Diags), "Selected congenital heart defects",
+   grepl("^Q212", Diags), "Selected congenital heart defects",
+   grepl("^Q213", Diags), "Selected congenital heart defects",
+   grepl("^Q234", Diags), "Selected congenital heart defects",
+   grepl("^Q251", Diags), "Selected congenital heart defects",
+   grepl("^Q35", Diags), "Oro-facial clefts",
+   grepl("^Q36", Diags), "Oro-facial clefts",
+   grepl("^Q37", Diags), "Oro-facial clefts",
+   grepl("^Q390|Q391|Q392|Q393|Q394", Diags), "Selected gastrointestinal defects",
+   grepl("^Q41", Diags), "Selected gastrointestinal defects",
+   grepl("^Q420|Q421|Q422|Q423", Diags), "Selected gastrointestinal defects",
+   grepl("^Q431", Diags), "Selected gastrointestinal defects",
+   grepl("^Q442", Diags), "Selected gastrointestinal defects",
+   grepl("^Q531|Q532|Q539", Diags), "Selected genital anomalies",
+   grepl("Q54|Q540|Q541|Q542|Q543|
+          Q545|Q546|Q547|Q548|Q549", Diags), "Selected genital anomalies",
+   grepl("^Q56", Diags), "Selected genital anomalies",
+   grepl("^Q640", Diags), "Selected genital anomalies",
+   grepl("^Q600|Q601|Q602", Diags), "Selected urinary tract defects",
+   grepl("^Q611|Q612|Q613|Q614|
+          Q615|Q618|Q619", Diags), "Selected urinary tract defects",
+   grepl("^Q641", Diags), "Selected urinary tract defects",
+   grepl("^Q642|Q643", Diags), "Selected urinary tract defects",
+   grepl("^Q65", Diags), "Hip dysplasia",
+   grepl("^Q71|Q72|Q73", Diags), "Limb deficiency defects",
+   grepl("^Q792", Diags), "Selected abdominal wall defects",
+   grepl("^Q793", Diags), "Selected abdominal wall defects",
+   grepl("^Q90", Diags), "Selected chromosomal defects",
+   grepl("^Q914|Q915|Q916|Q917", Diags), "Selected chromosomal defects",
+   grepl("^Q910|Q911|Q912|Q913", Diags), "Selected chromosomal defects",
+   grepl("^Q96", Diags), "Selected chromosomal defects",
+   default = "Other"
+))] %>%
+  .[!Diags %in% c("Q544")] %>% 
+  .[,`:=` (qcode = stringr::str_c(unique(Diags), collapse="|")),
+    by = .(cat)] %>%
+  .[,.(CaseID, BrthYear, cat, qcode)] %>% 
+  unique() %>%
+  .[,`:=` (count_anom = .N),
+    by = .(BrthYear, cat)] %>%
+  .[,.(BrthYear, cat, qcode, count_anom)] %>% 
+  unique() %>% 
+  .[,`:=` (total_anom = sum(count_anom,
+                            na.rm = TRUE)),
+    by = .(BrthYear, cat)] %>%
+  .[,.(BrthYear, cat, qcode, total_anom)] %>% 
+  unique() %>% 
+  .[order(cat, BrthYear)] 
+
+birth <- cd_birth[tolower(dlv) %in% c("lvb","stillbirth"),
+                  `:=` (total_lvb = sum(cd.count_dlv,
+                                        na.rm = TRUE)),
+                  by = .(BrthYear)] %>% 
+  .[!is.na(total_lvb), .(BrthYear, total_lvb)] %>% 
+  unique()
+
+# bringing total birth to anomaly data
+anom_ind <- merge(anom_ind,
+              birth,
+              by = ("BrthYear")) %>% 
+  .[order(cat, BrthYear)] %>% 
+  unique() %>% 
+  .[,`:=` (rate = 1000*total_anom/total_lvb)] %>% 
+  .[order(BrthYear, rate)]
+
+# bringing total birth to anomaly data
+anom_grp <- merge(anom_grp,
+              birth,
+              by = ("BrthYear")) %>% 
+  .[order(cat, BrthYear)] %>% 
+  unique() %>% 
+  .[,`:=` (rate = 1000*total_anom/total_lvb)] %>% 
+  .[order(BrthYear, rate)]
+
+source("utilities/plotLine.R")
+source("utilities/CI.R")
+source("utilities/modeling.R")
+```
+# Patterns of Selected Congenital Anomalies in Nova Scotia {#chapter-1}
+
+## Selected Anomalies {#section-2}
+
+### Selected Anomaly Definitions {#section-21}
+
+All the birth defects descriptions and respective ICD10 codes were taken from the [National Birth Defects Prevention Network (NBDPN) guidelines, chapter 3](https://www.nbdpn.org/docs/SGSC_-_Ch3_Case_Definition_-_final_draft_2016DEC20.pdf)
+
+#### Neural tube defects {-}
+
+- **Anencephaly and similar malformations (Q00) -** partial or complete absence of the brain and skull.
+
+- **Encephalocele (Q01) -** herniation of brain tissue and/or meninges through a defect in the skull. The hernia sac is usually covered by skin.
+
+- **Spina bifida (Q05, Q76.0) -** incomplete closure of the vertebral spine (usually posteriorly) through which spinal cord tissue and/or the membranes covering the spine (meninges) herniate.
+
+#### Selected central nervous system defects {-}
+
+- **Microcephaly (Q02) -** microcephaly, or microcephalus, is the clinical finding of a small head when compared with infants of the same sex and age. The head circumference (HC), also known as the occipitofrontal circumference (OFC), is considered a reliable assessment of the volume of the underlying brain. Microcephaly itself is not a malformation but a sign that the brain is abnormally small. 
+
+- **Congenital hydrocephalus (Q03) -** an increase in the amount of cerebrospinal fluid within the brain resulting in enlargement of the cerebral ventricles and increased intracranial pressure.
+
+- **Arhinencephaly/Holoprosencephaly (Q04.1, Q04.2)** arhinencephaly is an older term for holoprosencephaly which refers more specifically to structural defects of the olfactory system or nose. Holoprosencephaly results from variable degrees of incomplete division of the brain into right and left cerebral hemispheres. There are four types which vary in severity: alobar, semi-lobar, lobar, and middle interhemisphereic (MIHV). The condition can also affect development of the face and eyes. The most severely affected have one central eye (cyclopia) and a single tubular-shaped nose located above the eye (proboscis).
+
+#### Selected sense organ defects {-}
+
+- **Anophtalmos/Microphtalmos (Q11.0, Q11.1, Q11.2) -** anophthalmia – Total absence of eye tissue or apparent absence of the globe of the eye in an otherwise normal orbit. Microphthalmia – Reduced volume of the eye. The corneal diameter is usually less than 10 millimeters, or the anteroposterior globe diameter is less than 20 millimeters. Anophthalmia or microphthalmia may affect one or both eyes, or there may be anophthalmia of one eye and microphthalmia of the other. 
+
+- **Anotia/Microtia (Q16.0/Q17.2) -** anotia - Total absence of the external ear and canal. Microtia - Malformation or hypoplasia of the external ear (auricle, pinna).
+
+- **Choanal atresia (Q30) -** Congenital obstruction of the opening of the nasal cavity into the nasopharynx on either side. This prevents communication of the nasal cavity with the pharynx.
+
+#### Selected congenital heart defects {-}
+
+- **Commom truncus (Q20.0) -** failure of separation of the aorta and the pulmonary artery during development, resulting in a single common arterial trunk carrying blood from the heart to both the body and lungs.
+
+- **Discordant ventriculoarterial connection (Q20.30, Q20.31, Q20.32, Q20.38) -** transposition of the aorta and the pulmonary artery such that the aorta arises from the right ventricle (instead of the left) and the pulmonary artery arises from the left ventricle (instead of the right).
+
+- **Atrioventricular septal defect (Q21.2) -** a defect in both the lower portion of the atrial septum and the upper portion of the ventricular septum. In extreme cases, virtually the entire atrial and ventricular septae may be missing. The valves controlling blood flow from the atria to the ventricles, the tricuspid and mitral valves may also be abnormal. They may not form from the endocardial cushions during cardiac development into two separate valves, and thus be a single common atrioventricular valve. Together, these defects producing a large opening (canal) in the central part of the heart.
+
+- **Tetralogy of Fallot (Q21.3) -** congenital obstruction of the opening of the nasal cavity into the nasopharynx on either side. This prevents communication of the nasal cavity with the pharynx.
+
+- **Hypoplastic left heart syndrome (Q23.4) -** a condition in which the structures on the left side of the heart and the aorta are extremely small, insufficient to support systemic circulation and with normally related great arteries. Classically, this condition includes hypoplasia of the left ventricle, atresia or severe hypoplasia of both the mistral and aortic valves, hypoplasia of the aortic arch, and coarctation of the aorta.
+
+- **Coarctation of aorta (Q25.1) -** narrowing of the descending aorta, which may obstruct blood flow from the heart to the rest of the body. The most common site of coarctation occurs distal to the origin of the left subclavian artery in the region of the ductus arteriosus. If there is complete loss of communication in this location, it is a form of interruption of the aorta (Type A).
+
+#### Oro-facial clefts {-}
+
+- **Cleft palate (Q35) -** an opening in the roof of the mouth resulting from incomplete fusion of the shelves of the palate. The opening may involve the hard palate only, the soft palate only, or both.
+
+- **Cleft lip (Q36) -** a defect in the upper lip resulting from incomplete fusion of the parts of the lip.
+
+- **Cleft palate with cleft lip (Q37) -** a defect in the upper lip resulting from incomplete fusion of the parts of the lip, with an opening in the roof of the mouth.
+
+#### Selected gastrointestinal defects {-}
+
+- **Oesophageal atresia/stenosis, tracheoesophageal fistula (Q39.0-Q39.4) -** Esophageal atresia – A condition in which the esophagus ends in a blind pouch and fails to connect with the stomach. Tracheoesophageal fistula - An abnormal communication between the esophagus and the trachea. This is almost always associated with some form of esophageal atresia.
+
+- **Small intestine absence/atresia/stenosis (Q41) -** complete or partial occlusion of the lumen of one or more segments of the small intestine. Small intestinal atresias are often assigned a type descriptor in the surgical or autopsy report, depending upon the severity of the atresia (types include I, II, IIIA, IIIB, and VI).
+
+- **Ano-rectal absence/atresia/stenosis (Q42.0-Q42.3) -** complete or partial occlusion of the lumen of one or more segments of the large intestine and/or rectum.
+
+- **Hirschsprung disease (Q43.1) -** is a condition that affects the large intestine (colon) and causes problems with passing stool.
+
+- **Atresia of bile ducts (Q44.2) -** congenital absence of the lumen of the extrahepatic bile ducts.
+
+#### Selected genital anomalies {-}
+
+- **Cryptorchidism/undescended testicles (Q53.1, Q53.2, Q53.9) -** a testicle that hasn't moved into its proper position in the bag of skin hanging below the penis (scrotum) before birth.
+
+- **Hypospadias (Q54, excluding Q54.4) -** displacement of the opening of the urethra (urethral meatus) ventrally and proximally (underneath and closer to the body) in relation to the tip of the glans of the penis.
+
+- **Indeterminate sex and pseudohermaphroditism (Q56) -** in a baby with ambiguous genitalia, the genitals may be incompletely developed or the baby may have characteristics of both sexes. The external sex organs may not match the internal sex organs or genetic sex. Pseudohermaphroditism - is a condition in which the individual has a single chromosomal and gonadal sex but combines features of both sexes in the external genitalia, causing doubt as to the true sex
+
+- **Epispadias (Q64.0) -** displacement of the opening of the urethra dorsally and proximally (on the top and closer to the body) in relation to the tip of the glans of the penis.
+
+#### Selected urinary tract defects {-}
+
+- **Renal agenesis (Q60.0-Q60.2) -** complete absence of the kidney.
+
+- **Cystic kidney (Q61.1-Q61.5, Q61.8, Q61.9) -** genetic disorder characterized by the formation of fluid-filled sacs (cysts) in the kidneys
+
+- **Bladder and cloacal exstrophy (Q64.1) -** bladder exstrophy - a defect in the lower abdominal wall and anterior wall of the bladder through which the lining of the bladder is exposed to the outside. Cloacal exstrophy - congenital persistence of a common cloacal cavity into which gut, urethra, and reproductive tracts open with exstrophy of the cavity: usually accompanied by a low omphalocele, imperforate anus, and a (closed) neural tube defect.
+
+- **Lower urinary tract obstruction (Q64.2, Q64.3) -** posterior urethral valves (PUV) are tissue folds of the posterior urethra and function as valves obstructing urine outflow. Congenital PUV is an abnormal congenital obstructing membrane that is located within the posterior male urethra; this valve is the most common cause of bladder outlet obstruction in male children. Congenital PUV can also be found in virilized females and rarely in normal females. Obstruction could vary from mild to severe.
+
+#### Hip dysplasia (Q65) {-} 
+
+Hip dysplasia occurs when a baby's hip socket (acetabulum) is too shallow to cover the head of the thighbone (femoral head) to fit properly.
+
+#### Limb deficiency defects (Q71-Q73) {-}
+
+Complete or partial absence of the upper arm (humerus), lower arm (radius and/or ulna), wrist (carpals), hand (metacarpals), fingers (phalanges), thigh (femur), lower leg (tibia and/or fibula), ankle (tarsals), foot (metatarsals), or toes (phalanges).
+
+#### Selected abdominal wall defects {-}
+
+- **Omphalocele/Exomphalos (Q79.2) -** a defect in the anterior abdominal wall in which the umbilical ring is widened, allowing herniation of abdominal organs, including the small intestine, part of the large intestine, and occasionally the liver and spleen, into the umbilical cord. The herniating organs are covered by a nearly transparent membranous sac.
+
+- **Gastroschisis (Q79.3)-** a congenital opening or fissure in the anterior abdominal wall lateral to the umbilicus through which the small intestine, part of the large intestine, and occasionally the liver and spleen, may herniate. The opening is separated from the umbilicus by a small bridge of skin, and the herniating organs are not covered by a protective membrane. Gastroschisis usually occurs on the right side of the umbilicus, although it may occur on the left.
+
+#### Selected chromosomal defects {-}
+
+- **Down Syndrome (Q90) -** the presence of three copies of all or a large part of chromosome 21.
+
+- **Trisomy 13 - Patau - (Q91.4-Q91.7) -** the presence of three copies of all or a large part of chromosome 13.
+
+- **Trisomy 18 - Edwards - (Q91.0-Q91.3) -** the presence of three copies of all or a large part of chromosome 18.
+
+- **Turner syndrome (Q96) -** presence of an absent or structurally abnormal second X chromosome in a phenotypic female.
+
+
+### Neural tube defects {#section-22}
+
+There is no significant trend with neural tube defects as a whole or within the sub-group encephalocele. At a $5\%$ level it was possible to see a slightly increasing and decreasing trend for anencephaly ($\hat{\beta_{1}} =$ `r modeling_trend(data = anom_ind, value = "q00")$coef`, $p-value=$ `r modeling_trend(data = anom_ind, value = "q00")$pvalue`), and spina bifida ($\hat{\beta_{1}} =$ `r modeling_trend(data = anom_ind, value = "q05")$coef`, $p-value=$ `r modeling_trend(data = anom_ind, value = "q05")$pvalue`), respectively.
+
+Overall, the rates have decreased over the past 10 years (2012-2021: $\hat{\beta_{1}} =$ `r modeling_trend(data = anom_ind, value = "q00")[["coef"]]`, p-value = `r modeling_trend(data = anom_ind, value = "q00")[["pvalue"]]`); $95\%$ CI:[`r scales::comma(ci_rate(data = data.frame(total_anom = sum(anom_grp[BrthYear > 2011 & grepl("q00", tolower(qcode))]$total_anom, na.rm=TRUE), cat ="neural tube defects",total_lvb = sum(anom_grp[BrthYear > 2011 & grepl("q00", tolower(qcode))]$total_lvb, na.rm=TRUE)))$ll, accuracy = 0.01)`; `r scales::comma(ci_rate(data = data.frame(total_anom = sum(anom_grp[BrthYear > 2011 & grepl("q00", tolower(qcode))]$total_anom, na.rm=TRUE), cat = "neural tube defects",total_lvb = sum(anom_grp[BrthYear > 2011 & grepl("q00", tolower(qcode))]$total_lvb, na.rm=TRUE)))$ul, accuracy = 0.01)`])
+
+```{r nt-1, fig.cap= 'Neural tube defects - Total reported cases'}
+dta <- anom_grp[grepl(tolower("q00"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_grp, "q00")
+
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(var(dta$total_anom,
+         na.rm = TRUE)/mean(dta$total_anom,
+                            na.rm = TRUE) > 2,
+         "Negative Binomial GLM fit",
+         "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black")
+            # marker = list(color = "black")
+         )
+```
+
+
+```{r nt-2, fig.cap="Neural tube defects: Anencephaly, Encephalocele, Spina bifida - Total reported cases"}
+## filtering neural tube defects
+## count anomaly by year
+## categorize them
+# filtering total births: lvb + stillbirths
+
+dta <- anom_ind[grepl(tolower("q00|q01|q05"),
+                   tolower(qcode)) ]
+
+plot_line(data = dta,
+          var = "rate")
+```
+
+## Birth Prevalence - Time Trends {#section-1}
+
+The following table of selected sentinel anomalies indicate the trends in congenital anomaly prevalence in Nova Scotia from 1987 through 2021. Sentinel anomalies are those which the International Clearinghouse of Birth Defects Surveillance and Research (ICBDSR), of which we are a member, watches worldwide with the rationale that they are quite easily identified hence more accurately reported. *See Appendix A.5 (p. 53) for other anomalies listed in the report.*
+
+```{r trend-1}
+##-------------------------
+## neural tube defect (ntd)
+##-------------------------
+
+ntb <- modeling_trend(anom_grp, "q00")
+
+## (sub categories)
+ntb_sub <- lapply(
+  c("q00",
+    "q01",
+    "q05"),
+  function(x) modeling_trend(data = anom_ind,
+                             value = x))
+
+ntb_sub <- as.data.frame(do.call(rbind, ntb_sub))
+
+##-----------------------
+## Central nervous system
+##-----------------------
+
+cns <- modeling_trend(anom_grp, "q02")
+cns_sub <- lapply(
+  c("q02",
+    "q03",
+    "q042"),
+  function(x) modeling_trend(data = anom_ind,
+                             value = x))
+
+cns_sub <- as.data.frame(do.call(rbind, cns_sub))
+
+## ntd (sub categories)
+
+##--------------------
+## Sense organ defects
+##--------------------
+
+sod <- modeling_trend(anom_grp, "q110")
+
+## (sub categories)
+sod_sub <- lapply(
+  c("q110",
+    "q160",
+    "q172"),
+  function(x) modeling_trend(data = anom_ind,
+                             value = x))
+
+sod_sub <- as.data.frame(do.call(rbind, sod_sub))
+
+##-------------------------
+## Congenital heart defects
+##-------------------------
+
+chd <- modeling_trend(anom_grp, "q200")
+
+## (sub categories)
+chd_sub <- lapply(
+  c("q200",
+    "q2031",
+    "q212",
+    "q213",
+    "q234"),
+  function(x) modeling_trend(data = anom_ind,
+                             value = x))
+
+chd_sub <- as.data.frame(do.call(rbind, chd_sub))
+
+##------------------
+## Oro-facial clefts
+##------------------
+
+ofc <- modeling_trend(anom_grp, "q35")
+
+## (sub categories)
+ofc_sub <- lapply(
+  c("q35",
+    "q36",
+    "q37"),
+  function(x) modeling_trend(data = anom_ind,
+                             value = x))
+
+ofc_sub <- unique(as.data.frame(do.call(rbind, ofc_sub)))
+
+##-------------------------
+## Gastrointestinal defects
+##-------------------------
+
+gid <- modeling_trend(anom_grp, "q391")
+
+## (sub categories)
+gid_sub <- lapply(
+  c("q390",
+    "q41",
+    "q420",
+    "q431",
+    "q442"),
+  function(x) modeling_trend(data = anom_ind,
+                             value = x))
+
+gid_sub <- unique(as.data.frame(do.call(rbind, gid_sub)))
+
+##------------------
+## Genital anomalies
+##------------------
+
+ga <- modeling_trend(anom_grp, "q531")
+
+## (sub categories)
+ga_sub <- lapply(
+  c("q531",
+    "q54",
+    "q56",
+    "q640"),
+  function(x) modeling_trend(data = anom_ind,
+                             value = x))
+
+ga_sub <- unique(as.data.frame(do.call(rbind, ga_sub)))
+
+##----------------------
+## Urinary tract defects
+##----------------------
+
+utd <- modeling_trend(anom_grp, "q601")
+
+## (sub categories)
+utd_sub <- lapply(
+  c("q601",
+    "q611",
+    "q641",
+    "q642"),
+  function(x) modeling_trend(data = anom_ind,
+                             value = x))
+
+utd_sub <- unique(as.data.frame(do.call(rbind, utd_sub)))
+
+##--------------
+## Hip dysplasia
+##--------------
+
+hip <- modeling_trend(anom_grp, "q65")
+
+##------------------------
+## Limb deficiency defects
+##------------------------
+
+ldd <- modeling_trend(anom_grp, "q71")
+
+##-----------------------
+## Abdominal wall defects
+##-----------------------
+
+awd <- modeling_trend(anom_grp, "q792")
+
+## (sub categories)
+awd_sub <- lapply(
+  c("q792",
+    "q793"),
+  function(x) modeling_trend(data = anom_ind,
+                             value = x))
+
+awd_sub <- unique(as.data.frame(do.call(rbind, awd_sub)))
+
+##--------------------
+## Chromosomal defects
+##--------------------
+
+cd <- modeling_trend(anom_grp, "q90")
+
+## (sub categories)
+cd_sub <- lapply(
+  c("q90",
+    "q914",
+    "q910",
+    "q96"),
+  function(x) modeling_trend(data = anom_ind,
+                             value = x))
+
+cd_sub <- unique(as.data.frame(do.call(rbind, cd_sub)))
+
+## putting them all together
+dta <- rbind(
+  ntb, ntb_sub,
+  cns, cns_sub,
+  sod, sod_sub,
+  chd, chd_sub,
+  ofc, ofc_sub,
+  gid, gid_sub,
+  ga, ga_sub,
+  utd, utd_sub,
+  hip,
+  ldd,
+  awd, awd_sub,
+  cd, cd_sub
+)
+
+## printing table
+DT::datatable(dta,
+              rownames = FALSE,
+              colnames = c("Coeficient",
+                           "Selected anomaly",
+                           "Sample size - N <br> (Period)",
+                           "Trend direction",
+                           "Statistic - \U03C7<sup>2</sup><sub>1</sub>",
+                           "P-value"),
+              escape = FALSE,
+              # style = "bootstrap",
+        selection = 'single',
+        caption = " Linear trend analysis selected anomalies 1987–2021 inclusive",
+        # width = "10px",
+        extensions = "Buttons",
+        options = list(
+          # https://datatables.net/reference/option/dom
+          dom = 'B<t>tp',
+          extensions = "Buttons",
+          search = NULL,
+          paging = TRUE,
+          autoWidth = TRUE,
+          pageLength = 10,
+          ordering = TRUE,
+          stateSave = TRUE,
+          buttons =
+          list('copy', 'print', list(
+            extend = 'collection',
+            buttons = list(
+                list(extend = 'csv', filename = "trend_results")
+                # list(extend = 'excel', filename = "trend_results"),
+                # list(extend = 'pdf', filename = "trend_results")
+                ),
+            text = 'Download'
+          )),
+          columnDefs = list(list(visible = FALSE,
+                                 targets = c(0)))
+          # language = list(zeroRecords = "")
+        ))
+```
+
+
