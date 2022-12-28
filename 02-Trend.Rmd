@@ -1,0 +1,64 @@
+---
+fig.caption: yes
+---
+
+```{r setup, include=FALSE}
+source("utilities/data.R")
+source("utilities/plotLine.R")
+source("utilities/CI.R")
+source("utilities/modeling.R")
+```
+
+### Neural tube defects {#section-22}
+
+At a $5\%$ level, there is `r ifelse(modeling_trend(data = anom_grp, value = "q00")[["pvalue"]] >= 0.05, "no significant", ifelse(modeling_trend(data = anom_grp, value = "q00")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp, value = "q00")[["coef"]] < 0, "a decreasing", "an increasing"))` trend with neural tube defects as a whole or within the sub-group encephalocele.
+
+At a $5\%$ level, it was possible to see a slightly increasing and decreasing trend for anencephaly ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q00")[["coef"]], accuracy = 0.01)`, $p-value=$ `r scales::comma(modeling_trend(data = anom_ind, value = "q00")$pvalue, accuracy = 0.01)`), and spina bifida ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q05")$coef, accuracy = 0.01)`, $p-value=$ `r scales::comma(modeling_trend(data = anom_ind, value = "q05")$pvalue, accuracy = 0.01)`), respectively.
+
+Overall, the prevalence rates have `r ifelse(modeling_trend(data = anom_grp[BrthYear > 2011], value = "q00")[["pvalue"]] >= 0.05, "been stable", ifelse(modeling_trend(data = anom_grp[BrthYear > 2011], value = "q00")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp[BrthYear > 2011], value = "q00")[["coef"]] < 0, "decreased", "increased"))` over the past 10 years - 2012-2021: $\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp[BrthYear > 2011], value = "q00")[["coef"]], accuracy = 0.01)`, p-value = `r scales::comma(modeling_trend(data = anom_grp[BrthYear > 2011], value = "q00")[["pvalue"]], accuracy = 0.01)`); $95\%$ CI:[`r scales::comma(modeling_trend(data = anom_grp[BrthYear > 2011], value = "q00")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > 2011], value = "q00")[["std"]], accuracy = 0.01)`; `r scales::comma(modeling_trend(data = anom_grp[BrthYear > 2011], value = "q00")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > 2011], value = "q00")[["std"]], accuracy = 0.01)`].
+
+```{r nt-1, fig.cap= 'Neural tube defects - Total reported cases'}
+dta <- anom_grp[grepl(tolower("q00"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_grp, "q00")
+
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(var(dta$total_anom,
+         na.rm = TRUE)/mean(dta$total_anom,
+                            na.rm = TRUE) > 2,
+         "Negative Binomial GLM fit",
+         "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black")
+            # marker = list(color = "black")
+         )
+```
+
+```{r nt-2, fig.cap= 'Neural tube defects - Nova Scotia'}
+# filter data
+dta <- anom_grp_map[grepl(tolower("q00"),
+                   tolower(qcode)) ]
+
+# build map
+
+```
+
+```{r nt-3, fig.cap="Neural tube defects: Anencephaly, Encephalocele, Spina bifida - Total reported cases"}
+## filtering neural tube defects
+## count anomaly by year
+## categorize them
+# filtering total births: lvb + stillbirths
+
+dta <- anom_ind[grepl(tolower("q00|q01|q05"),
+                   tolower(qcode)) ]
+
+plot_line(data = dta,
+          var = "rate")
+```

@@ -2,7 +2,7 @@
 title: 'Nova Scotia Congenital Anomalies Surveillance System'
 subtitle: 'First Report, 1987-2021'
 author: 'Estevam Teixeira'
-date: '2022-11-23'
+date: '2022-12-22'
 site: bookdown::bookdown_site
 output: bookdown::bs4_book
 documentclass: krantz
@@ -187,8 +187,8 @@ where $qchisq()$ is the quantile function for the chi-squared $\left(\chi^{2}\ri
 
 
 ```{=html}
-<div id="htmlwidget-76d18235fd2bfa6fb6d8" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-76d18235fd2bfa6fb6d8">{"x":{"filter":"none","vertical":false,"extensions":["Buttons"],"caption":"<caption>Table of 95% confidence limits for number of cases (for 0-5 cases). Based on a Poisson distribution.<\/caption>","data":[[0,1,2,3,4,5],[0,0.0253178079842899,0.242209278543965,0.618672122895601,1.08986537362632,1.62348639011842],[3.68887945411394,5.5716433909389,7.22468766772396,8.76727306974232,10.2415886754037,11.6683320793227]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Number of Cases<\/th>\n      <th>Lower Bound<\/th>\n      <th>Upper Bound<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"B<t>t","extensions":"Buttons","paging":false,"pageLength":5,"ordering":true,"stateSave":true,"buttons":["copy","csv","excel","pdf","print"],"columnDefs":[{"targets":1,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[0,1,2]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render"],"jsHooks":[]}</script>
+<div id="htmlwidget-f15d44f3d255d2b42620" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f15d44f3d255d2b42620">{"x":{"filter":"none","vertical":false,"extensions":["Buttons"],"caption":"<caption>Table of 95% confidence limits for number of cases (for 0-5 cases). Based on a Poisson distribution.<\/caption>","data":[[0,1,2,3,4,5],[0,0.0253178079842899,0.242209278543965,0.618672122895601,1.08986537362632,1.62348639011842],[3.68887945411394,5.5716433909389,7.22468766772396,8.76727306974232,10.2415886754037,11.6683320793227]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Number of Cases<\/th>\n      <th>Lower Bound<\/th>\n      <th>Upper Bound<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"B<t>t","extensions":"Buttons","paging":false,"pageLength":5,"ordering":true,"stateSave":true,"buttons":["copy","csv","excel","pdf","print"],"columnDefs":[{"targets":1,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[0,1,2]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render"],"jsHooks":[]}</script>
 ```
 
   1. Calculate prevalence

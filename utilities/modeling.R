@@ -24,33 +24,41 @@ modeling_trend <- function(data, value, alpha = 0.05,
   }
   
   return(data.frame(
-    coef = scales::comma(coef(summary(mod))[2,1], accuracy = 0.001),
-    anom = unique(dta$cat),
+    coef = coef(summary(mod))[2,1],
+    std = coef(summary(mod))[2,2],
+    anom = paste0(unique(dta$cat),
+                  "<br>",
+                  "<span style='font-size:12px'> ICD-10: ",
+                  unique(dta$qcodecat),
+                  "</span>"),
     n = paste0(scales::comma(nrow(dta),accuracy = 1),
               "<br>",
-              "(",
+              "<span style='font-size:12px'>(",
               min(dta$BrthYear, na.rm = TRUE),
               "-",
-              max(dta$BrthYear, na.rm = TRUE),")"),
+              max(dta$BrthYear, na.rm = TRUE),")</span>"),
     trend = ifelse(coef(summary(mod))[2,4] >= alpha,
                    paste0("No significant change ",
+                          "<br>",
                           "(",
                           fontawesome::fa(name = "arrow-right"),
                           ")"),
             ifelse(coef(summary(mod))[2,4] < alpha &
                    coef(summary(mod))[2,1] < 0,
                    paste0("Decreasing ",
+                          "<br>",
                           "(",
                           fontawesome::fa(name = "arrow-down"),
                           ")"),
                    paste0("Increasing ",
+                          "<br>",
                           "(",
                           fontawesome::fa(name = "arrow-up"),
                           ")"))),
     statistic = scales::comma((coef(summary(mod))[2,3])^2, accuracy = 0.01),
     pvalue = ifelse(coef(summary(mod))[2,4] < 0.0001,
                     "< 0.0001",
-                    scales::comma(coef(summary(mod))[2,4], accuracy = 0.01)
+                    coef(summary(mod))[2,4]
     )))
 }
 
