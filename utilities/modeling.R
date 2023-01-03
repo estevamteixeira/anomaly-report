@@ -1,5 +1,5 @@
 modeling_trend <- function(data, value, alpha = 0.05,
-                           thres = 2){
+                           thres = 1.5){
   
   val <- unlist(value)
   dta <- data

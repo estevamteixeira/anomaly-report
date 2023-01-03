@@ -12,7 +12,9 @@ knitr::opts_chunk$set(
 pckgs <- c('tidyverse', 'knitr', 'scales','janitor',
            'kableExtra', 'data.table','reactablefmtr',
            'forcats','lubridate', 'anytime','reactable',
-           'htmltools', 'plotly','purrr', 'fontawesome')
+           'htmltools', 'plotly','purrr', 'fontawesome',
+           'cancensus','leaflet','leafsync','htmlwidgets',
+           'htmltools','tmap')
 # for (pp in `pckgs`) { if (!require(pp)) install.packages(pp); library(pp, character.only = T)  }
 
 if (!require("pacman")) install.packages("pacman")
@@ -371,3 +373,23 @@ anom_grp_map <- merge(anom_grp_map,
   .[order(CD_UID, qcode, time_cat)] %>% 
   .[,`:=` (rate = 1000*total_anom/total_lvb)] %>% 
   .[order(CD_UID, time_cat, rate)]
+
+# key to access cancensus datasets
+key = "CensusMapper_f505397ff4bb63467541085d028c9be8"
+
+cd_shp <- data.table::setDT(cancensus::get_census(
+  dataset = "CA21",
+  regions = list(PR = "12"), 
+  level = "CD",
+  geo_format = "sf",
+  api_key = key
+))[,`:=` (name = stringr::str_remove(name, " \\(CTY\\)"),
+          cd_type = "County",
+          area = `Shape Area`)][,
+                               c("GeoUID", "name", "cd_type", "Dwellings 2016","Dwellings", 
+                                 "Population 2016", "Population", "Households 2016",
+                                 "Households", "area", "geometry")]
+
+cd_names <- data.frame(CD_UID = cd_shp$GeoUID, cd_full = cd_shp$name)
+
+

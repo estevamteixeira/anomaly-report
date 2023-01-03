@@ -36,18 +36,18 @@ plot_line <- function(data, var, palt = "Dark2"){
         pal <- c("Cleft palate" = colors[1],
                  "Cleft lip" = colors[2],
                  "Cleft palate with cleft lip" = colors[3])
-      } else if(any(tolower(dta[["cat"]]) %in% c("Anotia/Microtia"))){
+      } else if(any(tolower(dta[["cat"]]) %in% c("anotia/microtia"))){
       colors <- brewer.pal(n = nfac,
                            name = palt)
       pal <- c("Anophtalmos/Microphtalmos" = colors[1],
                "Anotia/Microtia" = colors[2])
-      } else if(any(tolower(dta[["cat"]]) %in% c("Microcephaly"))){
+      } else if(any(tolower(dta[["cat"]]) %in% c("microcephaly"))){
       colors <- brewer.pal(n = nfac,
                            name = palt)
-      pal <- c("Microcephaly" = colors[1],
-               "Congenital hydrocephalus" = colors[2],
-               "Arhinencephaly/Holoprosencephal" = colors[3])
-      } else if(any(tolower(dta[["cat"]]) %in% c("Commom truncus"))){
+      pal <- c("Microcephaly" = "#1B9E77",
+               "Congenital hydrocephalus" = "#D95F02",
+               "Arhinencephaly/Holoprosencephal" = "#7570B3")
+      } else if(any(tolower(dta[["cat"]]) %in% c("commom truncus"))){
       colors <- brewer.pal(n = nfac,
                            name = palt)
       pal <- c("Commom truncus" = colors[1],
@@ -55,7 +55,7 @@ plot_line <- function(data, var, palt = "Dark2"){
                "Atrioventricular septal defect" = colors[3],
                "Tetralogy of Fallot" = colors[4],
                "Hypoplastic left heart syndrome" = colors[5])
-      } else if(any(tolower(dta[["cat"]]) %in% c("Hirschsprung disease"))){
+      } else if(any(tolower(dta[["cat"]]) %in% c("hirschsprung disease"))){
       colors <- brewer.pal(n = nfac,
                            name = palt)
       pal <- c("Oesophageal atresia/stenosis, tracheoesophageal fistula" = colors[1],
@@ -63,26 +63,26 @@ plot_line <- function(data, var, palt = "Dark2"){
                "Ano-rectal absence/atresia/stenosis" = colors[3],
                "Hirschsprung disease" = colors[4],
                "Atresia of bile ducts" = colors[5])
-      } else if(any(tolower(dta[["cat"]]) %in% c("Hypospadias"))){
+      } else if(any(tolower(dta[["cat"]]) %in% c("hypospadias"))){
       colors <- brewer.pal(n = nfac,
                            name = palt)
       pal <- c("Cryptorchidism/undescended testicles" = colors[1],
                "Hypospadias" = colors[2],
                "Indeterminate sex and pseudohermaphroditism" = colors[3],
                "Epispadias" = colors[4])
-      } else if(any(tolower(dta[["cat"]]) %in% c("Renal agenesis"))){
+      } else if(any(tolower(dta[["cat"]]) %in% c("renal agenesis"))){
       colors <- brewer.pal(n = nfac,
                            name = palt)
       pal <- c("Renal agenesis" = colors[1],
                "Cystic kidney" = colors[2],
                "Bladder and cloacal exstroph" = colors[3],
                "Lower urinary tract obstruction" = colors[4])
-      } else if(any(tolower(dta[["cat"]]) %in% c("Gastroschisis"))){
+      } else if(any(tolower(dta[["cat"]]) %in% c("gastroschisis"))){
       colors <- brewer.pal(n = nfac,
                            name = palt)
       pal <- c("Omphalocele/Exomphalos" = colors[1],
                "Gastroschisis" = colors[2])
-      } else if(any(tolower(dta[["cat"]]) %in% c("Down Syndrome"))){
+      } else if(any(tolower(dta[["cat"]]) %in% c("down syndrome"))){
       colors <- brewer.pal(n = nfac,
                            name = palt)
       pal <- c("Down Syndrome" = colors[1],
@@ -100,7 +100,7 @@ plot_line <- function(data, var, palt = "Dark2"){
                   type = "scatter",
                   mode = "lines",
                   linetype = ~cat,
-                  color = ~cat,
+                  # color = ~cat,
                   colors = pal,
                   # symbol = ~cat,
                   hovertemplate = ~paste(

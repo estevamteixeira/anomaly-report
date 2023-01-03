@@ -1,8 +1,12 @@
-fig:nt-1
-fig:nt-2
+fig:nt1
+fig:nt3
+fig:nt2
+fig:scns1
+fig:snsc3
+fig:scns2
 chapter-1
 section-2
 section-21
 section-22
+section-23
 section-a1
-github-repo-httpsgithub.comestevamteixeiransatleepd
