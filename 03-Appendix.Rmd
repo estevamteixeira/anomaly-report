@@ -58,7 +58,7 @@ sod <- modeling_trend(anom_grp, "q110")
 sod_sub <- lapply(
   c("q110",
     "q160",
-    "q172"),
+    "q300"),
   function(x) modeling_trend(data = anom_ind,
                              value = x))
 
@@ -208,7 +208,10 @@ dta <- rbind(
   ldd,
   awd, awd_sub,
   cd, cd_sub
-)
+) %>% 
+  mutate(pvalue = ifelse(!pvalue %in% "< 0.0001",
+                         scales::comma(as.numeric(pvalue), accuracy = 0.001),
+                         pvalue))
 
 ## printing table
 DT::datatable(dta,
@@ -252,7 +255,7 @@ DT::datatable(dta,
           # language = list(zeroRecords = "")
         )) %>% 
   DT::formatRound(
-          columns = c("statistic","pvalue"),
+          columns = c("statistic"),
           digits = 2,
           mark = ","
         )
