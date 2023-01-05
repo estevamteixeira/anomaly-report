@@ -54,7 +54,8 @@ plot_line <- function(data, var, palt = "Dark2"){
                "Discordant ventriculoarterial connection" = colors[2],
                "Atrioventricular septal defect" = colors[3],
                "Tetralogy of Fallot" = colors[4],
-               "Hypoplastic left heart syndrome" = colors[5])
+               "Hypoplastic left heart syndrome" = colors[5],
+               "Coarctation of aorta" = colors[6])
       } else if(any(tolower(dta[["cat"]]) %in% c("hirschsprung disease"))){
       colors <- brewer.pal(n = nfac,
                            name = palt)

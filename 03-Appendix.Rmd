@@ -76,7 +76,8 @@ chd_sub <- lapply(
     "q2031",
     "q212",
     "q213",
-    "q234"),
+    "q234",
+    "q251"),
   function(x) modeling_trend(data = anom_ind,
                              value = x))
 
