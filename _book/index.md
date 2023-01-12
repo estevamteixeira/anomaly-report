@@ -1,23 +1,22 @@
 --- 
 title: 'Nova Scotia Congenital Anomalies Surveillance System'
 subtitle: 'First Report, 1987-2021'
-author: 'Estevam Teixeira'
-date: '2023-01-05'
+author: 'Reproductive Care Program of Nova Scotia'
+date: '2023-01-12'
+knit: bookdown::render_book
 site: bookdown::bookdown_site
 output: bookdown::bs4_book
 documentclass: krantz
 monofont: "Source Code Pro"
 monofontoptions: "Scale=0.7"
-bibliography:
-  # - geocompr.bib
-  - packages.bib
 biblio-style: apalike
 link-citations: yes
 colorlinks: yes
 graphics: yes
 description: "The data presented in this report are meant to provide a quick reference to the sentinel indicators of perinatal health and care among Nova Scotia residents. We hope this report will assist with the development and monitoring of standards of care and will trigger research questions that can be pursued by researchers and trainees."
-# github-repo: "https://github.com/estevamteixeira/NSAtleePD"
-# cover-image: "images/Cover2010-19.png"
+github-repo: "https://github.com/estevamteixeira/anomaly-report"
+cover-image: "images/cover.pdf"
+pdf-cover-image: "images/cover.pdf"
 url: http://rcp.nshealth.ca/
 ---
 
@@ -25,35 +24,7 @@ url: http://rcp.nshealth.ca/
 
 
 
-# Acknowledgements {-}
 
-The **Surveillance of Congenital Anomalies in Nova Scotia (SCAN-NS)** would like to thank the Public Health Agency of Canada (PHAC) for the on-going support of data collection within Nova Scotia. SCA-NS is grateful for the ongoing interest and help of
-
-- [Dr. Scott](https://medicine.dal.ca/departments/department-sites/obstetrics/our-people/our-faculty/heather-scott.html);
-
-- [Dr. Skidmore](https://medicine.dal.ca/departments/department-sites/pediatrics/our-people/our-faculty/david-skidmore.html); and 
-
-- [Dr. Van den Hof](https://medicine.dal.ca/departments/department-sites/obstetrics/our-people/our-faculty/michiel-vandenhof.html)
-
-As our clinical advisors.
-
-Special thanks to Barry Campbell and the many staff within the [Reproductive Care Program of Nova Scotia](http://rcp.nshealth.ca/) for their continued support.
-
-This report has been prepared by:
-
-- Cora Cole.^[Surveillance of Congenital Anomalies Nova Scotia, cora.cole@iwk.nshealth.ca]
-- John Fahey.^[Reproductive Care Program of Nova Scotia, john.fahey@iwk.nshealth.ca]
-- Estevam Teixeira.^[Reproductive Care Program of Nova Scotia, estevam.teixeira@iwk.nshealth.ca]
-
-## Contact {-}
-
-For more information, please contact:
-
-Cora Cole, **Surveillance of Congenital Anomalies Nova Scotia**, [cora.cole@iwk.nshealth.ca](cora.cole@iwk.nshealth.ca)
-
-**Suggested citation:** 
-
-Surveillance of Congenital Anomalies Nova Scotia, Reproductive Care Program of Nova Scotia, The Izaak Walton Killam Health Centre (IWK) 2022.
 
 # Background {-}
 
@@ -103,9 +74,12 @@ The purpose of SCA-NS is to improve Congenital Anomaly case ascertainment, clust
 
 SCA-NS includes all Nova Scotia residents, with ascertainment from other Maritime Provinces for those cases where the mother delivered elsewhere. Information on cases includes the prenatal period up to one year of age including live births, stillbirths and terminations of pregnancies in which a fetal anomaly has been detected.
 
-# Methodology {-}
+\mainmatter
 
-## Case Definitions {-}
+
+# Methodology {#chapter-1}
+
+## Case Definitions {#section-11}
 
 A congenital anomaly is an abnormality that is present at birth, even if not diagnosed until months or years later. Most congenital anomalies are present long before the time of birth, some in the embryonic period (up to the end of the seventh week of gestation) and others in the fetal period (eighth week to term). The term "anomaly" covers all the major classes of abnormalities of development, of which there are four major categories as follows:
 
@@ -131,7 +105,7 @@ Other definitions related to pregnancy outcomes for the purposes of this report 
 
 Anomaly definitions are based, for the most part, on those provided by the  International Clearinghouse for Birth Defects Surveillance and Research (ICBDSR) and National Birth Defects Prevention Network (NBDPN).
 
-## Case Acertainment {-}
+## Case Acertainment {#section-12}
 
 An infant can be ascertained at any time up to the first birthday. Multiple ascertainment of the same infant can occur and is encouraged, as this frequently improves the quality and reliability of the data.
 
@@ -139,7 +113,7 @@ As several malformations may occur in the same infant, it is advantageous to all
 
 SCA-NS obtains information about infants with congenital anomalies from a variety of independent sources. Acquisition of additional reporting agencies is always a priority since the use of multiple sources of information improves not only the ease but also completeness of ascertainment as well as for verification of the diagnostic data.
 
-## Quality Control Measures and Data Linkage {-}
+## Quality Control Measures and Data Linkage {#section-13}
 
 Data quality is ensured through both a coded linking process and by manual chart audits of unmatched anomaly records. The first step in data quality control involves the linking of disparate fetal/infant records between databases. Linking is based on the matching of several unique variables in each record.
 
@@ -147,7 +121,7 @@ Data quality is ensured through both a coded linking process and by manual chart
 
 - If there are records that "fail" the automated matching process they are reviewed manually to determine if that information was only found in one data source or if information was entered incorrectly.
 
-## Confidentiality and Release of Data {-}
+## Confidentiality and Release of Data {#section-14}
 
 ### Authority for the Collection, Use, and Disclosure of Personal Information {-}
 
@@ -185,37 +159,50 @@ For the **denominator**, we use the total number of live births and stillbirths 
 
 where $qchisq()$ is the quantile function for the chi-squared $\left(\chi^{2}\right)$ distribution with $2X$, and $2(X+1)$ degrees of freedom. These limits can be computed using any statistical software or taken from a chi-square table (reproduced below for up to $5$ cases).
 
+\begin{table}
 
-```{=html}
-<div id="htmlwidget-7aeac0eda596a2ec2941" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7aeac0eda596a2ec2941">{"x":{"filter":"none","vertical":false,"extensions":["Buttons"],"caption":"<caption>Table of 95% confidence limits for number of cases (for 0-5 cases). Based on a Poisson distribution.<\/caption>","data":[[0,1,2,3,4,5],[0,0.0253178079842899,0.242209278543965,0.618672122895601,1.08986537362632,1.62348639011842],[3.68887945411394,5.5716433909389,7.22468766772396,8.76727306974232,10.2415886754037,11.6683320793227]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Number of Cases<\/th>\n      <th>Lower Bound<\/th>\n      <th>Upper Bound<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"B<t>t","extensions":"Buttons","paging":false,"pageLength":5,"ordering":true,"stateSave":true,"buttons":["copy","csv","excel","pdf","print"],"columnDefs":[{"targets":1,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[0,1,2]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render"],"jsHooks":[]}</script>
-```
+\caption{(\#tab:pois-1)}
+\centering
+\begin{tabular}[t]{rrr}
+\toprule
+Number of Cases & Lower Bound & Upper Bound\\
+\midrule
+0 & 0.000 & 3.689\\
+1 & 0.025 & 5.572\\
+2 & 0.242 & 7.225\\
+3 & 0.619 & 8.767\\
+4 & 1.090 & 10.242\\
+\addlinespace
+5 & 1.623 & 11.668\\
+\bottomrule
+\end{tabular}
+\end{table}
 
-  1. Calculate prevalence
+1. Calculate prevalence
   
-> $$\small{1,000 \times \dfrac{\text{Number of cases with birth defect A in an area and time period}}{\text{Number of live births and stillbirths in that area and time period}}}$$
+> $$\small{
+1,000 \times \dfrac{\text{Number of cases with birth defect A in an area and time period}}{\text{Number of live births and stillbirths in that area and time period}}
+}$$
   
-  2. Look up the lower and upper $95\%$ confidence limit for the number of cases with birth defect A. Using this new number in the numerator calculate the lower and upper $95\%$ confidence limit for prevalence.
+2. Look up the lower and upper $95\%$ confidence limit for the number of cases with birth defect A. Using this new number in the numerator calculate the lower and upper $95\%$ confidence limit for prevalence.
 
 > $$
-\scriptsize{
-\begin{align*}
-\text{Lower 95% CL for prevalence} &= 1,000 \times \dfrac{\text{Lower 95% CL for cases with birth defect A in an area and time period}}{\text{Number of live births and stillbirths in that area and time period}} \notag \\ \\
-\text{Upper 95% CL for prevalence} &= 1,000 \times \dfrac{\text{Upper 95% CL for cases with birth defect A in an area and time period}}{\text{Number of live births and stillbirths in that area and time period}} \notag
-\end{align*}
-}
+\scriptsize
+\begin{aligned}
+\text{Lower } 95\% \text{ CL for prevalence} &= 1,000 \times \dfrac{\text{Lower } 95\% \text{ CL for cases with birth defect A in an area and time period}}{\text{Number of live births and stillbirths in that area and time period}}\\
+\text{Upper } 95\% \text{ CL for prevalence} &= 1,000 \times \dfrac{\text{Upper } 95\% \text{ CL for cases with birth defect A in an area and time period}}{\text{Number of live births and stillbirths in that area and time period}} 
+\end{aligned}
 $$
 
   **Example -** Considering that for a birth defect A in an area and time period we had $5$ cases with a number of total births of $12,500$ we have
 
 > $$
-\small{
-\begin{align*}
-\text{Prevalence} &= 1,000 \times \dfrac{5}{12,500} = 0.4 \notag \\ \\
-\text{Lower 95% CL for prevalence} &= 1,000 \times \dfrac{1.623}{12,500} = 0.13 \notag \\ \\
-\text{Upper 95% CL for prevalence} &= 1,000 \times \dfrac{11.668}{12,500} = 0.93 \notag
-\end{align*}
-}
+\small
+\begin{aligned}
+\text{Prevalence} &= 1,000 \times \dfrac{5}{12,500} = 0.4  \\
+\text{Lower } 95\% \text{ CL for prevalence} &= 1,000 \times \dfrac{1.623}{12,500} = 0.13  \\
+\text{Upper } 95\% \text{ CL for prevalence} &= 1,000 \times \dfrac{11.668}{12,500} = 0.93 
+\end{aligned}
 $$
 
 - ***For a prevalence based on a large number of cases -*** For a large number of cases (arbitrarily defined here as $\ge 30$ cases), use the Normal distribution because as the number of cases grows larger, the Poisson distribution approximates the Normal distribution.
@@ -224,15 +211,14 @@ $$
   1. Calculate the lower and upper confidence limit using the following:
 
 > $$
-\small{
-\begin{align*}
-\text{Lower 95% CL for prevalence} &= 1,000 \times \dfrac{\left( 1- \dfrac{1}{9c}-\dfrac{1.96}{3}\sqrt{\dfrac{1}{c}} \right)^{3}}{b}\times c \notag \\ \\
-\text{Upper 95% CL for prevalence} &= 1,000 \times \dfrac{\left( 1- \dfrac{1}{9\left(c+1\right)}+\dfrac{1.96}{3}\sqrt{\dfrac{1}{\left(c+1\right)}} \right)^{3}}{b}\times \left(c+1\right) \notag
-\end{align*}
-}
+\small
+\begin{aligned}
+\text{Lower } 95\% \text{ CL for prevalence} &= 1,000 \times \dfrac{\left( 1- \dfrac{1}{9c}-\dfrac{1.96}{3}\sqrt{\dfrac{1}{c}} \right)^{3}}{b}\times c  \\
+\text{Upper } 95\% \text{ CL for prevalence} &= 1,000 \times \dfrac{\left( 1- \dfrac{1}{9\left(c+1\right)}+\dfrac{1.96}{3}\sqrt{\dfrac{1}{\left(c+1\right)}} \right)^{3}}{b}\times \left(c+1\right) 
+\end{aligned}
 $$
 
-  2. To determine different $\left(1-\alpha\right)\%$ confidence limits, replace $1.96$ with the corresponding value from the Normal distribution.
+  2. To determine different $\left(1 - \alpha \right) \%$ confidence limits, replace $1.96$ with the corresponding value from the Normal distribution.
   3. To obtain confidence limits for the number of cases instead of the prevalence, apply the formulae but do not divide by $b=$ number of live births and stillbirths in an area and time period or multiply by $1,000$.
 
 #### Trend analysis {-}
@@ -244,42 +230,36 @@ The simplest such distribution is the ***Poisson***. Its probabilities depend on
 In the context of prevalence, the response count $X_{i}$ has and index $t_{i}$ such that its expected value is proportional to $t_{i}$. Our approach here, is to consider the total births as the index, since this value varies over time. Then , our sample rate is $x_{i}/t_{i}$, with expected value $\mu_{i}/t_{i}$. A log-linear model for the expected rate has form
 
 > $$
-\small{
-\begin{align*}
-log\left(\mu_{i}/t_{i}\right) &= \beta_{0} + \beta_{1}(Year) \notag \\ \\
-log\left(\mu_{i}\right) - log\left(t_{i}\right) &= \beta_{0} + \beta_{1}(Year) \notag \\ \\
+\begin{aligned}
+log\left(\mu_{i}/t_{i}\right) &= \beta_{0} + \beta_{1}(Year)  \\
+log\left(\mu_{i}\right) - log\left(t_{i}\right) &= \beta_{0} + \beta_{1}(Year)  \\
 log\left(\mu_{i}\right) &= \beta_{0} + \beta_{1}(Year) + log\left(t_{i}\right)
-\end{align*}
-}
+\end{aligned}
 $$
 
 The adjustment term $-log\left(t_{i}\right)$, to the log link of the mean is called an *offset*. Another option is to run this model using the identity link. The model is then
 
 > $$
-\small{
-\begin{align*}
-\mu_{i}/t_{i} &= \beta_{0} + \beta_{1}(Year) \notag \\ \\
+\begin{aligned}
+\mu_{i}/t_{i} &= \beta_{0} + \beta_{1}(Year)  \\
 \mu_{i} &= \beta_{0}t_{i} + \beta_{1}(Year)t_{i}
-\end{align*}
-}
+\end{aligned}
 $$
 
 which does not require an offset. It corresponds to an ordinary Poisson GLM using the identity link with no intercept and exploratory variables $t_{i}$, $(Year)t_{i}$ and its estimates are equal to an OLS model without an intercept.
 
 Since we are working with the observed rater per 1,000 total births, adjusting the yearly count by total births is equivalent to have $t_{i} = \text{total births}/1,000$.
 
-Sometimes, one can note that the count data could show great variability. Under a Poisson model, we would expect the means and variances of the response to be about the same in various groups. A severe limitation of Poisson models is that $E\left(X\right)=Var\left(X\right)=\mu$. Hence, at a fixed mean the variance cannot decrease as additional predictors enter the model. The greater variability than predicted by the GLM random component reflects **overdispersion**. A common cause of overdispersion is subject heterogeneity. Without adjusting for overdispersion, we use incorrect, artificially small standard errors leading to artificially small p-values for model coefficients which may lead to wrong inferences and conclusions.
+Sometimes, one can note that the count data could show great variability. Under a Poisson model, we would expect the means and variances of the response to be about the same in various groups. A severe limitation of Poisson models is that $E \left(X \right) = Var \left(X \right) = \mu$. Hence, at a fixed mean the variance cannot decrease as additional predictors enter the model. The greater variability than predicted by the GLM random component reflects **overdispersion**. A common cause of overdispersion is subject heterogeneity. Without adjusting for overdispersion, we use incorrect, artificially small standard errors leading to artificially small p-values for model coefficients which may lead to wrong inferences and conclusions.
 
-We can take overdispersion into account in several different ways. The simplest is to use an estimated dispersion factor to inflate standard errors. Another way is to use a **negative-binomial** regression model. In this case, $E\left(X\right)= \mu$, and $Var\left(X\right)=\mu + \gamma\mu^{2}$. The index $\gamma \gt 0$ is a type of dispersion parameter. As $\gamma \rightarrow 0$, $Var\left(X\right) \rightarrow \mu$ and the negative binomial distribution converges to the Poisson.
+We can take overdispersion into account in several different ways. The simplest is to use an estimated dispersion factor to inflate standard errors. Another way is to use a **negative-binomial** regression model. In this case, $E\left(X\right)= \mu$, and $Var \left( X \right) = \mu + \gamma \cdot \mu^{2}$. The index $\gamma > 0$ is a type of dispersion parameter. As $\gamma \rightarrow 0$, $Var \left( X \right) \rightarrow \mu$ and the negative binomial distribution converges to the Poisson.
 
 <!-- In this report, we decided on using the negative-binomial since we have no real evidence to support the minor variations suggested by the overdispersed Poisson model. -->
 
 For the aforementioned model,
 
 > $$
-\small{
 \mu_{i} = \beta_{0}t_{i} + \beta_{1}(Year)t_{i}
-}
 $$
 
-significance tests focus on $H_{0}: \beta_{1} =0$. The Wald test uses the log-likelihood at $\hat{\beta_{1}}$, with test statistic $z=\hat{\beta_{1}}/SE(\hat{\beta_{1}})$ or its square. Under $H_{0}$, $z^{2}$ is asymptotically $\chi^{2}_{1}$. At a $5\%$ level, any p-value lower than $5\%$ would provide evidences against $H_{0}$, meaning that at a $5\%$ level they would be considered statistically significant.
+significance tests focus on $H_{0}: \beta_{1} =0$. The Wald test uses the log-likelihood at $\hat{\beta_{1}}$, with test statistic $z=\hat{\beta_{1}} / SE(\hat{\beta_{1}})$ or its square. Under $H_{0}$, $z^{2}$ is asymptotically $\chi^{2}_{1}$. At a $5\%$ level, any p-value lower than $5\%$ would provide evidences against $H_{0}$, meaning that at a $5\%$ level they would be considered statistically significant.

@@ -23,3 +23,13 @@ bookdown::bs4_book:
     facebook: no
     twitter: yes
     all: no
+bookdown::pdf_book:
+  toc: yes
+  includes:
+    in_header: latex/preamble.tex
+  template: latex/template.tex
+  pandoc_args: --top-level-division=chapter
+  keep_tex: yes
+  toc_depth: 4
+  toc_unnumbered: no
+  toc_appendix: yes

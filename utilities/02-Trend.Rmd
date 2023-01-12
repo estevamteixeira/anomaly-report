@@ -10,6 +10,7 @@ source("utilities/modeling.R")
 source("utilities/plotNSCDMap.R")
 ```
 
+
 ### Neural tube defects {#section-22}
 
 At a $5\%$ level, there is `r ifelse(modeling_trend(data = anom_grp, value = "q00")[["pvalue"]] >= 0.05, "no significant", ifelse(modeling_trend(data = anom_grp, value = "q00")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp, value = "q00")[["coef"]] < 0, "a decreasing", "an increasing"))` trend for neural tube defects ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp, value = "q00")[["coef"]], accuracy = 0.01)`, $p-value=$ `r ifelse(is.numeric(modeling_trend(data = anom_grp, value = "q00")[["pvalue"]]), scales::comma(modeling_trend(data = anom_grp, value = "q00")[["pvalue"]], accuracy = 0.01), modeling_trend(data = anom_grp, value = "q00")[["pvalue"]])`).

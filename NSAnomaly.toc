@@ -1,0 +1,23 @@
+\contentsline {fm}{Background}{v}{chapter*.1}%
+\contentsline {fm}{SCAN-NS Activity and Report Summary}{vii}{chapter*.2}%
+\contentsline {fm}{Introduction}{ix}{chapter*.3}%
+\contentsline {chapter}{\numberline {1}Methodology}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Case Definitions}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Case Acertainment}{2}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Quality Control Measures and Data Linkage}{3}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Confidentiality and Release of Data}{3}{section.1.4}%
+\contentsline {chapter}{\numberline {2}Patterns of Selected Congenital Anomalies in Nova Scotia}{9}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Selected Anomalies}{9}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Selected Anomaly Definitions}{9}{subsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.1.1}Neural tube defects}{9}{subsubsection.2.1.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.1.2}Selected central nervous system defects}{9}{subsubsection.2.1.1.2}%
+\contentsline {subsubsection}{\numberline {2.1.1.3}Selected sense organ defects}{10}{subsubsection.2.1.1.3}%
+\contentsline {subsubsection}{\numberline {2.1.1.4}Selected congenital heart defects}{10}{subsubsection.2.1.1.4}%
+\contentsline {subsubsection}{\numberline {2.1.1.5}Oro-facial clefts}{11}{subsubsection.2.1.1.5}%
+\contentsline {subsubsection}{\numberline {2.1.1.6}Selected gastrointestinal defects}{11}{subsubsection.2.1.1.6}%
+\contentsline {subsubsection}{\numberline {2.1.1.7}Selected genital anomalies}{12}{subsubsection.2.1.1.7}%
+\contentsline {subsubsection}{\numberline {2.1.1.8}Selected urinary tract defects}{12}{subsubsection.2.1.1.8}%
+\contentsline {subsubsection}{\numberline {2.1.1.9}Hip dysplasia (Q65)}{13}{subsubsection.2.1.1.9}%
+\contentsline {subsubsection}{\numberline {2.1.1.10}Limb deficiency defects (Q71-Q73)}{13}{subsubsection.2.1.1.10}%
+\contentsline {subsubsection}{\numberline {2.1.1.11}Selected abdominal wall defects}{13}{subsubsection.2.1.1.11}%
+\contentsline {subsubsection}{\numberline {2.1.1.12}Selected chromosomal defects}{13}{subsubsection.2.1.1.12}%

@@ -9,12 +9,12 @@ knitr::opts_chunk$set(
   eval.after = "fig.cap",
   fig.caption= TRUE)
 
-pckgs <- c('tidyverse', 'knitr', 'scales','janitor',
-           'kableExtra', 'data.table','reactablefmtr',
-           'forcats','lubridate', 'anytime','reactable',
+pckgs <- c('tidyr', 'knitr', 'scales','janitor',
+           'kableExtra', 'data.table','dplyr',
+           'forcats','lubridate', 'anytime',
            'htmltools', 'plotly','purrr', 'fontawesome',
            'cancensus','leaflet','leafsync','htmlwidgets',
-           'htmltools','tmap')
+           'htmltools','tmap','DT')
 # for (pp in `pckgs`) { if (!require(pp)) install.packages(pp); library(pp, character.only = T)  }
 
 if (!require("pacman")) install.packages("pacman")

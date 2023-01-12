@@ -1,0 +1,636 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+%
+\documentclass[
+]{krantz}
+\usepackage{pdfpages}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+  \setmonofont[Scale=0.7]{Source Code Pro}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Nova Scotia Congenital Anomalies Surveillance System},
+  pdfauthor={Reproductive Care Program of Nova Scotia},
+  colorlinks=true,
+  linkcolor=Maroon,
+  filecolor=Maroon,
+  citecolor=Blue,
+  urlcolor=Blue,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{longtable,booktabs}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{pdfpages}
+\frontmatter
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+
+\title{Nova Scotia Congenital Anomalies Surveillance System}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{First Report, 1987-2021}
+\author{Reproductive Care Program of Nova Scotia}
+\date{2023-01-12}
+
+\begin{document}
+\pagestyle{empty}
+\includepdf{images/cover.pdf}
+\setcounter{page}{1}
+\maketitle
+\thispagestyle{empty}
+\newpage
+
+
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\newpage
+}
+
+
+\hypertarget{background}{%
+\chapter*{Background}\label{background}}
+
+
+Gaps exist in the nation's capacity to conduct surveillance for congenital anomalies. In \(2002\), the Canadian Congenital Anomalies Surveillance Network (CCASN) was established
+
+\begin{quote}
+To support the development and maintenance of high quality population-based surveillance systems of congenital anomalies that will provide information to improve the health of Canadian children and their families.\footnote{Public Health Agency of Canada. What is Canadian Congenital Anomalies Surveillance Network (CCASN)}(\url{http://www.phac-aspc.gc.ca/ccasn-rcsac/index-eng.php})
+\end{quote}
+
+The CCASN produced a series of documents regarding the establishment of provincial/territorial surveillance systems for congenital anomalies\footnote{Canadian Congenital Anomalies Surveillance Network. Recommendations concerning the establishment of congenital anomalies surveillance in Canadian jurisdictions.}(), coding of congenital anomalies\footnote{Canadian Congenital Anomalies Surveillance Network. Coding of fetal anomalies.}(\url{https://health-infobase.canada.ca/congenital-anomalies/}), and delineating data elements required for minimal and enhanced surveillance for congenital anomalies\footnote{Canadian Congenital Anomalies Surveillance Network. Recommended data variables for congenital anomalies surveillance in Canadian provinces \& territories.}(\url{https://www.phac-aspc.gc.ca/ccasn-rcsac/sac-cas/pdf/cas-eng.pdf}).
+
+In Nova Scotia, data regarding congenital anomalies diagnosed at birth or during the birth admission have been collected since \(1987\) in the Nova Scotia Atlee Perinatal Database (NSAPD) managed by the Reproductive Care Program of Nova Scotia (RCP). The NSAPD collects data about all live born infants and stillbirths for all fetuses delivered \(\ge 20\) weeks gestation, or \(\ge 500\) grams, or live born and all co-multiples of the aforementioned; the NSAPD also captures information about the mothers of the infants/fetuses mentioned above. The NSAPD does not capture data for congenital anomaly cases identified during admissions that occur after \(28\) days of age. The NSAPD also does not capture data for pregnancies ending in termination.
+
+Since \(1992\), data regarding congenital anomalies diagnosed antenatally, or postnatally up to the time of discharge from the IWK Health Centre, or on the basis of an autopsy have been captured through the Fetal Anomaly Database (FADB) housed at the Division of Maternal and Fetal Medicine, IWK Health Centre. The IWK is the only obstetrics/paediatric tertiary care centre in the Maritimes; as such, the FADB captures most congenital anomaly cases in Nova Scotia resulting in live births, still births, and terminations. The FADB does not capture congenital anomaly cases diagnosed after the birth admission, many of which are present in other data sources within the province. The FADB also uses an in-house coding system to classify anomalies, a practice that predates the CCASN recommendation to use the Royal College of Paediatrics and Child Health codes (adapted from the \href{https://www.google.ca/url?sa=t\&rct=j\&q=\&esrc=s\&source=web\&cd=\&ved=2ahUKEwi9rdLH6pT7AhU2kIkEHUtrDgIQFnoECBgQAQ\&url=https\%3A\%2F\%2Fapps.who.int\%2Firis\%2Fbitstream\%2Fhandle\%2F10665\%2F246208\%2F9789241549165-V1-eng.pdf\&usg=AOvVaw1TYOJuoOf2vUt7kCVsCziR}{International Statistical Classification of Diseases and Related Health Problems, 10th Revision -- ICD-10}).
+
+\hypertarget{scan-ns-activity-and-report-summary}{%
+\chapter*{SCAN-NS Activity and Report Summary}\label{scan-ns-activity-and-report-summary}}
+
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  This is the first provincial report on the prevalence of congenital anomalies in Nova Scotia generated by the Surveillance of Congenital Anomalies in Nova Scotia project.
+\item
+  The International Classification of Diseases - \(10^{th}\) Edition (ICD-10-CA) has been adopted by the IWK Health Centre as the reporting classification system and SCA-NS uses the Royal College of Paediatrics and Child Health adaptation of ICD-10 as well. The anomalies outlined in this report reflect the ``sentinel anomalies list'' adopted by the Nova Scotia Congenital Anomaly Advisory Group. Other anomaly data is collected and available upon request.
+\item
+  Nova Scotia continues to participate in the Canadian Congenital Anomalies Surveillance System (CCASS), administered by the Maternal and Infant Health Section of PHAC.
+\item
+  The numerator data include live births, stillbirths, and also fetal losses \(< 20\) weeks gestation with congenital anomalies. Denominator data include live births and stillbirths only. By including fetal losses in the numerator, the reported rates should be more representative of true congenital anomaly rates. Fetal losses have been ascertained since \(1992\).
+\item
+  Data provided in this report is a compilation of several data Nova Scotia databases.
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Nova Scotia Atlee Perinatal Database (NSAPD).
+\item
+  Fetal Anomaly Database (FADB).
+\item
+  Canadian Institute for Health Information Discharge Abstract Database.
+\item
+  Vital Statistics Database; Service Nova Scotia.
+\item
+  Medical Services Insurance (MSI) Claims.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\item
+  Data within SCA-NS includes the years \(1992-2021\) however data for additional years are available for specific inquiries.
+\item
+  Congenital anomaly rates have remained relatively stable over the years with fluctuations occurring on a year to year basis and among specific anomalies.
+\end{enumerate}
+
+\hypertarget{introduction}{%
+\chapter*{Introduction}\label{introduction}}
+
+
+The purpose of SCA-NS is to improve Congenital Anomaly case ascertainment, cluster detection, local and national data comparison and reporting capability. Program objectives
+
+\begin{itemize}
+\tightlist
+\item
+  Provide baseline data on occurrence.
+\item
+  Identify populations at increased risk.
+\item
+  Monitor changes in occurrence.
+\item
+  Investigate clusters.
+\item
+  Refer affected children to services.
+\item
+  Evaluate prevention programs.
+\item
+  Create research opportunities.
+\end{itemize}
+
+SCA-NS includes all Nova Scotia residents, with ascertainment from other Maritime Provinces for those cases where the mother delivered elsewhere. Information on cases includes the prenatal period up to one year of age including live births, stillbirths and terminations of pregnancies in which a fetal anomaly has been detected.
+
+\mainmatter
+
+\hypertarget{chapter-1}{%
+\chapter{Methodology}\label{chapter-1}}
+
+\hypertarget{section-11}{%
+\section{Case Definitions}\label{section-11}}
+
+A congenital anomaly is an abnormality that is present at birth, even if not diagnosed until months or years later. Most congenital anomalies are present long before the time of birth, some in the embryonic period (up to the end of the seventh week of gestation) and others in the fetal period (eighth week to term). The term ``anomaly'' covers all the major classes of abnormalities of development, of which there are four major categories as follows:
+
+\begin{itemize}
+\item
+  \textbf{Malformation -} a morphologic defect of an organ, part of an organ or a larger region of the body resulting from an intrinsically abnormal developmental process (e.g., spina bifida, cleft lip and palate).
+\item
+  \textbf{Deformation -} an abnormal form, shape or position of a part of the body caused by mechanical forces (e.g., extrinsic force such as intrauterine constraint causing some forms of clubfoot).
+\item
+  \textbf{Disruption -} a morphologic defect of an organ, part of an organ or a larger region of the body resulting from the extrinsic breakdown of, or an interference with, an originally normal developmental process (e.g., an infection such as rubella or a teratogen such as thalidomide).
+\item
+  \textbf{Dysplasia -} the abnormal organization of cells into tissues and its morphologic result (e.g., Marfan Syndrome, osteogenesis imperfecta).
+\end{itemize}
+
+Other definitions related to pregnancy outcomes for the purposes of this report are as follows:
+
+\begin{itemize}
+\item
+  \textbf{Live birth -} a complete expulsion or extraction from the mother, irrespective of the duration of the pregnancy, of a fetus in which, after expulsion or extraction, there is breathing, beating of the heart, pulsation of the umbilical cord or definite movement of voluntary muscle (Alberta Vital Statistics Annual review, 2000).
+\item
+  \textbf{Stillbirth -} a complete expulsion or extraction from the mother, after at \(20\) weeks of pregnancy or more or after attaining a weight of 500 grams or more, of a fetus in which, after the expulsion or extraction, there is no breathing, beating of the heart, pulsation of the umbilical cord or unmistakable movement of voluntary muscle (Alberta Vital Statistics Annual review\footnote{ \href{https://open.alberta.ca/publications/1485-3809}{Alberta Vital Statistics Annual review}}).
+\item
+  \textbf{Gestation -} completed weeks of pregnancy at delivery.
+\item
+  \textbf{Preterm birth (a.k.a premature) -} a birth before \(37\) weeks of gestation (\(< 37\) weeks).
+\item
+  \textbf{Termination of Pregnancy (ToP) -} for our purposes, includes any pregnancy loss before 20 weeks gestation (\(< 20\) weeks). Most cases are therapeutic terminations for congenital anomalies but spontaneous abortions or intrauterine fetal deaths with fetal anomalies could also be included.
+\end{itemize}
+
+Anomaly definitions are based, for the most part, on those provided by the International Clearinghouse for Birth Defects Surveillance and Research (ICBDSR) and National Birth Defects Prevention Network (NBDPN).
+
+\hypertarget{section-12}{%
+\section{Case Acertainment}\label{section-12}}
+
+An infant can be ascertained at any time up to the first birthday. Multiple ascertainment of the same infant can occur and is encouraged, as this frequently improves the quality and reliability of the data.
+
+As several malformations may occur in the same infant, it is advantageous to allow each to be reported so that groups of associated malformations may be studied. This, however, leads to difficulties since the final tabulations may be reported as total malformations (anomaly rates) or as the total number of malformed infants (case rates). The tables in {[}Appendix A3{]} report anomaly rates, which in most cases are similar to case rates (e.g.~cleft palate, hypospadias, microcephaly. Whereas with limb anomalies, there can be multiple different limb anomalies in the same infant.
+
+SCA-NS obtains information about infants with congenital anomalies from a variety of independent sources. Acquisition of additional reporting agencies is always a priority since the use of multiple sources of information improves not only the ease but also completeness of ascertainment as well as for verification of the diagnostic data.
+
+\hypertarget{section-13}{%
+\section{Quality Control Measures and Data Linkage}\label{section-13}}
+
+Data quality is ensured through both a coded linking process and by manual chart audits of unmatched anomaly records. The first step in data quality control involves the linking of disparate fetal/infant records between databases. Linking is based on the matching of several unique variables in each record.
+
+\begin{itemize}
+\item
+  If two records ``pass'': this variable matching process, the records are considered link and therefore report anomalies on the same fetus/infant. This allows SCA-NS to create a record that reports anomalies from several databases for the same fetus/infant.
+\item
+  If there are records that ``fail'' the automated matching process they are reviewed manually to determine if that information was only found in one data source or if information was entered incorrectly.
+\end{itemize}
+
+\hypertarget{section-14}{%
+\section{Confidentiality and Release of Data}\label{section-14}}
+
+\hypertarget{authority-for-the-collection-use-and-disclosure-of-personal-information}{%
+\subsection*{Authority for the Collection, Use, and Disclosure of Personal Information}\label{authority-for-the-collection-use-and-disclosure-of-personal-information}}
+
+
+In Nova Scotia, personal health information is protected by legislation, policies, and professional codes of ethics of healthcare providers. SCA-NS will follow the provisions outlined in the IWK's Privacy of Personal Health Information policy and the RCP Privacy Policy\footnote{ \href{http://rcp.nshealth.ca/about/privacy-personal-information}{RCP Privacy Policy}} and the Data Access for Research and Planning Policy and Procedures\footnote{ \href{https://rcp.nshealth.ca/sites/default/files/atlee-database/nsapd_data_access_policy_nov2007.pdf}{Data Access for Research and Planning Policy and Procedures}}
+
+\hypertarget{data-requests}{%
+\subsection*{Data Requests}\label{data-requests}}
+
+
+Data requests will be reviewed by a sub-committee of the Joint Perinatal Epidemiology Research Unit-Population Health Research Unit-RCP Data Access Committee (JDAC). Clinical and technical staff will participate, as will representatives from all stakeholders currently involved in providing data, i.e.~Maternal-Fetal Medicine, BIAP, both with a privacy and a technical representative, and other groups such as Cardiology, as the database develops. Disclosure for research purposes also requires approval by a recognized Research Ethics Board and, if approved, a Data Use Agreement. SCA-NS will only consider disclosing individual level data (with or without personal identifiers) following a technical review and approval from a specially-constituted committee.
+
+\hypertarget{limitations-of-data-and-analysis}{%
+\subsection*{Limitations of Data and Analysis}\label{limitations-of-data-and-analysis}}
+
+
+One of the major limitations of any surveillance system is that on its own, the information provided does not allow etiology to be determined. If trends indicate a potential problem, then separate investigative studies need to be done. However, with appropriate approvals in place, it would be possible to conduct linkage studies with other data sources to explore potential causes of specific birth defects. SCA-NS data are collected passively from a variety of sources and the completeness and accuracy of data are largely dependent on reporting and coding of several different organizations. SCA-NS reviews anomalies that have been entered into the database on a regular basis. Detailed studies of some individual anomalies or anomaly groups aid in the assessment and maintenance of the data quality. With intensive review, some cases might be reassigned, re-coded or discarded altogether from the database. This continuing review might explain some discrepancies in the data from earlier reports.
+
+\hypertarget{epidemiological-and-statistical-measures}{%
+\subsection*{Epidemiological and Statistical Measures}\label{epidemiological-and-statistical-measures}}
+
+
+\begin{itemize}
+\tightlist
+\item
+  Unless otherwise stated, all the formulas used to compute prevalence and confidence intervals are calculated following the \href{http://www.nbdpn.org/docs/Ch_8_Statistics6-04_2016DEC14.pdf}{National Birth Defects Prevention Network (NBDPN) guidelines, chapter 8}:
+\end{itemize}
+
+\begin{quote}
+\[\small{\text{Prevalence at birth}} = 1,000 \times \dfrac{\small{\text{Number of cases with birth defect A in an area and time period}}}{\small{\text{Number of live births and stillbirths in that area and time period}}}\]
+\end{quote}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Pregnancy outcomes included -} the cases in the \textbf{numerator} are derived from all pregnancy outcomes collected by the program and may include:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Live births.
+  \item
+    Stillbirths.
+  \item
+    Termination of pregnancy (ToP): all fetal losses \(< 20\) weeks gestation with congenital anomalies.
+  \end{itemize}
+\end{itemize}
+
+For the \textbf{denominator}, we use the total number of live births and stillbirths in the same area and time period from which the cases were ascertained.
+
+\hypertarget{confidence-intervals}{%
+\subsubsection*{Confidence intervals}\label{confidence-intervals}}
+
+
+(\(95\%\)) confidence intervals are also included because the rate obtained is actually only a point estimate of the unknown, true population rate. The confidence interval provides information about the precision of the estimate. Thus, the confidence intervals are an estimated range of values within which there is a \(95\%\) probability that the true population rate will fall.
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{\emph{For a prevalence based on a small number of cases -}} For small numbers of cases (arbitrarily defined here as \(< 30\) cases), we use the Poisson distribution since birth defects are considered to be rare events. The easiest way to use the Poisson distribution is to refer to a table that provides the upper and lower \(95\%\) confidence limits for an observed number of cases. For that, we make use of the relationship between the Poisson and chi-square distribution functions. If \(X\) is a single observation from a Poisson distribution with mean \(\mu\). Then the ``exact'' \(95\%\) confidence limits for \(\mu\) are given by
+\end{itemize}
+
+\begin{quote}
+\[\small{\left[\dfrac{qchisq\left(0.025, 2X\right)}{2}; \dfrac{qchisq\left(0.975, 2(X+1)\right)}{2}\right]},\]
+\end{quote}
+
+where \(qchisq()\) is the quantile function for the chi-squared \(\left(\chi^{2}\right)\) distribution with \(2X\), and \(2(X+1)\) degrees of freedom. These limits can be computed using any statistical software or taken from a chi-square table (reproduced below for up to \(5\) cases).
+
+\begin{table}
+
+\caption{\label{tab:pois-1}}
+\centering
+\begin{tabular}[t]{rrr}
+\toprule
+Number of Cases & Lower Bound & Upper Bound\\
+\midrule
+0 & 0.000 & 3.689\\
+1 & 0.025 & 5.572\\
+2 & 0.242 & 7.225\\
+3 & 0.619 & 8.767\\
+4 & 1.090 & 10.242\\
+\addlinespace
+5 & 1.623 & 11.668\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Calculate prevalence
+\end{enumerate}
+
+\begin{quote}
+\[\small{
+1,000 \times \dfrac{\text{Number of cases with birth defect A in an area and time period}}{\text{Number of live births and stillbirths in that area and time period}}
+}\]
+\end{quote}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Look up the lower and upper \(95\%\) confidence limit for the number of cases with birth defect A. Using this new number in the numerator calculate the lower and upper \(95\%\) confidence limit for prevalence.
+\end{enumerate}
+
+\begin{quote}
+\[
+\scriptsize
+\begin{aligned}
+\text{Lower } 95\% \text{ CL for prevalence} &= 1,000 \times \dfrac{\text{Lower } 95\% \text{ CL for cases with birth defect A in an area and time period}}{\text{Number of live births and stillbirths in that area and time period}}\\
+\text{Upper } 95\% \text{ CL for prevalence} &= 1,000 \times \dfrac{\text{Upper } 95\% \text{ CL for cases with birth defect A in an area and time period}}{\text{Number of live births and stillbirths in that area and time period}} 
+\end{aligned}
+\]
+\end{quote}
+
+\textbf{Example -} Considering that for a birth defect A in an area and time period we had \(5\) cases with a number of total births of \(12,500\) we have
+
+\begin{quote}
+\[
+\small
+\begin{aligned}
+\text{Prevalence} &= 1,000 \times \dfrac{5}{12,500} = 0.4  \\
+\text{Lower } 95\% \text{ CL for prevalence} &= 1,000 \times \dfrac{1.623}{12,500} = 0.13  \\
+\text{Upper } 95\% \text{ CL for prevalence} &= 1,000 \times \dfrac{11.668}{12,500} = 0.93 
+\end{aligned}
+\]
+\end{quote}
+
+\begin{itemize}
+\item
+  \textbf{\emph{For a prevalence based on a large number of cases -}} For a large number of cases (arbitrarily defined here as \(\ge 30\) cases), use the Normal distribution because as the number of cases grows larger, the Poisson distribution approximates the Normal distribution.
+  Let \(c=\text{number of cases in an area and time period}\) and \(b=\text{number of live births and stillbirths in an area and time period}\)
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    Calculate the lower and upper confidence limit using the following:
+  \end{enumerate}
+\end{itemize}
+
+\begin{quote}
+\[
+\small
+\begin{aligned}
+\text{Lower } 95\% \text{ CL for prevalence} &= 1,000 \times \dfrac{\left( 1- \dfrac{1}{9c}-\dfrac{1.96}{3}\sqrt{\dfrac{1}{c}} \right)^{3}}{b}\times c  \\
+\text{Upper } 95\% \text{ CL for prevalence} &= 1,000 \times \dfrac{\left( 1- \dfrac{1}{9\left(c+1\right)}+\dfrac{1.96}{3}\sqrt{\dfrac{1}{\left(c+1\right)}} \right)^{3}}{b}\times \left(c+1\right) 
+\end{aligned}
+\]
+\end{quote}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  To determine different \(\left(1 - \alpha \right) \%\) confidence limits, replace \(1.96\) with the corresponding value from the Normal distribution.
+\item
+  To obtain confidence limits for the number of cases instead of the prevalence, apply the formulae but do not divide by \(b=\) number of live births and stillbirths in an area and time period or multiply by \(1,000\).
+\end{enumerate}
+
+\hypertarget{trend-analysis}{%
+\subsubsection*{Trend analysis}\label{trend-analysis}}
+
+
+When appropriate, \textbf{trend analysis} are performed. Since our response variable of interest is the number of cases, there is no fixed upper bound \(n\) for it. Since number of cases must take a non-negative integer value, its distribution should place its mass on that range.
+
+The simplest such distribution is the \textbf{\emph{Poisson}}. Its probabilities depend on a single parameter, the mean \(\mu\). The Poisson distribution is used for counts of events that occur randomly over time or space, when outcomes in disjoint periods or regions are independent. It satisfies \(E\left(X\right)=Var\left(X\right)=\mu\). It approaches normality as \(\mu\) increases.
+
+In the context of prevalence, the response count \(X_{i}\) has and index \(t_{i}\) such that its expected value is proportional to \(t_{i}\). Our approach here, is to consider the total births as the index, since this value varies over time. Then , our sample rate is \(x_{i}/t_{i}\), with expected value \(\mu_{i}/t_{i}\). A log-linear model for the expected rate has form
+
+\begin{quote}
+\[
+\begin{aligned}
+log\left(\mu_{i}/t_{i}\right) &= \beta_{0} + \beta_{1}(Year)  \\
+log\left(\mu_{i}\right) - log\left(t_{i}\right) &= \beta_{0} + \beta_{1}(Year)  \\
+log\left(\mu_{i}\right) &= \beta_{0} + \beta_{1}(Year) + log\left(t_{i}\right)
+\end{aligned}
+\]
+\end{quote}
+
+The adjustment term \(-log\left(t_{i}\right)\), to the log link of the mean is called an \emph{offset}. Another option is to run this model using the identity link. The model is then
+
+\begin{quote}
+\[
+\begin{aligned}
+\mu_{i}/t_{i} &= \beta_{0} + \beta_{1}(Year)  \\
+\mu_{i} &= \beta_{0}t_{i} + \beta_{1}(Year)t_{i}
+\end{aligned}
+\]
+\end{quote}
+
+which does not require an offset. It corresponds to an ordinary Poisson GLM using the identity link with no intercept and exploratory variables \(t_{i}\), \((Year)t_{i}\) and its estimates are equal to an OLS model without an intercept.
+
+Since we are working with the observed rater per 1,000 total births, adjusting the yearly count by total births is equivalent to have \(t_{i} = \text{total births}/1,000\).
+
+Sometimes, one can note that the count data could show great variability. Under a Poisson model, we would expect the means and variances of the response to be about the same in various groups. A severe limitation of Poisson models is that \(E \left(X \right) = Var \left(X \right) = \mu\). Hence, at a fixed mean the variance cannot decrease as additional predictors enter the model. The greater variability than predicted by the GLM random component reflects \textbf{overdispersion}. A common cause of overdispersion is subject heterogeneity. Without adjusting for overdispersion, we use incorrect, artificially small standard errors leading to artificially small p-values for model coefficients which may lead to wrong inferences and conclusions.
+
+We can take overdispersion into account in several different ways. The simplest is to use an estimated dispersion factor to inflate standard errors. Another way is to use a \textbf{negative-binomial} regression model. In this case, \(E\left(X\right)= \mu\), and \(Var \left( X \right) = \mu + \gamma \cdot \mu^{2}\). The index \(\gamma > 0\) is a type of dispersion parameter. As \(\gamma \rightarrow 0\), \(Var \left( X \right) \rightarrow \mu\) and the negative binomial distribution converges to the Poisson.
+
+For the aforementioned model,
+
+\begin{quote}
+\[
+\mu_{i} = \beta_{0}t_{i} + \beta_{1}(Year)t_{i}
+\]
+\end{quote}
+
+significance tests focus on \(H_{0}: \beta_{1} =0\). The Wald test uses the log-likelihood at \(\hat{\beta_{1}}\), with test statistic \(z=\hat{\beta_{1}} / SE(\hat{\beta_{1}})\) or its square. Under \(H_{0}\), \(z^{2}\) is asymptotically \(\chi^{2}_{1}\). At a \(5\%\) level, any p-value lower than \(5\%\) would provide evidences against \(H_{0}\), meaning that at a \(5\%\) level they would be considered statistically significant.
+
+\hypertarget{chapter-2}{%
+\chapter{Patterns of Selected Congenital Anomalies in Nova Scotia}\label{chapter-2}}
+
+\hypertarget{section-21}{%
+\section{Selected Anomalies}\label{section-21}}
+
+\hypertarget{section-211}{%
+\subsection{Selected Anomaly Definitions}\label{section-211}}
+
+All the birth defects descriptions and respective ICD10 codes were taken from the \href{https://www.nbdpn.org/docs/SGSC_-_Ch3_Case_Definition_-_final_draft_2016DEC20.pdf}{National Birth Defects Prevention Network (NBDPN) guidelines, chapter 3}
+
+\hypertarget{section-2111}{%
+\subsubsection{Neural tube defects}\label{section-2111}}
+
+\begin{itemize}
+\item
+  \textbf{Anencephaly and similar malformations (Q00) -} partial or complete absence of the brain and skull.
+\item
+  \textbf{Encephalocele (Q01) -} herniation of brain tissue and/or meninges through a defect in the skull. The hernia sac is usually covered by skin.
+\item
+  \textbf{Spina bifida (Q05, Q76.0) -} incomplete closure of the vertebral spine (usually posteriorly) through which spinal cord tissue and/or the membranes covering the spine (meninges) herniate.
+\end{itemize}
+
+\hypertarget{section-2112}{%
+\subsubsection{Selected central nervous system defects}\label{section-2112}}
+
+\begin{itemize}
+\item
+  \textbf{Microcephaly (Q02) -} microcephaly, or microcephalus, is the clinical finding of a small head when compared with infants of the same sex and age. The head circumference (HC), also known as the occipitofrontal circumference (OFC), is considered a reliable assessment of the volume of the underlying brain. Microcephaly itself is not a malformation but a sign that the brain is abnormally small.
+\item
+  \textbf{Congenital hydrocephalus (Q03) -} an increase in the amount of cerebrospinal fluid within the brain resulting in enlargement of the cerebral ventricles and increased intracranial pressure.
+\item
+  \textbf{Arhinencephaly/Holoprosencephaly (Q04.1, Q04.2)} arhinencephaly is an older term for holoprosencephaly which refers more specifically to structural defects of the olfactory system or nose. Holoprosencephaly results from variable degrees of incomplete division of the brain into right and left cerebral hemispheres. There are four types which vary in severity: alobar, semi-lobar, lobar, and middle interhemisphereic (MIHV). The condition can also affect development of the face and eyes. The most severely affected have one central eye (cyclopia) and a single tubular-shaped nose located above the eye (proboscis).
+\end{itemize}
+
+\hypertarget{section-2113}{%
+\subsubsection{Selected sense organ defects}\label{section-2113}}
+
+\begin{itemize}
+\item
+  \textbf{Anophtalmos/Microphtalmos (Q11.0, Q11.1, Q11.2) -} anophthalmia -- Total absence of eye tissue or apparent absence of the globe of the eye in an otherwise normal orbit. Microphthalmia -- Reduced volume of the eye. The corneal diameter is usually less than 10 millimeters, or the anteroposterior globe diameter is less than 20 millimeters. Anophthalmia or microphthalmia may affect one or both eyes, or there may be anophthalmia of one eye and microphthalmia of the other.
+\item
+  \textbf{Anotia/Microtia (Q16.0/Q17.2) -} anotia - Total absence of the external ear and canal. Microtia - Malformation or hypoplasia of the external ear (auricle, pinna).
+\item
+  \textbf{Choanal atresia (Q30) -} Congenital obstruction of the opening of the nasal cavity into the nasopharynx on either side. This prevents communication of the nasal cavity with the pharynx.
+\end{itemize}
+
+\hypertarget{section-2114}{%
+\subsubsection{Selected congenital heart defects}\label{section-2114}}
+
+\begin{itemize}
+\item
+  \textbf{Commom truncus (Q20.0) -} failure of separation of the aorta and the pulmonary artery during development, resulting in a single common arterial trunk carrying blood from the heart to both the body and lungs.
+\item
+  \textbf{Discordant ventriculoarterial connection (Q20.30, Q20.31, Q20.32, Q20.38) -} transposition of the aorta and the pulmonary artery such that the aorta arises from the right ventricle (instead of the left) and the pulmonary artery arises from the left ventricle (instead of the right).
+\item
+  \textbf{Atrioventricular septal defect (Q21.2) -} a defect in both the lower portion of the atrial septum and the upper portion of the ventricular septum. In extreme cases, virtually the entire atrial and ventricular septae may be missing. The valves controlling blood flow from the atria to the ventricles, the tricuspid and mitral valves may also be abnormal. They may not form from the endocardial cushions during cardiac development into two separate valves, and thus be a single common atrioventricular valve. Together, these defects producing a large opening (canal) in the central part of the heart.
+\item
+  \textbf{Tetralogy of Fallot (Q21.3) -} congenital obstruction of the opening of the nasal cavity into the nasopharynx on either side. This prevents communication of the nasal cavity with the pharynx.
+\item
+  \textbf{Hypoplastic left heart syndrome (Q23.4) -} a condition in which the structures on the left side of the heart and the aorta are extremely small, insufficient to support systemic circulation and with normally related great arteries. Classically, this condition includes hypoplasia of the left ventricle, atresia or severe hypoplasia of both the mistral and aortic valves, hypoplasia of the aortic arch, and coarctation of the aorta.
+\item
+  \textbf{Coarctation of aorta (Q25.1) -} narrowing of the descending aorta, which may obstruct blood flow from the heart to the rest of the body. The most common site of coarctation occurs distal to the origin of the left subclavian artery in the region of the ductus arteriosus. If there is complete loss of communication in this location, it is a form of interruption of the aorta (Type A).
+\end{itemize}
+
+\hypertarget{section-2115}{%
+\subsubsection{Oro-facial clefts}\label{section-2115}}
+
+\begin{itemize}
+\item
+  \textbf{Cleft palate (Q35) -} an opening in the roof of the mouth resulting from incomplete fusion of the shelves of the palate. The opening may involve the hard palate only, the soft palate only, or both.
+\item
+  \textbf{Cleft lip (Q36) -} a defect in the upper lip resulting from incomplete fusion of the parts of the lip.
+\item
+  \textbf{Cleft palate with cleft lip (Q37) -} a defect in the upper lip resulting from incomplete fusion of the parts of the lip, with an opening in the roof of the mouth.
+\end{itemize}
+
+\hypertarget{section-2116}{%
+\subsubsection{Selected gastrointestinal defects}\label{section-2116}}
+
+\begin{itemize}
+\item
+  \textbf{Oesophageal atresia/stenosis, tracheoesophageal fistula (Q39.0-Q39.4) -} Esophageal atresia -- A condition in which the esophagus ends in a blind pouch and fails to connect with the stomach. Tracheoesophageal fistula - An abnormal communication between the esophagus and the trachea. This is almost always associated with some form of esophageal atresia.
+\item
+  \textbf{Small intestine absence/atresia/stenosis (Q41) -} complete or partial occlusion of the lumen of one or more segments of the small intestine. Small intestinal atresias are often assigned a type descriptor in the surgical or autopsy report, depending upon the severity of the atresia (types include I, II, IIIA, IIIB, and VI).
+\item
+  \textbf{Ano-rectal absence/atresia/stenosis (Q42.0-Q42.3) -} complete or partial occlusion of the lumen of one or more segments of the large intestine and/or rectum.
+\item
+  \textbf{Hirschsprung disease (Q43.1) -} is a condition that affects the large intestine (colon) and causes problems with passing stool.
+\item
+  \textbf{Atresia of bile ducts (Q44.2) -} congenital absence of the lumen of the extrahepatic bile ducts.
+\end{itemize}
+
+\hypertarget{section-2117}{%
+\subsubsection{Selected genital anomalies}\label{section-2117}}
+
+\begin{itemize}
+\item
+  \textbf{Cryptorchidism/undescended testicles (Q53.1, Q53.2, Q53.9) -} a testicle that hasn't moved into its proper position in the bag of skin hanging below the penis (scrotum) before birth.
+\item
+  \textbf{Hypospadias (Q54, excluding Q54.4) -} displacement of the opening of the urethra (urethral meatus) ventrally and proximally (underneath and closer to the body) in relation to the tip of the glans of the penis.
+\item
+  \textbf{Indeterminate sex and pseudohermaphroditism (Q56) -} in a baby with ambiguous genitalia, the genitals may be incompletely developed or the baby may have characteristics of both sexes. The external sex organs may not match the internal sex organs or genetic sex. Pseudohermaphroditism - is a condition in which the individual has a single chromosomal and gonadal sex but combines features of both sexes in the external genitalia, causing doubt as to the true sex
+\item
+  \textbf{Epispadias (Q64.0) -} displacement of the opening of the urethra dorsally and proximally (on the top and closer to the body) in relation to the tip of the glans of the penis.
+\end{itemize}
+
+\hypertarget{section-2118}{%
+\subsubsection{Selected urinary tract defects}\label{section-2118}}
+
+\begin{itemize}
+\item
+  \textbf{Renal agenesis (Q60.0-Q60.2) -} complete absence of the kidney.
+\item
+  \textbf{Cystic kidney (Q61.1-Q61.5, Q61.8, Q61.9) -} genetic disorder characterized by the formation of fluid-filled sacs (cysts) in the kidneys
+\item
+  \textbf{Bladder and cloacal exstrophy (Q64.1) -} bladder exstrophy - a defect in the lower abdominal wall and anterior wall of the bladder through which the lining of the bladder is exposed to the outside. Cloacal exstrophy - congenital persistence of a common cloacal cavity into which gut, urethra, and reproductive tracts open with exstrophy of the cavity: usually accompanied by a low omphalocele, imperforate anus, and a (closed) neural tube defect.
+\item
+  \textbf{Lower urinary tract obstruction (Q64.2, Q64.3) -} posterior urethral valves (PUV) are tissue folds of the posterior urethra and function as valves obstructing urine outflow. Congenital PUV is an abnormal congenital obstructing membrane that is located within the posterior male urethra; this valve is the most common cause of bladder outlet obstruction in male children. Congenital PUV can also be found in virilized females and rarely in normal females. Obstruction could vary from mild to severe.
+\end{itemize}
+
+\hypertarget{section-2119}{%
+\subsubsection{Hip dysplasia (Q65)}\label{section-2119}}
+
+Hip dysplasia occurs when a baby's hip socket (acetabulum) is too shallow to cover the head of the thighbone (femoral head) to fit properly.
+
+\hypertarget{section-21110}{%
+\subsubsection{Limb deficiency defects (Q71-Q73)}\label{section-21110}}
+
+Complete or partial absence of the upper arm (humerus), lower arm (radius and/or ulna), wrist (carpals), hand (metacarpals), fingers (phalanges), thigh (femur), lower leg (tibia and/or fibula), ankle (tarsals), foot (metatarsals), or toes (phalanges).
+
+\hypertarget{section-21111}{%
+\subsubsection{Selected abdominal wall defects}\label{section-21111}}
+
+\begin{itemize}
+\item
+  \textbf{Omphalocele/Exomphalos (Q79.2) -} a defect in the anterior abdominal wall in which the umbilical ring is widened, allowing herniation of abdominal organs, including the small intestine, part of the large intestine, and occasionally the liver and spleen, into the umbilical cord. The herniating organs are covered by a nearly transparent membranous sac.
+\item
+  \textbf{Gastroschisis (Q79.3)-} a congenital opening or fissure in the anterior abdominal wall lateral to the umbilicus through which the small intestine, part of the large intestine, and occasionally the liver and spleen, may herniate. The opening is separated from the umbilicus by a small bridge of skin, and the herniating organs are not covered by a protective membrane. Gastroschisis usually occurs on the right side of the umbilicus, although it may occur on the left.
+\end{itemize}
+
+\hypertarget{section-21112}{%
+\subsubsection{Selected chromosomal defects}\label{section-21112}}
+
+\begin{itemize}
+\item
+  \textbf{Down Syndrome (Q90) -} the presence of three copies of all or a large part of chromosome 21.
+\item
+  \textbf{Trisomy 13 - Patau - (Q91.4-Q91.7) -} the presence of three copies of all or a large part of chromosome 13.
+\item
+  \textbf{Trisomy 18 - Edwards - (Q91.0-Q91.3) -} the presence of three copies of all or a large part of chromosome 18.
+\item
+  \textbf{Turner syndrome (Q96) -} presence of an absent or structurally abnormal second X chromosome in a phenotypic female.
+\end{itemize}
+
+
+\end{document}
