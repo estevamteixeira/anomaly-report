@@ -11,112 +11,192 @@ source("utilities/modeling.R")
 
 <!-- \mainmatter: turns on chapter numbering, resets page numbering and uses arabic numerals for page numbers; -->
 
-# Patterns of Selected Congenital Anomalies in Nova Scotia {#chapter-2}
+# Patterns of Selected Congenital Anomalies in Nova Scotia {#chapter2}
 
-## Selected Anomalies {#section-21}
+## Selected Anomalies {#section21}
 
-### Selected Anomaly Definitions {#section-211}
+### Selected Anomaly Definitions {#section211}
 
-All the birth defects descriptions and respective ICD10 codes were taken from the [National Birth Defects Prevention Network (NBDPN) guidelines, chapter 3](https://www.nbdpn.org/docs/SGSC_-_Ch3_Case_Definition_-_final_draft_2016DEC20.pdf)
+All the birth defects descriptions and respective ICD10 codes were adapted from the [National Birth Defects Prevention Network (NBDPN) guidelines, chapter 3](https://www.nbdpn.org/docs/SGSC_-_Ch3_Case_Definition_-_final_draft_2016DEC20.pdf)
 
-#### Neural tube defects {#section-2111}
+#### Neural tube defects {#section2111}
 
-- **Anencephaly and similar malformations (Q00) -** partial or complete absence of the brain and skull.
+- **Anencephaly and similar malformations (Q00)**
 
-- **Encephalocele (Q01) -** herniation of brain tissue and/or meninges through a defect in the skull. The hernia sac is usually covered by skin.
+Partial or complete absence of the brain and skull.
 
-- **Spina bifida (Q05, Q76.0) -** incomplete closure of the vertebral spine (usually posteriorly) through which spinal cord tissue and/or the membranes covering the spine (meninges) herniate.
+- **Encephalocele (Q01)**
 
-#### Selected central nervous system defects {#section-2112}
+Herniation of brain tissue and/or meninges through a defect in the skull. The hernia sac is usually covered by skin.
 
-- **Microcephaly (Q02) -** microcephaly, or microcephalus, is the clinical finding of a small head when compared with infants of the same sex and age. The head circumference (HC), also known as the occipitofrontal circumference (OFC), is considered a reliable assessment of the volume of the underlying brain. Microcephaly itself is not a malformation but a sign that the brain is abnormally small. 
+- **Spina bifida (Q05)**
 
-- **Congenital hydrocephalus (Q03) -** an increase in the amount of cerebrospinal fluid within the brain resulting in enlargement of the cerebral ventricles and increased intracranial pressure.
+Incomplete closure of the vertebral spine (usually posteriorly) through which spinal cord tissue and/or the membranes covering the spine (meninges) herniate.
 
-- **Arhinencephaly/Holoprosencephaly (Q04.1, Q04.2)** arhinencephaly is an older term for holoprosencephaly which refers more specifically to structural defects of the olfactory system or nose. Holoprosencephaly results from variable degrees of incomplete division of the brain into right and left cerebral hemispheres. There are four types which vary in severity: alobar, semi-lobar, lobar, and middle interhemisphereic (MIHV). The condition can also affect development of the face and eyes. The most severely affected have one central eye (cyclopia) and a single tubular-shaped nose located above the eye (proboscis).
+#### Selected central nervous system defects {#section2112}
 
-#### Selected sense organ defects {#section-2113}
+- **Microcephaly (Q02)**
 
-- **Anophtalmos/Microphtalmos (Q11.0, Q11.1, Q11.2) -** anophthalmia – Total absence of eye tissue or apparent absence of the globe of the eye in an otherwise normal orbit. Microphthalmia – Reduced volume of the eye. The corneal diameter is usually less than 10 millimeters, or the anteroposterior globe diameter is less than 20 millimeters. Anophthalmia or microphthalmia may affect one or both eyes, or there may be anophthalmia of one eye and microphthalmia of the other. 
+Microcephaly, or microcephalus, is the clinical finding of a small head when compared with infants of the same sex and age. The head circumference (HC), also known as the occipitofrontal circumference (OFC), is considered a reliable assessment of the volume of the underlying brain. Microcephaly itself is not a malformation but a sign that the brain is abnormally small. 
 
-- **Anotia/Microtia (Q16.0/Q17.2) -** anotia - Total absence of the external ear and canal. Microtia - Malformation or hypoplasia of the external ear (auricle, pinna).
+- **Congenital hydrocephalus (Q03)**
 
-- **Choanal atresia (Q30) -** Congenital obstruction of the opening of the nasal cavity into the nasopharynx on either side. This prevents communication of the nasal cavity with the pharynx.
+An increase in the amount of cerebrospinal fluid within the brain resulting in enlargement of the cerebral ventricles and increased intracranial pressure.
 
-#### Selected congenital heart defects {#section-2114}
+- **Arhinencephaly/Holoprosencephaly (Q04.1, Q04.2)**
 
-- **Commom truncus (Q20.0) -** failure of separation of the aorta and the pulmonary artery during development, resulting in a single common arterial trunk carrying blood from the heart to both the body and lungs.
+Arhinencephaly is an older term for holoprosencephaly which refers more specifically to structural defects of the olfactory system or nose. Holoprosencephaly results from variable degrees of incomplete division of the brain into right and left cerebral hemispheres. There are four types which vary in severity: alobar, semi-lobar, lobar, and middle interhemisphereic (MIHV). The condition can also affect development of the face and eyes. The most severely affected have one central eye (cyclopia) and a single tubular-shaped nose located above the eye (proboscis).
 
-- **Discordant ventriculoarterial connection (Q20.30, Q20.31, Q20.32, Q20.38) -** transposition of the aorta and the pulmonary artery such that the aorta arises from the right ventricle (instead of the left) and the pulmonary artery arises from the left ventricle (instead of the right).
+#### Selected sense organ defects {#section2113}
 
-- **Atrioventricular septal defect (Q21.2) -** a defect in both the lower portion of the atrial septum and the upper portion of the ventricular septum. In extreme cases, virtually the entire atrial and ventricular septae may be missing. The valves controlling blood flow from the atria to the ventricles, the tricuspid and mitral valves may also be abnormal. They may not form from the endocardial cushions during cardiac development into two separate valves, and thus be a single common atrioventricular valve. Together, these defects producing a large opening (canal) in the central part of the heart.
+- **Anophtalmos/Microphtalmos (Q11.0, Q11.1, Q11.2)**
 
-- **Tetralogy of Fallot (Q21.3) -** congenital obstruction of the opening of the nasal cavity into the nasopharynx on either side. This prevents communication of the nasal cavity with the pharynx.
+Anophthalmia is the total absence of eye tissue or apparent absence of the globe of the eye in an otherwise normal orbit. Microphthalmia is the reduced volume of the eye. The corneal diameter is usually less than 10 millimeters, or the anteroposterior globe diameter is less than 20 millimeters. Anophthalmia or microphthalmia may affect one or both eyes, or there may be anophthalmia of one eye and microphthalmia of the other. 
 
-- **Hypoplastic left heart syndrome (Q23.4) -** a condition in which the structures on the left side of the heart and the aorta are extremely small, insufficient to support systemic circulation and with normally related great arteries. Classically, this condition includes hypoplasia of the left ventricle, atresia or severe hypoplasia of both the mistral and aortic valves, hypoplasia of the aortic arch, and coarctation of the aorta.
+- **Anotia/Microtia (Q16.0, Q17.2)**
 
-- **Coarctation of aorta (Q25.1) -** narrowing of the descending aorta, which may obstruct blood flow from the heart to the rest of the body. The most common site of coarctation occurs distal to the origin of the left subclavian artery in the region of the ductus arteriosus. If there is complete loss of communication in this location, it is a form of interruption of the aorta (Type A).
+Anotia is the total absence of the external ear and canal. Microtia is the malformation or hypoplasia of the external ear (auricle, pinna).
 
-#### Oro-facial clefts {#section-2115}
+- **Choanal atresia (Q30.0)**
 
-- **Cleft palate (Q35) -** an opening in the roof of the mouth resulting from incomplete fusion of the shelves of the palate. The opening may involve the hard palate only, the soft palate only, or both.
+Congenital obstruction of the opening of the nasal cavity into the nasopharynx on either side. This prevents communication of the nasal cavity with the pharynx.
 
-- **Cleft lip (Q36) -** a defect in the upper lip resulting from incomplete fusion of the parts of the lip.
+#### Selected congenital heart defects {#section2114}
 
-- **Cleft palate with cleft lip (Q37) -** a defect in the upper lip resulting from incomplete fusion of the parts of the lip, with an opening in the roof of the mouth.
+- **Commom truncus (Q20.0)**
 
-#### Selected gastrointestinal defects {#section-2116}
+Failure of separation of the aorta and the pulmonary artery during development, resulting in a single common arterial trunk carrying blood from the heart to both the body and lungs.
 
-- **Oesophageal atresia/stenosis, tracheoesophageal fistula (Q39.0-Q39.4) -** Esophageal atresia – A condition in which the esophagus ends in a blind pouch and fails to connect with the stomach. Tracheoesophageal fistula - An abnormal communication between the esophagus and the trachea. This is almost always associated with some form of esophageal atresia.
+- **Transposition of great vessels (Q20.1, Q20.3, Q20.5)**
 
-- **Small intestine absence/atresia/stenosis (Q41) -** complete or partial occlusion of the lumen of one or more segments of the small intestine. Small intestinal atresias are often assigned a type descriptor in the surgical or autopsy report, depending upon the severity of the atresia (types include I, II, IIIA, IIIB, and VI).
+Transposition of the aorta and the pulmonary artery such that the aorta arises 
+from the right ventricle (instead of the left) and the pulmonary artery arises from the left ventricle (instead of the right).
 
-- **Ano-rectal absence/atresia/stenosis (Q42.0-Q42.3) -** complete or partial occlusion of the lumen of one or more segments of the large intestine and/or rectum.
+- **Atrioventricular septal defect (Q21.2)**
 
-- **Hirschsprung disease (Q43.1) -** is a condition that affects the large intestine (colon) and causes problems with passing stool.
+A defect in both the lower portion of the atrial septum and the upper portion of the ventricular septum. In extreme cases, virtually the entire atrial and ventricular septae may be missing. The valves controlling blood flow from the atria to the ventricles, the tricuspid and mitral valves may also be abnormal. They may not form from the endocardial cushions during cardiac development into two separate valves, and thus be a single common atrioventricular valve. Together, these defects producing a large opening (canal) in the central part of the heart.
 
-- **Atresia of bile ducts (Q44.2) -** congenital absence of the lumen of the extrahepatic bile ducts.
+- **Tetralogy of Fallot (Q21.3)**
 
-#### Selected genital anomalies {#section-2117}
+Congenital obstruction of the opening of the nasal cavity into the nasopharynx on either side. This prevents communication of the nasal cavity with the pharynx.
 
-- **Cryptorchidism/undescended testicles (Q53.1, Q53.2, Q53.9) -** a testicle that hasn't moved into its proper position in the bag of skin hanging below the penis (scrotum) before birth.
+- **Hypoplastic left heart syndrome (Q23.4)**
 
-- **Hypospadias (Q54, excluding Q54.4) -** displacement of the opening of the urethra (urethral meatus) ventrally and proximally (underneath and closer to the body) in relation to the tip of the glans of the penis.
+A condition in which the structures on the left side of the heart and the aorta are extremely small, insufficient to support systemic circulation and with normally related great arteries. Classically, this condition includes hypoplasia of the left ventricle, atresia or severe hypoplasia of both the mistral and aortic valves, hypoplasia of the aortic arch, and coarctation of the aorta.
 
-- **Indeterminate sex and pseudohermaphroditism (Q56) -** in a baby with ambiguous genitalia, the genitals may be incompletely developed or the baby may have characteristics of both sexes. The external sex organs may not match the internal sex organs or genetic sex. Pseudohermaphroditism - is a condition in which the individual has a single chromosomal and gonadal sex but combines features of both sexes in the external genitalia, causing doubt as to the true sex
+- **Coarctation of aorta (Q25.1)**
 
-- **Epispadias (Q64.0) -** displacement of the opening of the urethra dorsally and proximally (on the top and closer to the body) in relation to the tip of the glans of the penis.
+Narrowing of the descending aorta, which may obstruct blood flow from the heart to the rest of the body. The most common site of coarctation occurs distal to the origin of the left subclavian artery in the region of the ductus arteriosus. If there is complete loss of communication in this location, it is a form of interruption of the aorta (Type A).
 
-#### Selected urinary tract defects {#section-2118}
+#### Oro-facial clefts {#section2115}
 
-- **Renal agenesis (Q60.0-Q60.2) -** complete absence of the kidney.
+- **Cleft palate (Q35, excluding Q35.7)**
 
-- **Cystic kidney (Q61.1-Q61.5, Q61.8, Q61.9) -** genetic disorder characterized by the formation of fluid-filled sacs (cysts) in the kidneys
+An opening in the roof of the mouth resulting from incomplete fusion of the shelves of the palate. The opening may involve the hard palate only, the soft palate only, or both.
 
-- **Bladder and cloacal exstrophy (Q64.1) -** bladder exstrophy - a defect in the lower abdominal wall and anterior wall of the bladder through which the lining of the bladder is exposed to the outside. Cloacal exstrophy - congenital persistence of a common cloacal cavity into which gut, urethra, and reproductive tracts open with exstrophy of the cavity: usually accompanied by a low omphalocele, imperforate anus, and a (closed) neural tube defect.
+- **Cleft lip (Q36)**
 
-- **Lower urinary tract obstruction (Q64.2, Q64.3) -** posterior urethral valves (PUV) are tissue folds of the posterior urethra and function as valves obstructing urine outflow. Congenital PUV is an abnormal congenital obstructing membrane that is located within the posterior male urethra; this valve is the most common cause of bladder outlet obstruction in male children. Congenital PUV can also be found in virilized females and rarely in normal females. Obstruction could vary from mild to severe.
+A defect in the upper lip resulting from incomplete fusion of the parts of the lip.
 
-#### Hip dysplasia (Q65) {#section-2119} 
+- **Cleft palate with cleft lip (Q37)**
+
+A defect in the upper lip resulting from incomplete fusion of the parts of the lip, with an opening in the roof of the mouth.
+
+#### Selected gastrointestinal defects {#section2116}
+
+- **Oesophageal atresia/stenosis, tracheoesophageal fistula (Q39.0-Q39.4)**
+
+Esophageal atresia is condition in which the esophagus ends in a blind pouch and fails to connect with the stomach. Tracheoesophageal fistula is an abnormal communication between the esophagus and the trachea. This is almost always associated with some form of esophageal atresia.
+
+- **Small intestine absence/atresia/stenosis (Q41)**
+
+Complete or partial occlusion of the lumen of one or more segments of the small intestine. Small intestinal atresias are often assigned a type descriptor in the surgical or autopsy report, depending upon the severity of the atresia (types include I, II, IIIA, IIIB, and VI).
+
+- **Ano-rectal absence/atresia/stenosis (Q42.0-Q42.3)**
+
+Complete or partial occlusion of the lumen of one or more segments of the large intestine and/or rectum.
+
+- **Hirschsprung disease (Q43.1)**
+
+Also called congenital aganglionic megacolon is a condition that affects the large intestine (colon) and causes problems with passing stool.
+
+- **Atresia of bile ducts (Q44.2)**
+
+Congenital absence of the lumen of the extrahepatic bile ducts.
+
+#### Selected genital anomalies {#section2117}
+
+- **Cryptorchidism/undescended testicles (Q53.1, Q53.2, Q53.9)**
+
+A testicle that hasn't moved into its proper position in the bag of skin hanging below the penis (scrotum) before birth.
+
+- **Hypospadias (Q54, excluding Q54.4)**
+
+Displacement of the opening of the urethra (urethral meatus) ventrally and proximally (underneath and closer to the body) in relation to the tip of the glans of the penis.
+
+- **Indeterminate sex (Q56)**
+
+In a baby with ambiguous genitalia, the genitals may be incompletely developed or the baby may have characteristics of both sexes. The external sex organs may not match the internal sex organs or genetic sex. Pseudohermaphroditism - is a condition in which the individual has a single chromosomal and gonadal sex but combines features of both sexes in the external genitalia, causing doubt as to the true sex
+
+- **Epispadias (Q64.0)**
+
+Displacement of the opening of the urethra dorsally and proximally (on the top and closer to the body) in relation to the tip of the glans of the penis.
+
+#### Selected urinary tract defects {#section2118}
+
+- **Renal agenesis (Q60.0-Q60.2)**
+
+Complete absence of the kidney.
+
+- **Cystic kidney (Q61.1-Q61.5, Q61.8, Q61.9)**
+
+Genetic disorder characterized by the formation of fluid-filled sacs (cysts) in the kidneys
+
+- **Bladder and cloacal exstrophy (Q64.1)**
+
+Bladder exstrophy is a defect in the lower abdominal wall and anterior wall of the bladder through which the lining of the bladder is exposed to the outside. Cloacal exstrophy is a congenital persistence of a common cloacal cavity into which gut, urethra, and reproductive tracts open with exstrophy of the cavity: usually accompanied by a low omphalocele, imperforate anus, and a (closed) neural tube defect.
+
+- **Lower urinary tract obstruction (Q64.2, Q64.3)**
+
+Posterior urethral valves (PUV) are tissue folds of the posterior urethra and function as valves obstructing urine outflow. Congenital PUV is an abnormal congenital obstructing membrane that is located within the posterior male urethra; this valve is the most common cause of bladder outlet obstruction in male children. Congenital PUV can also be found in virilized females and rarely in normal females. Obstruction could vary from mild to severe.
+
+#### Hip dysplasia (Q65) {#section2119} 
 
 Hip dysplasia occurs when a baby's hip socket (acetabulum) is too shallow to cover the head of the thighbone (femoral head) to fit properly.
 
-#### Limb deficiency defects (Q71-Q73) {#section-21110}
+#### Limb deficiency defects (Q71-Q73) {#section21110}
 
 Complete or partial absence of the upper arm (humerus), lower arm (radius and/or ulna), wrist (carpals), hand (metacarpals), fingers (phalanges), thigh (femur), lower leg (tibia and/or fibula), ankle (tarsals), foot (metatarsals), or toes (phalanges).
 
-#### Selected abdominal wall defects {#section-21111}
+#### Selected abdominal wall defects {#section21111}
 
-- **Omphalocele/Exomphalos (Q79.2) -** a defect in the anterior abdominal wall in which the umbilical ring is widened, allowing herniation of abdominal organs, including the small intestine, part of the large intestine, and occasionally the liver and spleen, into the umbilical cord. The herniating organs are covered by a nearly transparent membranous sac.
+- **Diaphragmatic hernia (Q79.0)**
 
-- **Gastroschisis (Q79.3)-** a congenital opening or fissure in the anterior abdominal wall lateral to the umbilicus through which the small intestine, part of the large intestine, and occasionally the liver and spleen, may herniate. The opening is separated from the umbilicus by a small bridge of skin, and the herniating organs are not covered by a protective membrane. Gastroschisis usually occurs on the right side of the umbilicus, although it may occur on the left.
+Incomplete formation of the diaphragm through which a portion of the 
+abdominal contents herniate into the thoracic cavity.
 
-#### Selected chromosomal defects {#section-21112}
+- **Omphalocele/Exomphalos (Q79.2)**
 
-- **Down Syndrome (Q90) -** the presence of three copies of all or a large part of chromosome 21.
+A defect in the anterior abdominal wall in which the umbilical ring is widened, allowing herniation of abdominal organs, including the small intestine, part of the large intestine, and occasionally the liver and spleen, into the umbilical cord. The herniating organs are covered by a nearly transparent membranous sac.
 
-- **Trisomy 13 - Patau - (Q91.4-Q91.7) -** the presence of three copies of all or a large part of chromosome 13.
+- **Gastroschisis (Q79.3)**
 
-- **Trisomy 18 - Edwards - (Q91.0-Q91.3) -** the presence of three copies of all or a large part of chromosome 18.
+A congenital opening or fissure in the anterior abdominal wall lateral to the umbilicus through which the small intestine, part of the large intestine, and occasionally the liver and spleen, may herniate. The opening is separated from the umbilicus by a small bridge of skin, and the herniating organs are not covered by a protective membrane. Gastroschisis usually occurs on the right side of the umbilicus, although it may occur on the left.
 
-- **Turner syndrome (Q96) -** presence of an absent or structurally abnormal second X chromosome in a phenotypic female.
+#### Selected chromosomal defects {#section21112}
+
+- **Down Syndrome (Q90)**
+
+The presence of three copies of all or a large part of chromosome 21.
+
+- **Trisomy 13 - Patau - (Q91.4-Q91.7)**
+
+The presence of three copies of all or a large part of chromosome 13.
+
+- **Trisomy 18 - Edwards - (Q91.0-Q91.3)**
+
+The presence of three copies of all or a large part of chromosome 18.
+
+- **Turner syndrome (Q96)**
+
+Presence of an absent or structurally abnormal second X chromosome in a phenotypic female.

@@ -12,12 +12,28 @@
 \contentsline {subsubsection}{\numberline {2.1.1.1}Neural tube defects}{9}{subsubsection.2.1.1.1}%
 \contentsline {subsubsection}{\numberline {2.1.1.2}Selected central nervous system defects}{9}{subsubsection.2.1.1.2}%
 \contentsline {subsubsection}{\numberline {2.1.1.3}Selected sense organ defects}{10}{subsubsection.2.1.1.3}%
-\contentsline {subsubsection}{\numberline {2.1.1.4}Selected congenital heart defects}{10}{subsubsection.2.1.1.4}%
-\contentsline {subsubsection}{\numberline {2.1.1.5}Oro-facial clefts}{11}{subsubsection.2.1.1.5}%
-\contentsline {subsubsection}{\numberline {2.1.1.6}Selected gastrointestinal defects}{11}{subsubsection.2.1.1.6}%
-\contentsline {subsubsection}{\numberline {2.1.1.7}Selected genital anomalies}{12}{subsubsection.2.1.1.7}%
-\contentsline {subsubsection}{\numberline {2.1.1.8}Selected urinary tract defects}{12}{subsubsection.2.1.1.8}%
-\contentsline {subsubsection}{\numberline {2.1.1.9}Hip dysplasia (Q65)}{13}{subsubsection.2.1.1.9}%
-\contentsline {subsubsection}{\numberline {2.1.1.10}Limb deficiency defects (Q71-Q73)}{13}{subsubsection.2.1.1.10}%
-\contentsline {subsubsection}{\numberline {2.1.1.11}Selected abdominal wall defects}{13}{subsubsection.2.1.1.11}%
-\contentsline {subsubsection}{\numberline {2.1.1.12}Selected chromosomal defects}{13}{subsubsection.2.1.1.12}%
+\contentsline {subsubsection}{\numberline {2.1.1.4}Selected congenital heart defects}{11}{subsubsection.2.1.1.4}%
+\contentsline {subsubsection}{\numberline {2.1.1.5}Oro-facial clefts}{12}{subsubsection.2.1.1.5}%
+\contentsline {subsubsection}{\numberline {2.1.1.6}Selected gastrointestinal defects}{12}{subsubsection.2.1.1.6}%
+\contentsline {subsubsection}{\numberline {2.1.1.7}Selected genital anomalies}{13}{subsubsection.2.1.1.7}%
+\contentsline {subsubsection}{\numberline {2.1.1.8}Selected urinary tract defects}{13}{subsubsection.2.1.1.8}%
+\contentsline {subsubsection}{\numberline {2.1.1.9}Hip dysplasia (Q65)}{14}{subsubsection.2.1.1.9}%
+\contentsline {subsubsection}{\numberline {2.1.1.10}Limb deficiency defects (Q71-Q73)}{14}{subsubsection.2.1.1.10}%
+\contentsline {subsubsection}{\numberline {2.1.1.11}Selected abdominal wall defects}{14}{subsubsection.2.1.1.11}%
+\contentsline {subsubsection}{\numberline {2.1.1.12}Selected chromosomal defects}{15}{subsubsection.2.1.1.12}%
+\contentsline {chapter}{\numberline {3}Anomalies Overview}{17}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Neural tube defects}{17}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Selected central nervous system defects}{20}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Selected sense organ defects}{23}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Selected congenital heart defects}{26}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Oro-facial clefts}{29}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Selected gastrointestinal defects}{32}{section.3.6}%
+\contentsline {section}{\numberline {3.7}Selected genital anomalies}{37}{section.3.7}%
+\contentsline {section}{\numberline {3.8}Selected urinary tract defects}{41}{section.3.8}%
+\contentsline {section}{\numberline {3.9}Hip dysplasia}{45}{section.3.9}%
+\contentsline {section}{\numberline {3.10}Limb deficiency defects}{47}{section.3.10}%
+\contentsline {section}{\numberline {3.11}Selected abdominal wall defects}{49}{section.3.11}%
+\contentsline {section}{\numberline {3.12}Selected chromosomal defects}{52}{section.3.12}%
+\contentsline {fm}{Appendix}{57}{chapter*.10}%
+\contentsline {section}{\numberline {3.13}Appendix 1 - Linear trend analysis and p-values, 1987-2021}{57}{section.3.13}%
+\contentsline {section}{\numberline {3.14}Appendix 2 - Total birth, number of cases, anomalies and anomalies per case, 1987-2021}{60}{section.3.14}%

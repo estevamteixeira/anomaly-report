@@ -1,0 +1,3147 @@
+---
+fig.caption: yes
+params:
+  year1: 2006
+  year2: 2020
+  year10: 2011
+---
+
+```{r setup, include=FALSE}
+source("utilities/data.R")
+source("utilities/plotLine.R")
+source("utilities/CI.R")
+source("utilities/modeling.R")
+source("utilities/plotNSCDMap.R")
+```
+
+# Anomalies Overview {#chapter3}
+
+## Neural tube defects {#section32}
+
+At a $5\%$ level, there is `r ifelse(modeling_trend(data = anom_grp, value = "q00")[["pvalue"]] >= 0.05, "no significant", ifelse(modeling_trend(data = anom_grp, value = "q00")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp, value = "q00")[["coef"]] < 0, "a decreasing", "an increasing"))` trend for `r tolower(unique(anom_grp[grepl("q00", tolower(qcode))][["cat"]]))` ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp, value = "q00")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_grp, value = "q00")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_grp, value = "q00")[["pvalue"]],accuracy = 0.01))`) for the period `r paste0(min(modeling_anal(data = anom_grp, value = "q00")[["BrthYear"]])," - ",max(modeling_anal(data = anom_grp, value = "q00")[["BrthYear"]]))`. From figure \@ref(fig:nt1), the prevalence rate exhibited an upward trend from 1988 to 2003, while it has remained stable from 2004 to 2021.
+
+Over the past 10 years `r paste0("(",params$year10+1,"-",params$year10+10,")")`, `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q00")[["pvalue"]] >= 0.05, "there is no evidence showing any trend", ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q00")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q00")[["coef"]] < 0, "there is evidence showing a decrease", "there is evidence showing an increase"))` in the prevalence rate of `r tolower(unique(anom_grp[grepl("q00", tolower(qcode))][["cat"]]))`. On average, the prevalence rate for each subsequent year is `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q00")[["coef"]]), accuracy = 0.01)` times of the previous year's rate: (prevalence rate = exp(`r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q00")[["coef"]], accuracy = 0.01)`) = `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q00")[["coef"]]), accuracy = 0.01)` per 1,000 total births; $\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q00")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q00")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q00")[["pvalue"]],accuracy = 0.01))`; $95\%$ CI for $\hat{\beta_{1}}$ and for the prevalence rate are given by $CI(95\%)_{\hat{\beta_{1}}}$:[`r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q00")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q00")[["std"]], accuracy = 0.01)`; `r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q00")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q00")[["std"]], accuracy = 0.01)`], and $CI(95\%)_{rate}$:[`r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q00")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q00")[["std"]]), accuracy = 0.01)`; `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q00")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q00")[["std"]]), accuracy = 0.01)`], respectively).
+
+```{r nt1, fig.cap="Neural tube defects - Total reported cases.", out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_grp[grepl(tolower("q00"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_grp, "q00")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+Based on the statistical analysis, at a $5\%$ level, it is possible to observe:
+
+- `r unique(anom_ind[grepl("q00", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q00")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q00")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q00")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q00")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q00")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q00")[["pvalue"]],accuracy = 0.01))`).
+
+```{r nt11, fig.cap=paste0(unique(anom_ind[grepl("q00", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q00"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q00")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+- `r unique(anom_ind[grepl("q01", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q01")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q01")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q01")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q01")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q01")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q01")[["pvalue"]],accuracy = 0.01))`).
+
+```{r nt12, fig.cap="Encephalocele - Total reported cases.", out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q01"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q01")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+- `r unique(anom_ind[grepl("q05", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q05")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q05")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q05")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q05")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q05")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q05")[["pvalue"]],accuracy = 0.01))`).
+
+```{r nt13, fig.cap=paste0(unique(anom_ind[grepl("q05", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q05"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q05")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+Figure \@ref(fig:nt3) shows how the prevalence of `r tolower(unique(anom_grp[grepl("q00", tolower(qcode))][["cat"]]))` is geographically distributed in Nova Scotia by county between `r params$year1` and `r params$year2`.
+
+Guysborough is the only county where `r tolower(unique(anom_grp[grepl("q00", tolower(qcode))][["cat"]]))` has never been reported.
+
+In the past, `r tolower(unique(anom_grp[grepl("q00", tolower(qcode))][["cat"]]))` appeared to be more prevalent in northern, western, and eastern counties. Lately, this predominance seems to have concentrated more towards the northern and western counties, with emphasis on Yarmouth, Shelburne, Queens, Hants, and Pictou counties.
+
+```{r nt3, fig.cap=paste0("Neural tube defects - Nova Scotia. Shifts in counties between ", params$year1, " and ", params$year2, "."), out.width= if (knitr::is_latex_output()){"65%"}}
+ # filter data
+dta <- anom_grp_map[grepl(tolower("q00"),
+                          tolower(qcode)) ] %>%
+  .[,
+    `:=` (total_anom = ifelse(count_anom < 5,
+                              "< 5",
+                              as.character(scales::comma(count_anom, accuracy = 1))),
+          total_lvb_yr = ifelse(total_lvb_yr < 5,
+                             "< 5",
+                             as.character(scales::comma(total_lvb_yr, accuracy = 1))))
+  ] %>% 
+  tidyr::complete(CDuid = sort(unique(cd_names$CDuid)),
+                  nesting(time_cat, cat, qcode, qcodecat)
+  ) %>% 
+  # merge(cd_names,
+  #       by = c("CD_UID")) %>% 
+  setDT()
+
+# nplots <- sort(unique(dta$time_lab))
+
+dta_map <- merge(cd_shp,
+                 dta,
+                 by.x = c("GeoUID"),
+                 by.y = c("CDuid"),
+                 all.x = TRUE)[,
+                               c("GeoUID", "name","cat","cd_type","time_cat",
+                                 "count_anom","total_anom","total_lvb_yr",
+                                 "rate","area","geometry")
+                 ][,
+                   `:=` (rate = data.table::fifelse(!rate %in% 0,
+                                                    rate,
+                                                    NA_integer_))] |>
+  arrange(time_cat) |>
+  mutate(BrthYear = time_cat) |>
+  sf::st_sf() |>
+  sf::st_transform(4326)
+
+if (knitr::is_html_output()){
+  # tmap_mode("view")|>
+  #   tm_view(projection = 4326)
+  # plot_map(dta_map[,-1])
+  knitr::include_url("images/maps/nt1.html")
+} else if(knitr::is_latex_output()){
+  tmap_mode("plot")
+  plot_map_pdf(dta_map)
+}
+```
+
+```{asis, echo=knitr::is_latex_output()}
+\clearpage
+```
+
+## Selected central nervous system defects {#section33}
+
+At a $5\%$ level, there is `r ifelse(modeling_trend(data = anom_grp, value = "q02")[["pvalue"]] >= 0.05, "no significant", ifelse(modeling_trend(data = anom_grp, value = "q02")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp, value = "q02")[["coef"]] < 0, "a decreasing", "an increasing"))` trend for `r tolower(unique(anom_grp[grepl("q02", tolower(qcode))][["cat"]]))` ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp, value = "q02")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_grp, value = "q02")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_grp, value = "q02")[["pvalue"]],accuracy = 0.01))`) for the period `r paste0(min(modeling_anal(data = anom_grp, value = "q02")[["BrthYear"]])," - ",max(modeling_anal(data = anom_grp, value = "q02")[["BrthYear"]]))`. From figure \@ref(fig:scn1), the prevalence rate exhibited a sharply upward trend from 1995 to 2000, when it dropped dramatically until 2004. Since then, the rate has gradually fluctuated downwards until reaching the current level.
+
+Over the past 10 years `r paste0("(",params$year10+1,"-",params$year10+10,")")`, `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q02")[["pvalue"]] >= 0.05, "there is no evidence showing any trend", ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q02")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q02")[["coef"]] < 0, "there is evidence showing a decrease", "there is evidence showing an increase"))` in the prevalence rate of `r tolower(unique(anom_grp[grepl("q02", tolower(qcode))][["cat"]]))`. On average, the prevalence rate for each subsequent year is `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q02")[["coef"]]), accuracy = 0.01)` times of the previous year's rate. In other words, the prevalence rate of `r tolower(unique(anom_grp[grepl("q02", tolower(qcode))][["cat"]]))` has `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q02")[["pvalue"]] >= 0.05, "been stable", ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q02")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q02")[["coef"]] < 0, "decreased", "increased"))` by an estimated `r scales::percent(1-exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q02")[["coef"]]), accuracy = 1)` over the last decade: (prevalence rate = exp(`r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q02")[["coef"]], accuracy = 0.01)`) = `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q02")[["coef"]]), accuracy = 0.01)` per 1,000 total births; $\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q02")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q02")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q02")[["pvalue"]],accuracy = 0.01))`; $95\%$ CI for $\hat{\beta_{1}}$ and for the prevalence rate are given by $CI_{\hat{\beta_{1}}}(95\%)$:[`r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q02")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q02")[["std"]], accuracy = 0.01)`; `r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q02")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q02")[["std"]], accuracy = 0.01)`], and $CI_{rate}(95\%)$:[`r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q02")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q02")[["std"]]), accuracy = 0.01)`; `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q02")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q02")[["std"]]), accuracy = 0.01)`], respectively).
+
+```{r scn1, fig.cap="Selected central nervous system defects - Total reported cases.", out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_grp[grepl(tolower("q02"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_grp, "q02")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+Based on the statistical analysis, at a $5\%$ level, it is possible to observe:
+
+- `r unique(anom_ind[grepl("q02", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q02")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q02")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q02")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q02")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q02")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q02")[["pvalue"]],accuracy = 0.01))`).
+
+```{r scn11, fig.cap=paste0(unique(anom_ind[grepl("q02", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q02"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q02")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+- `r unique(anom_ind[grepl("q03", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q03")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q03")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q03")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q03")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q03")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q03")[["pvalue"]],accuracy = 0.01))`).
+
+```{r scn12, fig.cap=paste0(unique(anom_ind[grepl("q03", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q03"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q03")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+- `r unique(anom_ind[grepl("q042", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q042")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q042")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q042")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q042")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q042")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q042")[["pvalue"]],accuracy = 0.01))`).
+
+```{r scn13, fig.cap=paste0(unique(anom_ind[grepl("q042", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q042"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q042")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+Figure \@ref(fig:scn3) shows how the prevalence of `r tolower(unique(anom_grp[grepl("q02", tolower(qcode))][["cat"]]))` is geographically distributed in Nova Scotia by county between `r params$year1` and `r params$year2`.
+
+<!-- Guysborough is the only county where `r tolower(unique(anom_grp[grepl("q02", tolower(qcode))][["cat"]]))` has never been reported. -->
+
+In the past, `r tolower(unique(anom_grp[grepl("q02", tolower(qcode))][["cat"]]))` appeared to be more prevalent in the eastern, and northern counties. Lately, this predominance seems to have concentrated more towards the western counties, with emphasis on Yarmouth, Shelburne, and Queens counties.
+
+```{r scn3, fig.cap=paste0("Selected central nervous system defects - Nova Scotia. Shifts in counties between ", params$year1, " and ", params$year2, "."), out.width= if (knitr::is_latex_output()){"65%"}}
+ # filter data
+dta <- anom_grp_map[grepl(tolower("q02"),
+                          tolower(qcode)) & !time_cat %in% "2001-2005"] %>%
+  .[,
+    `:=` (total_anom = ifelse(count_anom < 5,
+                              "< 5",
+                              as.character(scales::comma(count_anom, accuracy = 1))),
+          total_lvb_yr = ifelse(total_lvb_yr < 5,
+                             "< 5",
+                             as.character(scales::comma(total_lvb_yr, accuracy = 1))))
+  ] %>% 
+  tidyr::complete(CDuid = sort(unique(cd_names$CDuid)),
+                  nesting(time_cat, cat, qcode, qcodecat)
+  ) %>% 
+  # merge(cd_names,
+  #       by = c("CD_UID")) %>% 
+  setDT()
+
+# nplots <- sort(unique(dta$time_lab))
+
+dta_map <- merge(cd_shp,
+                 dta,
+                 by.x = c("GeoUID"),
+                 by.y = c("CDuid"),
+                 all.x = TRUE)[,
+                               c("GeoUID", "name","cat","cd_type","time_cat",
+                                 "count_anom","total_anom","total_lvb_yr",
+                                 "rate","area","geometry")
+                 ][,
+                   `:=` (rate = data.table::fifelse(!rate %in% 0,
+                                                    rate,
+                                                    NA_integer_))] |>
+  arrange(time_cat) |>
+  mutate(BrthYear = time_cat) |>
+  sf::st_sf() |>
+  sf::st_transform(4326)
+
+if (knitr::is_html_output()){
+  # tmap_mode("view")|>
+  #   tm_view(projection = 4326)
+  # plot_map(dta_map[,-1])
+  knitr::include_url("images/maps/scn1.html")
+} else if(knitr::is_latex_output()){
+  tmap_mode("plot")
+  plot_map_pdf(dta_map)
+}
+```
+
+```{asis, echo=knitr::is_latex_output()}
+\clearpage
+```
+
+## Selected sense organ defects {#section34}
+
+At a $5\%$ level, there is `r ifelse(modeling_trend(data = anom_grp, value = "q110")[["pvalue"]] >= 0.05, "no significant", ifelse(modeling_trend(data = anom_grp, value = "q110")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp, value = "q110")[["coef"]] < 0, "a decreasing", "an increasing"))` trend for `r tolower(unique(anom_grp[grepl("q110", tolower(qcode))][["cat"]]))` ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp, value = "q110")[["coef"]], accuracy = 0.001)`, p-value = `r ifelse(modeling_trend(data = anom_grp, value = "q110")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_grp, value = "q110")[["pvalue"]],accuracy = 0.01))`) for the period `r paste0(min(modeling_anal(data = anom_grp, value = "q110")[["BrthYear"]])," - ",max(modeling_anal(data = anom_grp, value = "q110")[["BrthYear"]]))`. From figure \@ref(fig:ssod1), the prevalence rate exhibited an upward trend from 1988 to 2003. Since then, the rate has gradually fluctuated downwards until reaching the current level.
+
+Over the past 10 years `r paste0("(",params$year10+1,"-",params$year10+10,")")`, `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q110")[["pvalue"]] >= 0.05, "there is no evidence showing any trend", ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q110")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q110")[["coef"]] < 0, "there is evidence showing a decrease", "there is evidence showing an increase"))` in the prevalence rate of `r tolower(unique(anom_grp[grepl("q110", tolower(qcode))][["cat"]]))`. On average, the prevalence rate for each subsequent year is `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q110")[["coef"]]), accuracy = 0.01)` times of the previous year's rate: (prevalence rate = exp(`r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q110")[["coef"]], accuracy = 0.01)`) = `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q110")[["coef"]]), accuracy = 0.01)` per 1,000 total births; $\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q110")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q110")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q110")[["pvalue"]],accuracy = 0.01))`; $95\%$ CI for $\hat{\beta_{1}}$ and for the prevalence rate are given by $CI(95\%)_{\hat{\beta_{1}}}$:[`r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q110")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q110")[["std"]], accuracy = 0.01)`; `r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q110")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q110")[["std"]], accuracy = 0.01)`], and $CI(95\%)_{rate}$:[`r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q110")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q110")[["std"]]), accuracy = 0.01)`; `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q110")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q110")[["std"]]), accuracy = 0.01)`], respectively).
+
+```{r ssod1, fig.cap="Selected sense organ defects - Total reported cases."}
+dta <- anom_grp[grepl(tolower("q110"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_grp, "q110")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+Based on the statistical analysis, at a $5\%$ level, it is possible to observe:
+
+- `r unique(anom_ind[grepl("q110", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q110")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q110")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q110")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q110")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q110")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q110")[["pvalue"]],accuracy = 0.001))`).
+
+```{r ssod11, fig.cap=paste0(unique(anom_ind[grepl("q110", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q110"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q110")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+- `r unique(anom_ind[grepl("q160", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q160")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q160")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q160")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q160")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q160")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q160")[["pvalue"]],accuracy = 0.01))`).
+
+```{r ssod12, fig.cap=paste0(unique(anom_ind[grepl("q160", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q160"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q160")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+- `r unique(anom_ind[grepl("q300", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q300")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q300")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q300")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q300")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q300")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q300")[["pvalue"]],accuracy = 0.01))`).
+
+```{r ssod13, fig.cap=paste0(unique(anom_ind[grepl("q300", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q300"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q300")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+<!-- ```{r ssod2, fig.cap="Selected sense organ defects: Anophtalmos/Microphtalmos, Anotia/Microtia, Choanal atresia - Total reported cases."} -->
+<!-- ## filtering neural tube defects -->
+<!-- ## count anomaly by year -->
+<!-- ## categorize them -->
+<!-- # filtering total births: lvb + stillbirths -->
+
+<!-- dta <- anom_ind[grepl(tolower("q110|q160|q300"), -->
+<!--                    tolower(qcode)) ] -->
+
+<!-- if (knitr::is_html_output()){ -->
+<!-- plot_line(data = dta, -->
+<!--           var = "rate") -->
+<!-- } else if (knitr::is_latex_output()){ -->
+<!--   plot_line_pdf(data = dta, -->
+<!--                 var = "rate") -->
+<!-- } -->
+<!-- ``` -->
+
+Figure \@ref(fig:ssod3) shows how the prevalence of `r tolower(unique(anom_grp[grepl("q110", tolower(qcode))][["cat"]]))` is geographically distributed in Nova Scotia by county between `r params$year1` and `r params$year2`.
+
+In the past, `r tolower(unique(anom_grp[grepl("q110", tolower(qcode))][["cat"]]))` appeared to be more prevalent in northern, western, and central counties. Lately, this predominance seems to have concentrated more towards the northern and western counties, with emphasis on Yarmouth, Shelburne, Kings, and Hants.
+
+```{r ssod3, fig.cap=paste0("Selected sense organ defects - Nova Scotia. Shifts in counties between ", params$year1, " and ", params$year2, "."), out.width= if (knitr::is_latex_output()){"65%"}}
+ # filter data
+dta <- anom_grp_map[grepl(tolower("q110"),
+                          tolower(qcode)) ] %>%
+  .[,
+    `:=` (total_anom = ifelse(count_anom < 5,
+                              "< 5",
+                              as.character(scales::comma(count_anom, accuracy = 1))),
+          total_lvb_yr = ifelse(total_lvb_yr < 5,
+                             "< 5",
+                             as.character(scales::comma(total_lvb_yr, accuracy = 1))))
+  ] %>% 
+  tidyr::complete(CDuid = sort(unique(cd_names$CDuid)),
+                  nesting(time_cat, cat, qcode, qcodecat)
+  ) %>% 
+  # merge(cd_names,
+  #       by = c("CD_UID")) %>% 
+  setDT()
+
+# nplots <- sort(unique(dta$time_lab))
+
+dta_map <- merge(cd_shp,
+                 dta,
+                 by.x = c("GeoUID"),
+                 by.y = c("CDuid"),
+                 all.x = TRUE)[,
+                               c("GeoUID", "name","cat","cd_type","time_cat",
+                                 "count_anom","total_anom","total_lvb_yr",
+                                 "rate","area","geometry")
+                 ][,
+                   `:=` (rate = data.table::fifelse(!rate %in% 0,
+                                                    rate,
+                                                    NA_integer_))] |>
+  arrange(time_cat) |>
+  mutate(BrthYear = time_cat) |>
+  sf::st_sf() |>
+  sf::st_transform(4326)
+
+if (knitr::is_html_output()){
+  # tmap_mode("view")|>
+  #   tm_view(projection = 4326)
+  # plot_map(dta_map[,-1])
+  knitr::include_url("images/maps/ssod1.html")
+} else if(knitr::is_latex_output()){
+  tmap_mode("plot")
+  plot_map_pdf(dta_map)
+}
+```
+
+```{asis, echo=knitr::is_latex_output()}
+\clearpage
+```
+
+## Selected congenital heart defects {#section35}
+
+At a $5\%$ level, there is `r ifelse(modeling_trend(data = anom_grp, value = "q200")[["pvalue"]] >= 0.05, "no significant", ifelse(modeling_trend(data = anom_grp, value = "q200")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp, value = "q200")[["coef"]] < 0, "a decreasing", "an increasing"))` trend for `r tolower(unique(anom_grp[grepl("q200", tolower(qcode))][["cat"]]))` ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp, value = "q200")[["coef"]], accuracy = 0.001)`, p-value = `r ifelse(modeling_trend(data = anom_grp, value = "q200")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_grp, value = "q200")[["pvalue"]],accuracy = 0.01))`) for the period `r paste0(min(modeling_anal(data = anom_grp, value = "q200")[["BrthYear"]])," - ",max(modeling_anal(data = anom_grp, value = "q200")[["BrthYear"]]))`. From figure \@ref(fig:schd1), the prevalence rate exhibited an downward trend from 1988 to 2021 with subsequent peaks being smaller on 1998, 2010, and 2019.
+
+Over the past 10 years `r paste0("(",params$year10+1,"-",params$year10+10,")")`, `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q200")[["pvalue"]] >= 0.05, "there is no evidence showing any trend", ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q200")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q200")[["coef"]] < 0, "there is evidence showing a decrease", "there is evidence showing an increase"))` in the prevalence rate of `r tolower(unique(anom_grp[grepl("q200", tolower(qcode))][["cat"]]))`. On average, the prevalence rate for each subsequent year is `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q200")[["coef"]]), accuracy = 0.01)` times of the previous year's rate: (prevalence rate = exp(`r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q200")[["coef"]], accuracy = 0.01)`) = `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q200")[["coef"]]), accuracy = 0.01)` per 1,000 total births; $\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q200")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q200")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q200")[["pvalue"]],accuracy = 0.01))`; $95\%$ CI for $\hat{\beta_{1}}$ and for the prevalence rate are given by $CI(95\%)_{\hat{\beta_{1}}}$:[`r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q200")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q200")[["std"]], accuracy = 0.01)`; `r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q200")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q200")[["std"]], accuracy = 0.01)`], and $CI(95\%)_{rate}$:[`r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q200")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q200")[["std"]]), accuracy = 0.01)`; `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q200")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q200")[["std"]]), accuracy = 0.01)`], respectively).
+
+```{r schd1, fig.cap="Selected congenital heart defects - Total reported cases."}
+dta <- anom_grp[grepl(tolower("q200"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_grp, "q200")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+Based on the statistical analysis, at a $5\%$ level, it is possible to observe:
+
+- `r unique(anom_ind[grepl("q200", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q200")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q200")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q200")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q200")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q200")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q200")[["pvalue"]],accuracy = 0.01))`).
+
+- `r unique(anom_ind[grepl("q201", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q201")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q201")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q201")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q201")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q201")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q201")[["pvalue"]],accuracy = 0.01))`).
+
+- `r unique(anom_ind[grepl("q212", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q212")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q212")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q212")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q212")[["coef"]], accuracy = 0.001)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q212")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q212")[["pvalue"]],accuracy = 0.01))`).
+
+- `r unique(anom_ind[grepl("q213", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q213")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q213")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q213")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q213")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q213")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q213")[["pvalue"]],accuracy = 0.01))`).
+
+```{r schd11, fig.cap=paste0(unique(anom_ind[grepl("q213", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q213"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q213")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+- `r unique(anom_ind[grepl("q234", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q234")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q234")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q234")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q234")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q234")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q234")[["pvalue"]],accuracy = 0.01))`).
+
+```{r schd12, fig.cap=paste0(unique(anom_ind[grepl("q234", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q234"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q234")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+- `r unique(anom_ind[grepl("q251", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q251")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q251")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q251")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q251")[["coef"]], accuracy = 0.001)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q251")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q251")[["pvalue"]],accuracy = 0.01))`).
+
+```{r schd13, fig.cap=paste0(unique(anom_ind[grepl("q251", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q251"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q251")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+Figure \@ref(fig:schd3) shows how the prevalence of `r tolower(unique(anom_grp[grepl("q200", tolower(qcode))][["cat"]]))` is geographically distributed in Nova Scotia by county between `r params$year1` and `r params$year2`.
+
+In the past, `r tolower(unique(anom_grp[grepl("q200", tolower(qcode))][["cat"]]))` appeared to be an anomaly that occurred everywhere in the province being more prevalent in the eastern county of Richmond. Lately, this predominance seems to have consolidated and other eastern counties like Inverness and Victoria are also showing a high prevalence rate for `r tolower(unique(anom_grp[grepl("q200", tolower(qcode))][["cat"]]))`.
+
+```{r schd3, fig.cap=paste0("Selected congenital heart defects - Nova Scotia. Shifts in counties between ", params$year1, " and ", params$year2, "."), out.width= if (knitr::is_latex_output()){"65%"}}
+ # filter data
+dta <- anom_grp_map[grepl(tolower("q200"),
+                          tolower(qcode)) ] %>%
+  .[,
+    `:=` (total_anom = ifelse(count_anom < 5,
+                              "< 5",
+                              as.character(scales::comma(count_anom, accuracy = 1))),
+          total_lvb_yr = ifelse(total_lvb_yr < 5,
+                             "< 5",
+                             as.character(scales::comma(total_lvb_yr, accuracy = 1))))
+  ] %>% 
+  tidyr::complete(CDuid = sort(unique(cd_names$CDuid)),
+                  nesting(time_cat, cat, qcode, qcodecat)
+  ) %>% 
+  # merge(cd_names,
+  #       by = c("CD_UID")) %>% 
+  setDT()
+
+# nplots <- sort(unique(dta$time_lab))
+
+dta_map <- merge(cd_shp,
+                 dta,
+                 by.x = c("GeoUID"),
+                 by.y = c("CDuid"),
+                 all.x = TRUE)[,
+                               c("GeoUID", "name","cat","cd_type","time_cat",
+                                 "count_anom","total_anom","total_lvb_yr",
+                                 "rate","area","geometry")
+                 ][,
+                   `:=` (rate = data.table::fifelse(!rate %in% 0,
+                                                    rate,
+                                                    NA_integer_))] |>
+  arrange(time_cat) |>
+  mutate(BrthYear = time_cat) |>
+  sf::st_sf() |>
+  sf::st_transform(4326)
+
+if (knitr::is_html_output()){
+  # tmap_mode("view")|>
+  #   tm_view(projection = 4326)
+  # plot_map(dta_map[,-1])
+  knitr::include_url("images/maps/schd1.html")
+} else if(knitr::is_latex_output()){
+  tmap_mode("plot")
+  plot_map_pdf(dta_map)
+}
+```
+
+```{asis, echo=knitr::is_latex_output()}
+\clearpage
+```
+
+## Oro-facial clefts {#section36}
+
+At a $5\%$ level, there is `r ifelse(modeling_trend(data = anom_grp, value = "q35")[["pvalue"]] >= 0.05, "no significant", ifelse(modeling_trend(data = anom_grp, value = "q35")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp, value = "q35")[["coef"]] < 0, "a decreasing", "an increasing"))` trend for `r tolower(unique(anom_grp[grepl("q35", tolower(qcode))][["cat"]]))` ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp, value = "q35")[["coef"]], accuracy = 0.001)`, p-value = `r ifelse(modeling_trend(data = anom_grp, value = "q35")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_grp, value = "q35")[["pvalue"]],accuracy = 0.01))`) for the period `r paste0(min(modeling_anal(data = anom_grp, value = "q35")[["BrthYear"]])," - ",max(modeling_anal(data = anom_grp, value = "q35")[["BrthYear"]]))`. From figure \@ref(fig:ofc1), the prevalence rate exhibited an upward trend from 1988 to 2011 with drastic lower rates between 2012 and 2021.
+
+Over the past 10 years `r paste0("(",params$year10+1,"-",params$year10+10,")")`, `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q35")[["pvalue"]] >= 0.05, "there is no evidence showing any trend", ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q35")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q35")[["coef"]] < 0, "there is evidence showing a decrease", "there is evidence showing an increase"))` in the prevalence rate of `r tolower(unique(anom_grp[grepl("q35", tolower(qcode))][["cat"]]))`. On average, the prevalence rate for each subsequent year is `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q35")[["coef"]]), accuracy = 0.01)` times of the previous year's rate: (prevalence rate = exp(`r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q35")[["coef"]], accuracy = 0.01)`) = `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q35")[["coef"]]), accuracy = 0.01)` per 1,000 total births; $\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q35")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q35")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q35")[["pvalue"]],accuracy = 0.01))`; $95\%$ CI for $\hat{\beta_{1}}$ and for the prevalence rate are given by $CI(95\%)_{\hat{\beta_{1}}}$:[`r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q35")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q35")[["std"]], accuracy = 0.01)`; `r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q35")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q35")[["std"]], accuracy = 0.01)`], and $CI(95\%)_{rate}$:[`r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q35")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q35")[["std"]]), accuracy = 0.01)`; `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q35")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q35")[["std"]]), accuracy = 0.01)`], respectively).
+
+```{r ofc1, fig.cap="Oro-facial clefts - Total reported cases."}
+dta <- anom_grp[grepl(tolower("q35"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_grp, "q35")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+Based on the statistical analysis, at a $5\%$ level, it is possible to observe:
+
+- `r unique(anom_ind[grepl("q35", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q35")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q35")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q35")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q35")[["coef"]], accuracy = 0.001)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q35")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q35")[["pvalue"]],accuracy = 0.01))`).
+
+```{r ofc11, fig.cap=paste0(unique(anom_ind[grepl("q35", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q35"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q35")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+- `r unique(anom_ind[grepl("q36", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q36")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q36")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q36")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q36")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q36")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q36")[["pvalue"]],accuracy = 0.01))`).
+
+```{r ofc12, fig.cap=paste0(unique(anom_ind[grepl("q36", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q36"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q36")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+- `r unique(anom_ind[grepl("q37", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q37")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q37")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q37")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q37")[["coef"]], accuracy = 0.001)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q37")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q37")[["pvalue"]],accuracy = 0.01))`).
+
+```{r ofc13, fig.cap=paste0(unique(anom_ind[grepl("q37", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q37"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q37")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+Figure \@ref(fig:ofc3) shows how the prevalence of `r tolower(unique(anom_grp[grepl("q35", tolower(qcode))][["cat"]]))` is geographically distributed in Nova Scotia by county between `r params$year1` and `r params$year2`.
+
+In the past, `r tolower(unique(anom_grp[grepl("q35", tolower(qcode))][["cat"]]))` appeared to be more prevalent in northern, central, and eastern counties. Lately, this predominance seems to have concentrated more towards the northern and western counties, with emphasis on Yarmouth, Hants, and Colchester counties. In the eastern side of the province, Victoria county has the highest levels.
+
+```{r ofc3, fig.cap=paste0("Oro-facial clefts - Nova Scotia. Shifts in counties between ", params$year1, " and ", params$year2, "."), out.width= if (knitr::is_latex_output()){"65%"}}
+ # filter data
+dta <- anom_grp_map[grepl(tolower("q35"),
+                          tolower(qcode)) ] %>%
+  .[,
+    `:=` (total_anom = ifelse(count_anom < 5,
+                              "< 5",
+                              as.character(scales::comma(count_anom, accuracy = 1))),
+          total_lvb_yr = ifelse(total_lvb_yr < 5,
+                             "< 5",
+                             as.character(scales::comma(total_lvb_yr, accuracy = 1))))
+  ] %>% 
+  tidyr::complete(CDuid = sort(unique(cd_names$CDuid)),
+                  nesting(time_cat, cat, qcode, qcodecat)
+  ) %>% 
+  # merge(cd_names,
+  #       by = c("CD_UID")) %>% 
+  setDT()
+
+# nplots <- sort(unique(dta$time_lab))
+
+dta_map <- merge(cd_shp,
+                 dta,
+                 by.x = c("GeoUID"),
+                 by.y = c("CDuid"),
+                 all.x = TRUE)[,
+                               c("GeoUID", "name","cat","cd_type","time_cat",
+                                 "count_anom","total_anom","total_lvb_yr",
+                                 "rate","area","geometry")
+                 ][,
+                   `:=` (rate = data.table::fifelse(!rate %in% 0,
+                                                    rate,
+                                                    NA_integer_))] |>
+  arrange(time_cat) |>
+  mutate(BrthYear = time_cat) |>
+  sf::st_sf() |>
+  sf::st_transform(4326)
+
+if (knitr::is_html_output()){
+  # tmap_mode("view")|>
+  #   tm_view(projection = 4326)
+  # plot_map(dta_map[,-1])
+  knitr::include_url("images/maps/ofc1.html")
+} else if(knitr::is_latex_output()){
+  tmap_mode("plot")
+  plot_map_pdf(dta_map)
+}
+```
+
+```{asis, echo=knitr::is_latex_output()}
+\clearpage
+```
+
+## Selected gastrointestinal defects {#section37}
+
+At a $5\%$ level, there is `r ifelse(modeling_trend(data = anom_grp, value = "q390")[["pvalue"]] >= 0.05, "no significant", ifelse(modeling_trend(data = anom_grp, value = "q390")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp, value = "q390")[["coef"]] < 0, "a decreasing", "an increasing"))` trend for `r tolower(unique(anom_grp[grepl("q390", tolower(qcode))][["cat"]]))` ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp, value = "q390")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_grp, value = "q390")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_grp, value = "q390")[["pvalue"]],accuracy = 0.001))`) for the period `r paste0(min(modeling_anal(data = anom_grp, value = "q390")[["BrthYear"]])," - ",max(modeling_anal(data = anom_grp, value = "q390")[["BrthYear"]]))`. From figure \@ref(fig:sgd1), the prevalence rate exhibited an upward trend from 1988 to 2005, while it has oscillated between highs and lows since then.
+
+Over the past 10 years `r paste0("(",params$year10+1,"-",params$year10+10,")")`, `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q390")[["pvalue"]] >= 0.05, "there is no evidence showing any trend", ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q390")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q390")[["coef"]] < 0, "there is evidence showing a decrease", "there is evidence showing an increase"))` in the prevalence rate of `r tolower(unique(anom_grp[grepl("q390", tolower(qcode))][["cat"]]))`. On average, the prevalence rate for each subsequent year is `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q390")[["coef"]]), accuracy = 0.01)` times of the previous year's rate: (prevalence rate = exp(`r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q390")[["coef"]], accuracy = 0.001)`) = `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q390")[["coef"]]), accuracy = 0.001)` per 1,000 total births; $\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q390")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q390")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q390")[["pvalue"]],accuracy = 0.01))`; $95\%$ CI for $\hat{\beta_{1}}$ and for the prevalence rate are given by $CI(95\%)_{\hat{\beta_{1}}}$:[`r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q390")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q390")[["std"]], accuracy = 0.01)`; `r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q390")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q390")[["std"]], accuracy = 0.01)`], and $CI(95\%)_{rate}$:[`r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q390")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q390")[["std"]]), accuracy = 0.01)`; `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q390")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q390")[["std"]]), accuracy = 0.01)`], respectively).
+
+```{r sgd1, fig.cap="Selected gastrointestinal defects - Total reported cases."}
+dta <- anom_grp[grepl(tolower("q390"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_grp, "q390")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+Based on the statistical analysis, at a $5\%$ level, it is possible to observe:
+
+- `r unique(anom_ind[grepl("q390", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q390")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q390")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q390")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q390")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q390")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q390")[["pvalue"]],accuracy = 0.01))`).
+
+```{r sgd11, fig.cap=paste0(unique(anom_ind[grepl("q390", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q390"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q390")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+- `r unique(anom_ind[grepl("q410", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q410")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q410")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q410")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q410")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q410")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q410")[["pvalue"]],accuracy = 0.01))`).
+
+```{r sgd12, fig.cap=paste0(unique(anom_ind[grepl("q410", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q410"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q410")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+- `r unique(anom_ind[grepl("q420", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q420")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q420")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q420")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q420")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q420")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q420")[["pvalue"]],accuracy = 0.001))`).
+
+```{r sgd13, fig.cap=paste0(unique(anom_ind[grepl("q420", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q420"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q420")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+- `r unique(anom_ind[grepl("q431", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q431")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q431")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q431")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q431")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q431")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q431")[["pvalue"]],accuracy = 0.01))`).
+
+```{r sgd14, fig.cap=paste0(unique(anom_ind[grepl("q431", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q431"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q431")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+- `r unique(anom_ind[grepl("q442", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q442")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q442")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q442")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q442")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q442")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q442")[["pvalue"]],accuracy = 0.01))`).
+
+```{r sgd15, fig.cap=paste0(unique(anom_ind[grepl("q442", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q442"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q442")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+Figure \@ref(fig:sgd3) shows how the prevalence of `r tolower(unique(anom_grp[grepl("q390", tolower(qcode))][["cat"]]))` is geographically distributed in Nova Scotia by county between `r params$year1` and `r params$year2`.
+
+In the past, `r tolower(unique(anom_grp[grepl("q390", tolower(qcode))][["cat"]]))` was found to be more prevalent in northern, western, and eastern counties. Presently, the prevalence distribution remains similar, with an emphasis on the counties of Yarmouth, Digby, Inverness and Richmond.
+
+```{r sgd3, fig.cap=paste0("Selected gastrointestinal defects - Nova Scotia. Shifts in counties between ", params$year1, " and ", params$year2, "."), out.width= if (knitr::is_latex_output()){"65%"}}
+ # filter data
+dta <- anom_grp_map[grepl(tolower("q390"),
+                          tolower(qcode)) ] %>%
+  .[,
+    `:=` (total_anom = ifelse(count_anom < 5,
+                              "< 5",
+                              as.character(scales::comma(count_anom, accuracy = 1))),
+          total_lvb_yr = ifelse(total_lvb_yr < 5,
+                             "< 5",
+                             as.character(scales::comma(total_lvb_yr, accuracy = 1))))
+  ] %>% 
+  tidyr::complete(CDuid = sort(unique(cd_names$CDuid)),
+                  nesting(time_cat, cat, qcode, qcodecat)
+  ) %>% 
+  # merge(cd_names,
+  #       by = c("CD_UID")) %>% 
+  setDT()
+
+# nplots <- sort(unique(dta$time_lab))
+
+dta_map <- merge(cd_shp,
+                 dta,
+                 by.x = c("GeoUID"),
+                 by.y = c("CDuid"),
+                 all.x = TRUE)[,
+                               c("GeoUID", "name","cat","cd_type","time_cat",
+                                 "count_anom","total_anom","total_lvb_yr",
+                                 "rate","area","geometry")
+                 ][,
+                   `:=` (rate = data.table::fifelse(!rate %in% 0,
+                                                    rate,
+                                                    NA_integer_))] |>
+  arrange(time_cat) |>
+  mutate(BrthYear = time_cat) |>
+  sf::st_sf() |>
+  sf::st_transform(4326)
+
+if (knitr::is_html_output()){
+  # tmap_mode("view")|>
+  #   tm_view(projection = 4326)
+  # plot_map(dta_map[,-1])
+  knitr::include_url("images/maps/sgd1.html")
+} else if(knitr::is_latex_output()){
+  tmap_mode("plot")
+  plot_map_pdf(dta_map)
+}
+```
+
+```{asis, echo=knitr::is_latex_output()}
+\clearpage
+```
+
+## Selected genital anomalies {#section38}
+
+At a $5\%$ level, there is `r ifelse(modeling_trend(data = anom_grp, value = "q531")[["pvalue"]] >= 0.05, "no significant", ifelse(modeling_trend(data = anom_grp, value = "q531")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp, value = "q531")[["coef"]] < 0, "a decreasing", "an increasing"))` trend for `r tolower(unique(anom_grp[grepl("q531", tolower(qcode))][["cat"]]))` ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp, value = "q531")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_grp, value = "q531")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_grp, value = "q531")[["pvalue"]],accuracy = 0.01))`) for the period `r paste0(min(modeling_anal(data = anom_grp, value = "q531")[["BrthYear"]])," - ",max(modeling_anal(data = anom_grp, value = "q531")[["BrthYear"]]))`. From figure \@ref(fig:sga1), the prevalence rate has been exhibiting an upward trend with the peaks getting higher over the years.
+
+Over the past 10 years `r paste0("(",params$year10+1,"-",params$year10+10,")")`, `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q531")[["pvalue"]] >= 0.05, "there is no evidence showing any trend", ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q531")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q531")[["coef"]] < 0, "there is evidence showing a decrease", "there is evidence showing an increase"))` in the prevalence rate of `r tolower(unique(anom_grp[grepl("q531", tolower(qcode))][["cat"]]))`. On average, the prevalence rate for each subsequent year is `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q531")[["coef"]]), accuracy = 0.01)` times of the previous year's rate: (prevalence rate = exp(`r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q531")[["coef"]], accuracy = 0.01)`) = `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q531")[["coef"]]), accuracy = 0.01)` per 1,000 total births; $\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q531")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q531")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q531")[["pvalue"]],accuracy = 0.01))`; $95\%$ CI for $\hat{\beta_{1}}$ and for the prevalence rate are given by $CI(95\%)_{\hat{\beta_{1}}}$:[`r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q531")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q531")[["std"]], accuracy = 0.01)`; `r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q531")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q531")[["std"]], accuracy = 0.01)`], and $CI(95\%)_{rate}$:[`r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q531")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q531")[["std"]]), accuracy = 0.01)`; `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q531")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q531")[["std"]]), accuracy = 0.01)`], respectively).
+
+```{r sga1, fig.cap="Selected genital anomalies - Total reported cases."}
+dta <- anom_grp[grepl(tolower("q531"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_grp, "q531")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+Based on the statistical analysis, at a $5\%$ level, it is possible to observe:
+
+- `r unique(anom_ind[grepl("q531", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q531")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q531")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q531")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q531")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q531")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q531")[["pvalue"]],accuracy = 0.01))`).
+
+```{r sga11, fig.cap=paste0(unique(anom_ind[grepl("q531", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q531"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q531")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+- `r unique(anom_ind[grepl("q540", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q540")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q540")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q540")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q540")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q540")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q540")[["pvalue"]],accuracy = 0.01))`).
+
+```{r sga12, fig.cap=paste0(unique(anom_ind[grepl("q540", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q540"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q540")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+- `r unique(anom_ind[grepl("q56", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q56")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q56")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q56")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q56")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q56")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q56")[["pvalue"]],accuracy = 0.01))`).
+
+```{r sga13, fig.cap=paste0(unique(anom_ind[grepl("q56", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q56"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q56")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+- `r unique(anom_ind[grepl("q640", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q640")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q640")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q640")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q640")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q640")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q640")[["pvalue"]],accuracy = 0.01))`).
+
+```{r sga14, fig.cap=paste0(unique(anom_ind[grepl("q640", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q640"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q640")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+Figure \@ref(fig:sga3) shows how the prevalence of `r tolower(unique(anom_grp[grepl("q531", tolower(qcode))][["cat"]]))` is geographically distributed in Nova Scotia by county between `r params$year1` and `r params$year2`.
+
+In the past, `r tolower(unique(anom_grp[grepl("q531", tolower(qcode))][["cat"]]))` appeared to be more prevalent in western, and eastern counties. Lately, this predominance seems to have spread to the entire province with emphasis on Yarmouth, Digby, Queens, Pictou and Guysborough counties.
+
+```{r sga3, fig.cap=paste0("Selected genital anomalies - Nova Scotia. Shifts in counties between ", params$year1, " and ", params$year2, "."), out.width= if (knitr::is_latex_output()){"65%"}}
+ # filter data
+dta <- anom_grp_map[grepl(tolower("q531"),
+                          tolower(qcode)) ] %>%
+  .[,
+    `:=` (total_anom = ifelse(count_anom < 5,
+                              "< 5",
+                              as.character(scales::comma(count_anom, accuracy = 1))),
+          total_lvb_yr = ifelse(total_lvb_yr < 5,
+                             "< 5",
+                             as.character(scales::comma(total_lvb_yr, accuracy = 1))))
+  ] %>% 
+  tidyr::complete(CDuid = sort(unique(cd_names$CDuid)),
+                  nesting(time_cat, cat, qcode, qcodecat)
+  ) %>% 
+  # merge(cd_names,
+  #       by = c("CD_UID")) %>% 
+  setDT()
+
+# nplots <- sort(unique(dta$time_lab))
+
+dta_map <- merge(cd_shp,
+                 dta,
+                 by.x = c("GeoUID"),
+                 by.y = c("CDuid"),
+                 all.x = TRUE)[,
+                               c("GeoUID", "name","cat","cd_type","time_cat",
+                                 "count_anom","total_anom","total_lvb_yr",
+                                 "rate","area","geometry")
+                 ][,
+                   `:=` (rate = data.table::fifelse(!rate %in% 0,
+                                                    rate,
+                                                    NA_integer_))] |>
+  arrange(time_cat) |>
+  mutate(BrthYear = time_cat) |>
+  sf::st_sf() |>
+  sf::st_transform(4326)
+
+if (knitr::is_html_output()){
+  # tmap_mode("view")|>
+  #   tm_view(projection = 4326)
+  # plot_map(dta_map[,-1])
+  knitr::include_url("images/maps/sga1.html")
+} else if(knitr::is_latex_output()){
+  tmap_mode("plot")
+  plot_map_pdf(dta_map)
+}
+```
+
+```{asis, echo=knitr::is_latex_output()}
+\clearpage
+```
+
+## Selected urinary tract defects {#section39}
+
+At a $5\%$ level, there is `r ifelse(modeling_trend(data = anom_grp, value = "q600")[["pvalue"]] >= 0.05, "no significant", ifelse(modeling_trend(data = anom_grp, value = "q600")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp, value = "q600")[["coef"]] < 0, "a decreasing", "an increasing"))` trend for `r tolower(unique(anom_grp[grepl("q600", tolower(qcode))][["cat"]]))` ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp, value = "q600")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_grp, value = "q600")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_grp, value = "q600")[["pvalue"]],accuracy = 0.01))`) for the period `r paste0(min(modeling_anal(data = anom_grp, value = "q600")[["BrthYear"]])," - ",max(modeling_anal(data = anom_grp, value = "q600")[["BrthYear"]]))`. From figure \@ref(fig:sutd1), the prevalence rate exhibited an upward trend from 1988 to 2000. Since then, it has oscillated with highs and lows with no clear direction.
+
+Over the past 10 years `r paste0("(",params$year10+1,"-",params$year10+10,")")`, `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q600")[["pvalue"]] >= 0.05, "there is no evidence showing any trend", ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q600")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q600")[["coef"]] < 0, "there is evidence showing a decrease", "there is evidence showing an increase"))` in the prevalence rate of `r tolower(unique(anom_grp[grepl("q600", tolower(qcode))][["cat"]]))`. On average, the prevalence rate for each subsequent year is `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q600")[["coef"]]), accuracy = 0.01)` times of the previous year's rate: (prevalence rate = exp(`r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q600")[["coef"]], accuracy = 0.01)`) = `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q600")[["coef"]]), accuracy = 0.01)` per 1,000 total births; $\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q600")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q600")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q600")[["pvalue"]],accuracy = 0.01))`; $95\%$ CI for $\hat{\beta_{1}}$ and for the prevalence rate are given by $CI(95\%)_{\hat{\beta_{1}}}$:[`r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q600")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q600")[["std"]], accuracy = 0.01)`; `r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q600")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q600")[["std"]], accuracy = 0.01)`], and $CI(95\%)_{rate}$:[`r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q600")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q600")[["std"]]), accuracy = 0.01)`; `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q600")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q600")[["std"]]), accuracy = 0.01)`], respectively).
+
+```{r sutd1, fig.cap="Selected urinary tract defects - Total reported cases."}
+dta <- anom_grp[grepl(tolower("q600"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_grp, "q600")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+Based on the statistical analysis, at a $5\%$ level, it is possible to observe:
+
+- `r unique(anom_ind[grepl("q600", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q600")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q600")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q600")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q600")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q600")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q600")[["pvalue"]],accuracy = 0.01))`).
+
+```{r sutd11, fig.cap=paste0(unique(anom_ind[grepl("q600", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q600"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q600")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+- `r unique(anom_ind[grepl("q611", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q611")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q611")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q611")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q611")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q611")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q611")[["pvalue"]],accuracy = 0.01))`).
+
+```{r sutd12, fig.cap=paste0(unique(anom_ind[grepl("q611", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q611"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q611")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+- `r unique(anom_ind[grepl("q641", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q641")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q641")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q641")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q641")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q641")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q641")[["pvalue"]],accuracy = 0.01))`).
+
+```{r sutd13, fig.cap=paste0(unique(anom_ind[grepl("q641", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q641"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q641")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+- `r unique(anom_ind[grepl("q642", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q642")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q642")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q642")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q642")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q642")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q642")[["pvalue"]],accuracy = 0.01))`).
+
+```{r sutd14, fig.cap=paste0(unique(anom_ind[grepl("q642", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_ind[grepl(tolower("q642"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_ind, "q642")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+Figure \@ref(fig:sutd3) shows how the prevalence of `r tolower(unique(anom_grp[grepl("q600", tolower(qcode))][["cat"]]))` is geographically distributed in Nova Scotia by county between `r params$year1` and `r params$year2`.
+
+In the past, `r tolower(unique(anom_grp[grepl("q600", tolower(qcode))][["cat"]]))` appeared to be more prevalent in northern, western, and central counties. Lately, this predominance seems to have concentrated more towards the northern, western, and eastern counties, with emphasis on Shelburne, Queens, Guysborough, and Inverness counties.
+
+```{r sutd3, fig.cap=paste0("Selected urinary tract defects - Nova Scotia. Shifts in counties between ", params$year1, " and ", params$year2, "."), out.width= if (knitr::is_latex_output()){"65%"}}
+ # filter data
+dta <- anom_grp_map[grepl(tolower("q600"),
+                          tolower(qcode)) ] %>%
+  .[,
+    `:=` (total_anom = ifelse(count_anom < 5,
+                              "< 5",
+                              as.character(scales::comma(count_anom, accuracy = 1))),
+          total_lvb_yr = ifelse(total_lvb_yr < 5,
+                             "< 5",
+                             as.character(scales::comma(total_lvb_yr, accuracy = 1))))
+  ] %>% 
+  tidyr::complete(CDuid = sort(unique(cd_names$CDuid)),
+                  nesting(time_cat, cat, qcode, qcodecat)
+  ) %>% 
+  # merge(cd_names,
+  #       by = c("CD_UID")) %>% 
+  setDT()
+
+# nplots <- sort(unique(dta$time_lab))
+
+dta_map <- merge(cd_shp,
+                 dta,
+                 by.x = c("GeoUID"),
+                 by.y = c("CDuid"),
+                 all.x = TRUE)[,
+                               c("GeoUID", "name","cat","cd_type","time_cat",
+                                 "count_anom","total_anom","total_lvb_yr",
+                                 "rate","area","geometry")
+                 ][,
+                   `:=` (rate = data.table::fifelse(!rate %in% 0,
+                                                    rate,
+                                                    NA_integer_))] |>
+  arrange(time_cat) |>
+  mutate(BrthYear = time_cat) |>
+  sf::st_sf() |>
+  sf::st_transform(4326)
+
+if (knitr::is_html_output()){
+  # tmap_mode("view")|>
+  #   tm_view(projection = 4326)
+  # plot_map(dta_map[,-1])
+  knitr::include_url("images/maps/sutd1.html")
+} else if(knitr::is_latex_output()){
+  tmap_mode("plot")
+  plot_map_pdf(dta_map)
+}
+```
+
+```{asis, echo=knitr::is_latex_output()}
+\clearpage
+```
+
+## Hip dysplasia {#section310}
+
+At a $5\%$ level, there is `r ifelse(modeling_trend(data = anom_grp, value = "q650")[["pvalue"]] >= 0.05, "no significant", ifelse(modeling_trend(data = anom_grp, value = "q650")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp, value = "q650")[["coef"]] < 0, "a decreasing", "an increasing"))` trend for `r tolower(unique(anom_grp[grepl("q650", tolower(qcode))][["cat"]]))` ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp, value = "q650")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_grp, value = "q650")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_grp, value = "q650")[["pvalue"]],accuracy = 0.01))`) for the period `r paste0(min(modeling_anal(data = anom_grp, value = "q650")[["BrthYear"]])," - ",max(modeling_anal(data = anom_grp, value = "q650")[["BrthYear"]]))`. From figure \@ref(fig:hip1), the prevalence rate exhibited steadily increased from 1990 to 2016. However, since then, there has been a significant and rapid decrease in the prevalence rate.
+
+Over the past 10 years `r paste0("(",params$year10+1,"-",params$year10+10,")")`, `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q650")[["pvalue"]] >= 0.05, "there is no evidence showing any trend", ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q650")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q650")[["coef"]] < 0, "there is evidence showing a decrease", "there is evidence showing an increase"))` in the prevalence rate of `r tolower(unique(anom_grp[grepl("q650", tolower(qcode))][["cat"]]))`. On average, the prevalence rate for each subsequent year is `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q650")[["coef"]]), accuracy = 0.01)` times of the previous year's rate: (prevalence rate = exp(`r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q650")[["coef"]], accuracy = 0.01)`) = `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q650")[["coef"]]), accuracy = 0.01)` per 1,000 total births; $\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q650")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q650")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q650")[["pvalue"]],accuracy = 0.01))`; $95\%$ CI for $\hat{\beta_{1}}$ and for the prevalence rate are given by $CI(95\%)_{\hat{\beta_{1}}}$:[`r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q650")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q650")[["std"]], accuracy = 0.01)`; `r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q650")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q650")[["std"]], accuracy = 0.01)`], and $CI(95\%)_{rate}$:[`r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q650")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q650")[["std"]]), accuracy = 0.01)`; `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q650")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q650")[["std"]]), accuracy = 0.01)`], respectively).
+
+```{r hip1, fig.cap="Hip dysplasia - Total reported cases.", out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_grp[grepl(tolower("q650"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_grp, "q650")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+Figure \@ref(fig:hip3) shows how the prevalence of `r tolower(unique(anom_grp[grepl("q650", tolower(qcode))][["cat"]]))` is geographically distributed in Nova Scotia by county between `r params$year1` and `r params$year2`.
+
+In the past, `r tolower(unique(anom_grp[grepl("q650", tolower(qcode))][["cat"]]))` was observed throughout the province, except for Victoria county. However, in recent years, the prevalence of hip dysplasia has become more concentrated in the central, western, and eastern counties, with a higher incidence noted in Queens, Lunenburg, Hants, Halifax, and Guysborough counties.
+
+```{r hip3, fig.cap=paste0("Hip dysplasia - Nova Scotia. Shifts in counties between ", params$year1, " and ", params$year2, "."), out.width= if (knitr::is_latex_output()){"65%"}}
+ # filter data
+dta <- anom_grp_map[grepl(tolower("q650"),
+                          tolower(qcode)) ] %>%
+  .[,
+    `:=` (total_anom = ifelse(count_anom < 5,
+                              "< 5",
+                              as.character(scales::comma(count_anom, accuracy = 1))),
+          total_lvb_yr = ifelse(total_lvb_yr < 5,
+                             "< 5",
+                             as.character(scales::comma(total_lvb_yr, accuracy = 1))))
+  ] %>% 
+  tidyr::complete(CDuid = sort(unique(cd_names$CDuid)),
+                  nesting(time_cat, cat, qcode, qcodecat)
+  ) %>% 
+  # merge(cd_names,
+  #       by = c("CD_UID")) %>% 
+  setDT()
+
+# nplots <- sort(unique(dta$time_lab))
+
+dta_map <- merge(cd_shp,
+                 dta,
+                 by.x = c("GeoUID"),
+                 by.y = c("CDuid"),
+                 all.x = TRUE)[,
+                               c("GeoUID", "name","cat","cd_type","time_cat",
+                                 "count_anom","total_anom","total_lvb_yr",
+                                 "rate","area","geometry")
+                 ][,
+                   `:=` (rate = data.table::fifelse(!rate %in% 0,
+                                                    rate,
+                                                    NA_integer_))] |>
+  arrange(time_cat) |>
+  mutate(BrthYear = time_cat) |>
+  sf::st_sf() |>
+  sf::st_transform(4326)
+
+if (knitr::is_html_output()){
+  # tmap_mode("view")|>
+  #   tm_view(projection = 4326)
+  # plot_map(dta_map[,-1])
+  knitr::include_url("images/maps/hip1.html")
+} else if(knitr::is_latex_output()){
+  tmap_mode("plot")
+  plot_map_pdf(dta_map)
+}
+```
+
+```{asis, echo=knitr::is_latex_output()}
+\clearpage
+```
+
+## Limb deficiency defects {#section311}
+
+At a $5\%$ level, there is `r ifelse(modeling_trend(data = anom_grp, value = "q711")[["pvalue"]] >= 0.05, "no significant", ifelse(modeling_trend(data = anom_grp, value = "q711")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp, value = "q711")[["coef"]] < 0, "a decreasing", "an increasing"))` trend for `r tolower(unique(anom_grp[grepl("q711", tolower(qcode))][["cat"]]))` ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp, value = "q711")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_grp, value = "q711")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_grp, value = "q711")[["pvalue"]],accuracy = 0.01))`) for the period `r paste0(min(modeling_anal(data = anom_grp, value = "q711")[["BrthYear"]])," - ",max(modeling_anal(data = anom_grp, value = "q711")[["BrthYear"]]))`. From figure \@ref(fig:ldd1), the prevalence rate exhibited an upward trend from 1988 to 2000, before returning to levels similar to those observed in 1993. Since then, the prevalence rate has fluctuated over time.
+
+Over the past 10 years `r paste0("(",params$year10+1,"-",params$year10+10,")")`, `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q711")[["pvalue"]] >= 0.05, "there is no evidence showing any trend", ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q711")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q711")[["coef"]] < 0, "there is evidence showing a decrease", "there is evidence showing an increase"))` in the prevalence rate of `r tolower(unique(anom_grp[grepl("q711", tolower(qcode))][["cat"]]))`. On average, the prevalence rate for each subsequent year is `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q711")[["coef"]]), accuracy = 0.01)` times of the previous year's rate: (prevalence rate = exp(`r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q711")[["coef"]], accuracy = 0.01)`) = `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q711")[["coef"]]), accuracy = 0.01)` per 1,000 total births; $\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q711")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q711")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q711")[["pvalue"]],accuracy = 0.01))`; $95\%$ CI for $\hat{\beta_{1}}$ and for the prevalence rate are given by $CI(95\%)_{\hat{\beta_{1}}}$:[`r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q711")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q711")[["std"]], accuracy = 0.01)`; `r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q711")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q711")[["std"]], accuracy = 0.01)`], and $CI(95\%)_{rate}$:[`r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q711")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q711")[["std"]]), accuracy = 0.01)`; `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q711")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q711")[["std"]]), accuracy = 0.01)`], respectively).
+
+```{r ldd1, fig.cap="Limb deficiency defects - Total reported cases.", out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_grp[grepl(tolower("q711"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_grp, "q711")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+Figure \@ref(fig:ldd3) shows how the prevalence of `r tolower(unique(anom_grp[grepl("q711", tolower(qcode))][["cat"]]))` is geographically distributed in Nova Scotia by county between `r params$year1` and `r params$year2`.
+
+In the past, `r tolower(unique(anom_grp[grepl("q711", tolower(qcode))][["cat"]]))` were more prevalent in northern counties. However, in recent years, the incidence of these defects has become more concentrated in the northern, western, and eastern counties, with a higher prevalence noted in Yarmouth, Hants, Antigonish, and Inverness counties.
+
+```{r ldd3, fig.cap=paste0("Limb deficiency defects - Nova Scotia. Shifts in counties between ", params$year1, " and ", params$year2, "."), out.width= if (knitr::is_latex_output()){"65%"}}
+ # filter data
+dta <- anom_grp_map[grepl(tolower("q711"),
+                          tolower(qcode)) ] %>%
+  .[,
+    `:=` (total_anom = ifelse(count_anom < 5,
+                              "< 5",
+                              as.character(scales::comma(count_anom, accuracy = 1))),
+          total_lvb_yr = ifelse(total_lvb_yr < 5,
+                             "< 5",
+                             as.character(scales::comma(total_lvb_yr, accuracy = 1))))
+  ] %>% 
+  tidyr::complete(CDuid = sort(unique(cd_names$CDuid)),
+                  nesting(time_cat, cat, qcode, qcodecat)
+  ) %>% 
+  # merge(cd_names,
+  #       by = c("CD_UID")) %>% 
+  setDT()
+
+# nplots <- sort(unique(dta$time_lab))
+
+dta_map <- merge(cd_shp,
+                 dta,
+                 by.x = c("GeoUID"),
+                 by.y = c("CDuid"),
+                 all.x = TRUE)[,
+                               c("GeoUID", "name","cat","cd_type","time_cat",
+                                 "count_anom","total_anom","total_lvb_yr",
+                                 "rate","area","geometry")
+                 ][,
+                   `:=` (rate = data.table::fifelse(!rate %in% 0,
+                                                    rate,
+                                                    NA_integer_))] |>
+  arrange(time_cat) |>
+  mutate(BrthYear = time_cat) |>
+  sf::st_sf() |>
+  sf::st_transform(4326)
+
+if (knitr::is_html_output()){
+  # tmap_mode("view")|>
+  #   tm_view(projection = 4326)
+  # plot_map(dta_map[,-1])
+  knitr::include_url("images/maps/ldd1.html")
+} else if(knitr::is_latex_output()){
+  tmap_mode("plot")
+  plot_map_pdf(dta_map)
+}
+```
+
+```{asis, echo=knitr::is_latex_output()}
+\clearpage
+```
+
+## Selected abdominal wall defects {#section312}
+
+At a $5\%$ level, there is `r ifelse(modeling_trend(data = anom_grp, value = "q790")[["pvalue"]] >= 0.05, "no significant", ifelse(modeling_trend(data = anom_grp, value = "q790")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp, value = "q790")[["coef"]] < 0, "a decreasing", "an increasing"))` trend for `r tolower(unique(anom_grp[grepl("q790", tolower(qcode))][["cat"]]))` ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp, value = "q790")[["coef"]], accuracy = 0.001)`, p-value = `r ifelse(modeling_trend(data = anom_grp, value = "q790")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_grp, value = "q790")[["pvalue"]],accuracy = 0.01))`) for the period `r paste0(min(modeling_anal(data = anom_grp, value = "q790")[["BrthYear"]])," - ",max(modeling_anal(data = anom_grp, value = "q790")[["BrthYear"]]))`. From figure \@ref(fig:sawd1), the prevalence rate exhibited no clear trend and has fluctuated over time.
+
+Over the past 10 years `r paste0("(",params$year10+1,"-",params$year10+10,")")`, `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q790")[["pvalue"]] >= 0.05, "there is no evidence showing any trend", ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q790")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q790")[["coef"]] < 0, "there is evidence showing a decrease", "there is evidence showing an increase"))` in the prevalence rate of `r tolower(unique(anom_grp[grepl("q790", tolower(qcode))][["cat"]]))`. On average, the prevalence rate for each subsequent year is `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q790")[["coef"]]), accuracy = 0.01)` times of the previous year's rate: (prevalence rate = exp(`r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q790")[["coef"]], accuracy = 0.01)`) = `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q790")[["coef"]]), accuracy = 0.01)` per 1,000 total births; $\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q790")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q790")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q790")[["pvalue"]],accuracy = 0.01))`; $95\%$ CI for $\hat{\beta_{1}}$ and for the prevalence rate are given by $CI(95\%)_{\hat{\beta_{1}}}$:[`r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q790")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q790")[["std"]], accuracy = 0.01)`; `r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q790")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q790")[["std"]], accuracy = 0.01)`], and $CI(95\%)_{rate}$:[`r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q790")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q790")[["std"]]), accuracy = 0.01)`; `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q790")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q790")[["std"]]), accuracy = 0.01)`], respectively).
+
+```{r sawd1, fig.cap="Selected abdominal wall defects - Total reported cases.", out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_grp[grepl(tolower("q790"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_grp, "q790")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+Based on the statistical analysis, at a $5\%$ level, it is possible to observe:
+
+- `r unique(anom_ind[grepl("q790", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q790")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q790")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q790")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q790")[["coef"]], accuracy = 0.001)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q790")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q790")[["pvalue"]],accuracy = 0.01))`).
+
+```{r sawd11, fig.cap=paste0(unique(anom_ind[grepl("q790", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+## filtering neural tube defects
+## count anomaly by year
+## categorize them
+# filtering total births: lvb + stillbirths
+
+dta <- anom_ind_matage[grepl(tolower("q790"),
+                   tolower(qcode)) ]
+
+if (knitr::is_html_output()){
+plot_line_matage(data = dta,
+          var = "rate")
+} else if (knitr::is_latex_output()){
+  plot_line_pdf_matage(data = dta,
+                var = "rate")
+}
+```
+
+The highest prevalence rates for `r tolower(unique(anom_ind[grepl("q790", tolower(qcode))][["cat"]]))` are for mothers with maternal age $\ge 35$.
+
+- `r unique(anom_ind[grepl("q792", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q792")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q792")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q792")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q792")[["coef"]], accuracy = 0.001)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q792")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q792")[["pvalue"]],accuracy = 0.01))`).
+
+```{r sawd12, fig.cap=paste0(unique(anom_ind[grepl("q792", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+## filtering neural tube defects
+## count anomaly by year
+## categorize them
+# filtering total births: lvb + stillbirths
+
+dta <- anom_ind_matage[grepl(tolower("q792"),
+                   tolower(qcode)) ]
+
+if (knitr::is_html_output()){
+plot_line_matage(data = dta,
+          var = "rate")
+} else if (knitr::is_latex_output()){
+  plot_line_pdf_matage(data = dta,
+                var = "rate")
+}
+```
+
+The highest prevalence rates for `r tolower(unique(anom_ind[grepl("q792", tolower(qcode))][["cat"]]))` are for mothers with maternal age $< 25$.
+
+- `r unique(anom_ind[grepl("q793", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q793")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q793")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q793")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q793")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q793")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q793")[["pvalue"]],accuracy = 0.01))`).
+
+```{r sawd13, fig.cap=paste0(unique(anom_ind[grepl("q793", tolower(qcode))][["cat"]])," - Total reported cases."), out.width= if (knitr::is_latex_output()){"65%"}}
+## filtering neural tube defects
+## count anomaly by year
+## categorize them
+# filtering total births: lvb + stillbirths
+
+dta <- anom_ind_matage[grepl(tolower("q793"),
+                   tolower(qcode)) ]
+
+if (knitr::is_html_output()){
+plot_line_matage(data = dta,
+          var = "rate")
+} else if (knitr::is_latex_output()){
+  plot_line_pdf_matage(data = dta,
+                var = "rate")
+}
+```
+
+The highest prevalence rates for `r tolower(unique(anom_ind[grepl("q793", tolower(qcode))][["cat"]]))` are for mothers with maternal age $< 25$.
+
+Figure \@ref(fig:sawd3) shows how the prevalence of `r tolower(unique(anom_grp[grepl("q790", tolower(qcode))][["cat"]]))` is geographically distributed in Nova Scotia by county between `r params$year1` and `r params$year2`.
+
+In the past, `r tolower(unique(anom_grp[grepl("q790", tolower(qcode))][["cat"]]))` appeared to be more prevalent in western, and eastern counties. Lately, this predominance seems to have remained the same, with emphasis on Yarmouth, and Inverness counties.
+
+```{r sawd3, fig.cap=paste0("Selected abdominal wall defects - Nova Scotia. Shifts in counties between ", params$year1, " and ", params$year2, "."), out.width= if (knitr::is_latex_output()){"65%"}}
+ # filter data
+dta <- anom_grp_map[grepl(tolower("q790"),
+                          tolower(qcode)) ] %>%
+  .[,
+    `:=` (total_anom = ifelse(count_anom < 5,
+                              "< 5",
+                              as.character(scales::comma(count_anom, accuracy = 1))),
+          total_lvb_yr = ifelse(total_lvb_yr < 5,
+                             "< 5",
+                             as.character(scales::comma(total_lvb_yr, accuracy = 1))))
+  ] %>% 
+  tidyr::complete(CDuid = sort(unique(cd_names$CDuid)),
+                  nesting(time_cat, cat, qcode, qcodecat)
+  ) %>% 
+  # merge(cd_names,
+  #       by = c("CD_UID")) %>% 
+  setDT()
+
+# nplots <- sort(unique(dta$time_lab))
+
+dta_map <- merge(cd_shp,
+                 dta,
+                 by.x = c("GeoUID"),
+                 by.y = c("CDuid"),
+                 all.x = TRUE)[,
+                               c("GeoUID", "name","cat","cd_type","time_cat",
+                                 "count_anom","total_anom","total_lvb_yr",
+                                 "rate","area","geometry")
+                 ][,
+                   `:=` (rate = data.table::fifelse(!rate %in% 0,
+                                                    rate,
+                                                    NA_integer_))] |>
+  arrange(time_cat) |>
+  mutate(BrthYear = time_cat) |>
+  sf::st_sf() |>
+  sf::st_transform(4326)
+
+if (knitr::is_html_output()){
+  # tmap_mode("view")|>
+  #   tm_view(projection = 4326)
+  # plot_map(dta_map[,-1])
+  knitr::include_url("images/maps/sawd1.html")
+} else if(knitr::is_latex_output()){
+  tmap_mode("plot")
+  plot_map_pdf(dta_map)
+}
+```
+
+```{asis, echo=knitr::is_latex_output()}
+\clearpage
+```
+
+## Selected chromosomal defects {#section313}
+
+At a $5\%$ level, there is `r ifelse(modeling_trend(data = anom_grp, value = "q900")[["pvalue"]] >= 0.05, "no significant", ifelse(modeling_trend(data = anom_grp, value = "q900")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp, value = "q900")[["coef"]] < 0, "a decreasing", "an increasing"))` trend for `r tolower(unique(anom_grp[grepl("q900", tolower(qcode))][["cat"]]))` ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp, value = "q900")[["coef"]], accuracy = 0.001)`, p-value = `r ifelse(modeling_trend(data = anom_grp, value = "q900")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_grp, value = "q900")[["pvalue"]],accuracy = 0.001))`) for the period `r paste0(min(modeling_anal(data = anom_grp, value = "q900")[["BrthYear"]])," - ",max(modeling_anal(data = anom_grp, value = "q900")[["BrthYear"]]))`. From figure \@ref(fig:scd1), the prevalence rate exhibited no clear trend and has fluctuated over time.
+
+Over the past 10 years `r paste0("(",params$year10+1,"-",params$year10+10,")")`, `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q900")[["pvalue"]] >= 0.05, "there is no evidence showing any trend", ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q900")[["pvalue"]] < 0.05 & modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q900")[["coef"]] < 0, "there is evidence showing a decrease", "there is evidence showing an increase"))` in the prevalence rate of `r tolower(unique(anom_grp[grepl("q900", tolower(qcode))][["cat"]]))`. On average, the prevalence rate for each subsequent year is `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q900")[["coef"]]), accuracy = 0.01)` times of the previous year's rate: (prevalence rate = exp(`r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q900")[["coef"]], accuracy = 0.01)`) = `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q900")[["coef"]]), accuracy = 0.01)` per 1,000 total births; $\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q900")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q900")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q900")[["pvalue"]],accuracy = 0.01))`; $95\%$ CI for $\hat{\beta_{1}}$ and for the prevalence rate are given by $CI(95\%)_{\hat{\beta_{1}}}$:[`r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q900")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q900")[["std"]], accuracy = 0.01)`; `r scales::comma(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q900")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q900")[["std"]], accuracy = 0.01)`], and $CI(95\%)_{rate}$:[`r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q900")[["coef"]]-1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q900")[["std"]]), accuracy = 0.01)`; `r scales::comma(exp(modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q900")[["coef"]]+1.96*modeling_trend(data = anom_grp[BrthYear > params$year10], value = "q900")[["std"]]), accuracy = 0.01)`], respectively).
+
+```{r scd1, fig.cap="Selected chromosomal defects - Total reported cases.", out.width= if (knitr::is_latex_output()){"65%"}}
+dta <- anom_grp[grepl(tolower("q900"),
+                   tolower(qcode)) ]
+  
+xy <- modeling_anal(anom_grp, "q900")
+
+if (knitr::is_html_output()){
+p1 <- plot_line(data = dta,
+                var = "rate")
+
+p1 %>% 
+  add_trace(data = xy,
+            x = ~BrthYear,
+            y = ~rate,
+            name = ifelse(xy[["model"]] %in% "nb",
+                          "Negative Binomial GLM fit",
+                          "Poisson GLM fit"),
+            mode = "lines",
+            line = list(color = "black"),
+            marker = list(color = "black"),
+         hovertemplate = ~paste(
+                    "<b>", cat, "-", BrthYear, "</b>",
+                    "<br> Total estimated cases:",
+                    ifelse(total_anom < 5,
+                           "< 5",
+                           as.character(scales::comma(total_anom,
+                                                      accuracy = 1))),
+                    "<br> Total births:",
+                    ifelse(total_lvb_yr < 5,
+                           "< 5",
+                           as.character(scales::comma(total_lvb_yr,
+                                                      accuracy = 1))),
+                    "<br> Prevalence (*cases per 1,000 total births):",
+                    scales::comma(rate,
+                                  accuracy = 0.01),
+                    "<extra></extra>" # removes the trace name from the hover text
+                  )
+         )
+} else if(knitr::is_latex_output()){
+  xy <- xy %>% 
+  mutate(cat = ifelse(model %in% "nb",
+         "Negative Binomial GLM fit",
+         ifelse(model %in% "pois",
+         "Poisson GLM fit", cat))) %>% 
+    select(-model)
+  
+  new_dta <- rbind(dta, xy)
+  
+  plot_line_pdf(data = new_dta,
+                var = "rate")
+}
+```
+
+Based on the statistical analysis, at a $5\%$ level, it is possible to observe:
+
+- `r unique(anom_ind[grepl("q900", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q900")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q900")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q900")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q900")[["coef"]], accuracy = 0.001)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q900")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q900")[["pvalue"]],accuracy = 0.01))`).
+
+From figure \@ref(fig:scd21), `r tolower(unique(anom_ind[grepl("q900", tolower(qcode))][["cat"]]))` is most commonly observed in babies born to mothers who are 35 years of age or older.
+
+```{r scd21, fig.cap="Down syndrome by maternal age groups - Total reported cases.", out.width= if (knitr::is_latex_output()){"65%"}}
+## filtering neural tube defects
+## count anomaly by year
+## categorize them
+# filtering total births: lvb + stillbirths
+
+dta <- anom_ind_matage[grepl(tolower("q900"),
+                   tolower(qcode)) ]
+
+if (knitr::is_html_output()){
+plot_line_matage(data = dta,
+          var = "rate")
+} else if (knitr::is_latex_output()){
+  plot_line_pdf_matage(data = dta,
+                var = "rate")
+}
+```
+
+- `r unique(anom_ind[grepl("q914", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q914")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q914")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q914")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q914")[["coef"]], accuracy = 0.001)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q914")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q914")[["pvalue"]],accuracy = 0.01))`).
+
+From figure \@ref(fig:scd22), babies born to mothers who are 25 years of age or older have the highest risk of `r tolower(unique(anom_ind[grepl("q914", tolower(qcode))][["cat"]]))`.
+
+```{r scd22, fig.cap="Trisomy 13 - Patau by maternal age groups - Total reported cases.", out.width= if (knitr::is_latex_output()){"65%"}}
+## filtering neural tube defects
+## count anomaly by year
+## categorize them
+# filtering total births: lvb + stillbirths
+
+dta <- anom_ind_matage[grepl(tolower("q914"),
+                   tolower(qcode)) ]
+
+if (knitr::is_html_output()){
+plot_line_matage(data = dta,
+          var = "rate")
+} else if (knitr::is_latex_output()){
+  plot_line_pdf_matage(data = dta,
+                var = "rate")
+}
+```
+
+- `r unique(anom_ind[grepl("q910", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q910")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q910")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q910")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q910")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q910")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q910")[["pvalue"]],accuracy = 0.0001))`).
+
+From figure \@ref(fig:scd23), The risk of `r tolower(unique(anom_ind[grepl("q910", tolower(qcode))][["cat"]]))` is highest in babies born to mothers who are 35 years of age or older.
+
+```{r scd23, fig.cap="Trisomy 18 - Edwards by maternal age groups - Total reported cases.", out.width= if (knitr::is_latex_output()){"65%"}}
+## filtering neural tube defects
+## count anomaly by year
+## categorize them
+# filtering total births: lvb + stillbirths
+
+dta <- anom_ind_matage[grepl(tolower("q910"),
+                   tolower(qcode)) ]
+
+if (knitr::is_html_output()){
+plot_line_matage(data = dta,
+          var = "rate")
+} else if (knitr::is_latex_output()){
+  plot_line_pdf_matage(data = dta,
+                var = "rate")
+}
+```
+
+- `r unique(anom_ind[grepl("q960", tolower(qcode))][["cat"]])`: there `r ifelse(modeling_trend(data = anom_ind, value = "q960")[["pvalue"]] >= 0.05, "is no significant", ifelse(modeling_trend(data = anom_ind, value = "q960")[["pvalue"]] < 0.05 & modeling_trend(data = anom_ind, value = "q960")[["coef"]] < 0, "is evidence of a decreasing", "is evidence of an increasing"))` trend ($\hat{\beta_{1}} =$ `r scales::comma(modeling_trend(data = anom_ind, value = "q960")[["coef"]], accuracy = 0.01)`, p-value = `r ifelse(modeling_trend(data = anom_ind, value = "q960")[["pvalue"]] < 0.0001,"< 0.0001",scales::comma(modeling_trend(data = anom_ind, value = "q960")[["pvalue"]],accuracy = 0.01))`).
+
+Babies born to mothers who are 25 years of age or younger have the highest risk of `r tolower(unique(anom_ind[grepl("q960", tolower(qcode))][["cat"]]))`.
+  
+```{r scd24, fig.cap="Turner syndrome by maternal age groups - Total reported cases.", out.width= if (knitr::is_latex_output()){"65%"}}
+## filtering neural tube defects
+## count anomaly by year
+## categorize them
+# filtering total births: lvb + stillbirths
+
+dta <- anom_ind_matage[grepl(tolower("q960"),
+                   tolower(qcode)) ]
+
+if (knitr::is_html_output()){
+plot_line_matage(data = dta,
+          var = "rate")
+} else if (knitr::is_latex_output()){
+  plot_line_pdf_matage(data = dta,
+                var = "rate")
+}
+```
+
+Figure \@ref(fig:scd3) shows how the prevalence of `r tolower(unique(anom_grp[grepl("q900", tolower(qcode))][["cat"]]))` is geographically distributed in Nova Scotia by county between `r params$year1` and `r params$year2`.
+
+In the past, `r tolower(unique(anom_grp[grepl("q900", tolower(qcode))][["cat"]]))` appeared to be more prevalent in western, northern, and eastern counties. Lately, this predominance seems to have concentrated more towards the northern and central counties, with emphasis on Hants, and Pictou counties.
+
+```{r scd3, fig.cap=paste0("Selected chromosomal defects - Nova Scotia. Shifts in counties between ", params$year1, " and ", params$year2, "."), out.width= if (knitr::is_latex_output()){"65%"}}
+ # filter data
+dta <- anom_grp_map[grepl(tolower("q900"),
+                          tolower(qcode)) ] %>%
+  .[,
+    `:=` (total_anom = ifelse(count_anom < 5,
+                              "< 5",
+                              as.character(scales::comma(count_anom, accuracy = 1))),
+          total_lvb_yr = ifelse(total_lvb_yr < 5,
+                             "< 5",
+                             as.character(scales::comma(total_lvb_yr, accuracy = 1))))
+  ] %>% 
+  tidyr::complete(CDuid = sort(unique(cd_names$CDuid)),
+                  nesting(time_cat, cat, qcode, qcodecat)
+  ) %>% 
+  # merge(cd_names,
+  #       by = c("CD_UID")) %>% 
+  setDT()
+
+# nplots <- sort(unique(dta$time_lab))
+
+dta_map <- merge(cd_shp,
+                 dta,
+                 by.x = c("GeoUID"),
+                 by.y = c("CDuid"),
+                 all.x = TRUE)[,
+                               c("GeoUID", "name","cat","cd_type","time_cat",
+                                 "count_anom","total_anom","total_lvb_yr",
+                                 "rate","area","geometry")
+                 ][,
+                   `:=` (rate = data.table::fifelse(!rate %in% 0,
+                                                    rate,
+                                                    NA_integer_))] |>
+  arrange(time_cat) |>
+  mutate(BrthYear = time_cat) |>
+  sf::st_sf() |>
+  sf::st_transform(4326)
+
+if (knitr::is_html_output()){
+  # tmap_mode("view")|>
+  #   tm_view(projection = 4326)
+  # plot_map(dta_map[,-1])
+  knitr::include_url("images/maps/scd1.html")
+} else if(knitr::is_latex_output()){
+  tmap_mode("plot")
+  plot_map_pdf(dta_map)
+}
+```

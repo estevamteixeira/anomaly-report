@@ -24,37 +24,71 @@ pacman::p_load(pckgs, character.only = TRUE)
 # add data
 # anomaly
 cd_anom <- read.csv("data/cd_anomaly.csv", header = TRUE, stringsAsFactors = TRUE) |> 
-  dplyr::mutate(CD_UID = as.character(CD_UID),
-                Birth_Date = as.Date(as.character(Birth_Date))) |>
   ## filtering only NS counties
-  dplyr::filter(dplyr::between(CD_UID, 1201, 1299)) |> 
+  dplyr::filter(dplyr::between(CSDuid, 1201000, 1299999) &
+                dplyr::between(BrthYear, 1987, 2021)) |>
+  dplyr::filter(!substr(CSDuid, 5, 8) %in% "999") |> 
+  dplyr::mutate(CSDuid = as.character(CSDuid),
+                Birth_Date = as.Date(as.character(Birth_Date)),
+                CDuid = substr(CSDuid, 1, 4),
+                # Cluster_Number = stringr::str_pad(Cluster_Number, 6, pad = "0"),
+                # NetworkID = substr(Cluster_Number, 1, 4),
+                # ZoneID = substr(Cluster_Number, 1, 2),
+                CSDuid = ifelse(CSDuid %in% c("1208001","1208002"),
+                                "1208003",
+                                CSDuid),
+                CSDName = ifelse(CSDuid %in% c("1208003"),
+                                 "West Hants",
+                                 CSDName),
+                CSDType = ifelse(CSDuid %in% c("1208003"),
+                                 "Rural municipality",
+                                 CSDType)) |>
   data.table::setDT()
 
 # births
 cd_birth <- read.csv("data/cd_birth.csv", header = TRUE, stringsAsFactors = TRUE) |> 
-  dplyr::mutate(CD_UID = as.character(CD_UID)) |> 
+  ## filtering only NS counties
+  dplyr::filter(dplyr::between(CSDuid, 1201000, 1299999) &
+                  dplyr::between(BrthYear, 1987, 2021)) |>
+  dplyr::filter(!substr(CSDuid, 5, 8) %in% "999") |>
+  dplyr::mutate(CSDuid = as.character(CSDuid),
+                CDuid = substr(CSDuid, 1, 4),
+                # Cluster_Number = stringr::str_pad(Cluster_Number, 6, pad = "0"),
+                # NetworkID = substr(Cluster_Number, 1, 4),
+                # ZoneID = substr(Cluster_Number, 1, 2),
+                CSDuid = ifelse(CSDuid %in% c("1208001","1208002"),
+                                "1208003",
+                                CSDuid),
+                CSDName = ifelse(CSDuid %in% c("1208003"),
+                                 "West Hants",
+                                 CSDName),
+                CSDType = ifelse(CSDuid %in% c("1208003"),
+                                 "Rural municipality",
+                                 CSDType)) |>
   data.table::setDT()
 
+## Individual -------
 anom_ind <- unique(cd_anom[,
-                           .(CaseID, CD_UID, BrthYear, Diags)]) %>% 
+                           .(CaseID, BIRTHID, MOTHERID,
+                             CSDuid, CDuid, BrthYear, dlv, Diags)]) %>% 
   .[,`:=` (cat = fcase(
     grepl("^Q00", Diags), "Anencephaly",
     grepl("^Q01", Diags), "Encephalocele",
-    grepl("^Q05|Q760", Diags), "Spina bifida",
+    grepl("^Q05", Diags), "Spina bifida",
     grepl("^Q02", Diags), "Microcephaly",
     grepl("^Q03", Diags), "Congenital hydrocephalus",
     grepl("^Q041|Q042", Diags), "Arhinencephaly/Holoprosencephaly",
     grepl("^Q110|Q111|Q112", Diags), "Anophtalmos/Microphtalmos",
     grepl("^Q160|Q172", Diags), "Anotia/Microtia",
-    grepl("^Q30", Diags), "Choanal atresia",
+    grepl("^Q300", Diags), "Choanal atresia",
     grepl("^Q200", Diags), "Commom truncus",
-    grepl("^Q2030|Q2031|Q2032|Q2038", Diags), "Discordant ventriculoarterial connection",
+    grepl("^Q201|Q203|Q205", Diags), "Transposition of great vessels",
     grepl("^Q212", Diags), "Atrioventricular septal defect",
     grepl("^Q213", Diags), "Tetralogy of Fallot",
     grepl("^Q234", Diags), "Hypoplastic left heart syndrome",
     grepl("^Q251", Diags), "Coarctation of aorta",
-    grepl("^Q35", Diags), "Cleft palate",
-    grepl("^Q36", Diags), "Cleft lip",
+    grepl("^Q35", Diags), "Cleft palate only",
+    grepl("^Q36", Diags), "Cleft lip only",
     grepl("^Q37", Diags), "Cleft palate with cleft lip",
     grepl("^Q390|Q391|Q392|Q393|Q394", Diags), "Oesophageal atresia/stenosis, tracheoesophageal fistula",
     grepl("^Q41", Diags), "Small intestine absence/atresia/stenosis",
@@ -64,15 +98,16 @@ anom_ind <- unique(cd_anom[,
     grepl("^Q531|Q532|Q539", Diags), "Cryptorchidism/undescended testicles",
     grepl("Q54|Q540|Q541|Q542|Q543|
           Q545|Q546|Q547|Q548|Q549", Diags), "Hypospadias",
-    grepl("^Q56", Diags), "Indeterminate sex and pseudohermaphroditism",
+    grepl("^Q56", Diags), "Indeterminate sex",
     grepl("^Q640", Diags), "Epispadias",
     grepl("^Q600|Q601|Q602", Diags), "Renal agenesis",
     grepl("^Q611|Q612|Q613|Q614|
           Q615|Q618|Q619", Diags), "Cystic kidney",
-    grepl("^Q641", Diags), "Bladder and cloacal exstroph",
+    grepl("^Q641", Diags), "Bladder and cloacal exstrophy",
     grepl("^Q642|Q643", Diags), "Lower urinary tract obstruction",
     grepl("^Q65", Diags), "Hip dysplasia",
     grepl("^Q71|Q72|Q73", Diags), "Limb deficiency defects",
+    grepl("^Q790", Diags), "Diaphragmatic hernia",
     grepl("^Q792", Diags), "Omphalocele/Exomphalos",
     grepl("^Q793", Diags), "Gastroschisis",
     grepl("^Q90", Diags), "Down Syndrome",
@@ -81,26 +116,26 @@ anom_ind <- unique(cd_anom[,
     grepl("^Q96", Diags), "Turner syndrome",
     default = "Other"
   ))] %>%
-  # remove q54 not hypospadias
-  .[!Diags %in% c("Q544")] %>%
+  # remove q54.4, Q35.7
+  .[!Diags %in% c("Q544","Q357")] %>%
   .[,`:=` (qcode = stringr::str_c(unique(Diags), collapse="|"),
            qcodecat = fcase(
              grepl("^anencephaly", tolower(cat)), "Q00",
              grepl("^encephalocele", tolower(cat)), "Q01",
-             grepl("^spina bifida", tolower(cat)), "Q05-Q76.0",
+             grepl("^spina bifida", tolower(cat)), "Q05",
              grepl("^microcephaly", tolower(cat)), "Q02",
              grepl("^congenital hydrocephalus", tolower(cat)), "Q03",
              grepl("^arhinencephaly", tolower(cat)), "Q04.1, Q04.2",
              grepl("^anophtalmos", tolower(cat)), "Q11.0-Q11.2",
              grepl("^anotia", tolower(cat)), "Q16.0, Q17.2",
-             grepl("^choanal", tolower(cat)), "Q30",
+             grepl("^choanal", tolower(cat)), "Q30.0",
              grepl("^commom", tolower(cat)), "Q20.0",
-             grepl("^discordant", tolower(cat)), "Q20.30-Q20.32, Q20.38",
+             grepl("^vessels", tolower(cat)), "Q20.1, Q20.3, Q20.5",
              grepl("^atrioventricular septal", tolower(cat)), "Q21.2",
              grepl("^tetralogy", tolower(cat)), "Q21.3",
              grepl("^hypoplastic", tolower(cat)), "Q23.4",
              grepl("^coarctation", tolower(cat)), "Q25.1",
-             grepl("^cleft palate$", tolower(cat)), "Q35",
+             grepl("^cleft palate$", tolower(cat)), "Q35, excludes Q35.7",
              grepl("^cleft lip$", tolower(cat)), "Q36",
              grepl("^cleft palate with cleft lip$", tolower(cat)), "Q37",
              grepl("^oesophageal", tolower(cat)), "Q39.0-Q39.4",
@@ -109,7 +144,7 @@ anom_ind <- unique(cd_anom[,
              grepl("^hirschsprung", tolower(cat)), "Q43.1",
              grepl("^atresia", tolower(cat)), "Q44.2",
              grepl("^cryptorchidism", tolower(cat)), "Q53.1, Q53.2, Q53.9",
-             grepl("^hypospadias", tolower(cat)), "Q54:excludes Q54.4",
+             grepl("^hypospadias", tolower(cat)), "Q54, excludes Q54.4",
              grepl("^indeterminate", tolower(cat)), "Q56",
              grepl("^epispadias", tolower(cat)), "Q64.0",
              grepl("^renal", tolower(cat)), "Q60.0-Q60.2",
@@ -118,6 +153,7 @@ anom_ind <- unique(cd_anom[,
              grepl("^lower", tolower(cat)), "Q64.2, Q64.3",
              grepl("^hip dysplasia", tolower(cat)), "Q65",
              grepl("^limb", tolower(cat)), "Q71-Q73",
+             grepl("^diaphragmatic", tolower(cat)), "Q79.0",
              grepl("^omphalocele", tolower(cat)), "Q79.2",
              grepl("^gastroschisis", tolower(cat)), "Q79.3",
              grepl("^down", tolower(cat)), "Q90",
@@ -138,20 +174,22 @@ anom_ind <- unique(cd_anom[,
   unique() %>% 
   .[order(cat, BrthYear)] 
 
+## Grouped --------
 anom_grp <- unique(cd_anom[,
-                           .(CaseID, CD_UID, BrthYear, Diags)]) %>% 
+                           .(CaseID, BIRTHID, MOTHERID,
+                             CSDuid, CDuid, BrthYear, dlv, Diags)]) %>% 
   .[,`:=` (cat = fcase(
     grepl("^Q00", Diags), "Neural tube defects",
     grepl("^Q01", Diags), "Neural tube defects",
-    grepl("^Q05|Q760", Diags), "Neural tube defects",
+    grepl("^Q05", Diags), "Neural tube defects",
     grepl("^Q02", Diags), "Selected central nervous system defects",
     grepl("^Q03", Diags), "Selected central nervous system defects",
     grepl("^Q041|Q042", Diags), "Selected central nervous system defects",
     grepl("^Q110|Q111|Q112", Diags), "Selected sense organ defects",
     grepl("^Q160|Q172", Diags), "Selected sense organ defects",
-    grepl("^Q30", Diags), "Selected sense organ defects",
-    grepl("^Q20", Diags), "Selected congenital heart defects",
-    grepl("^Q2030|Q2031|Q2032|Q2038", Diags), "Selected congenital heart defects",
+    grepl("^Q300", Diags), "Selected sense organ defects",
+    grepl("^Q200", Diags), "Selected congenital heart defects",
+    grepl("^Q201|Q203|Q205", Diags), "Selected congenital heart defects",
     grepl("^Q212", Diags), "Selected congenital heart defects",
     grepl("^Q213", Diags), "Selected congenital heart defects",
     grepl("^Q234", Diags), "Selected congenital heart defects",
@@ -176,6 +214,7 @@ anom_grp <- unique(cd_anom[,
     grepl("^Q642|Q643", Diags), "Selected urinary tract defects",
     grepl("^Q65", Diags), "Hip dysplasia",
     grepl("^Q71|Q72|Q73", Diags), "Limb deficiency defects",
+    grepl("^Q790", Diags), "Selected abdominal wall defects",
     grepl("^Q792", Diags), "Selected abdominal wall defects",
     grepl("^Q793", Diags), "Selected abdominal wall defects",
     grepl("^Q90", Diags), "Selected chromosomal defects",
@@ -184,20 +223,20 @@ anom_grp <- unique(cd_anom[,
     grepl("^Q96", Diags), "Selected chromosomal defects",
     default = "Other"
   ))] %>%
-  .[!Diags %in% c("Q544")] %>% 
+  .[!Diags %in% c("Q544","Q357")] %>% 
   .[,`:=` (qcode = stringr::str_c(unique(Diags), collapse="|"),
            qcodecat = fcase(
-             grepl("^neural tube", tolower(cat)), "Q00, Q01, Q05, Q76.0",
+             grepl("^neural tube", tolower(cat)), "Q00, Q01, Q05",
              grepl("^selected central nervous", tolower(cat)), "Q02, Q03, Q04.1, Q04.2",
-             grepl("^selected sense", tolower(cat)), "Q11.0-Q11.2, Q16.0, Q17.2, Q30",
-             grepl("^selected congenital heart", tolower(cat)), "Q20, Q21.2, Q21.3, Q23.4, Q25.1",
-             grepl("^oro-facial", tolower(cat)), "Q35-Q37",
+             grepl("^selected sense", tolower(cat)), "Q11.0-Q11.2, Q16.0, Q17.2, Q30.0",
+             grepl("^selected congenital heart", tolower(cat)), "Q20.0, Q20.1, Q20.3, Q20.5, Q21.2, Q21.3, Q23.4, Q25.1",
+             grepl("^oro-facial", tolower(cat)), "Q35-Q37, excludes Q35.7",
              grepl("^selected gastrointestinal", tolower(cat)), "Q39.0-Q39.4, Q41, Q42.0-Q42.3, Q43.1, Q44.2",
-             grepl("^selected genital", tolower(cat)), "Q53.1, Q53.2, Q53.9,
-             Q54:excludes Q54.4, Q56, Q64.0",
+             grepl("^selected genital", tolower(cat)), "Q53.1, Q53.2, Q53.9, Q54, excludes Q54.4, Q56, Q64.0",
              grepl("^selected urinary", tolower(cat)), "Q60.0-Q60.2, Q61.1-Q61.5, Q61.8, Q61.9, Q64.1-Q64.3",
              grepl("^hip", tolower(cat)), "Q65",
              grepl("^limb", tolower(cat)), "Q71-Q73",
+             grepl("^congenital diaphragmatic", tolower(cat)), "Q79.0",
              grepl("^selected abdominal", tolower(cat)), "Q79.2, Q79.3",
              grepl("^selected chromosomal", tolower(cat)), "Q90, Q91.0-Q91.7, Q96",
              grepl("^other", tolower(cat)), "Other"
@@ -216,28 +255,29 @@ anom_grp <- unique(cd_anom[,
   unique() %>% 
   .[order(cat, BrthYear)]
 
-## Maternal age
+## Individual - Maternal age ---------
 
 anom_ind_matage <- unique(cd_anom[,
-                           .(CaseID, CD_UID, BrthYear, Diags, matage)]) %>% 
+                           .(CaseID, BIRTHID, MOTHERID,CSDuid, CDuid,
+                             BrthYear, dlv, Diags, DMMATAGE)]) %>% 
   .[,`:=` (cat = fcase(
     grepl("^Q00", Diags), "Anencephaly",
     grepl("^Q01", Diags), "Encephalocele",
-    grepl("^Q05|Q760", Diags), "Spina bifida",
+    grepl("^Q05", Diags), "Spina bifida",
     grepl("^Q02", Diags), "Microcephaly",
     grepl("^Q03", Diags), "Congenital hydrocephalus",
     grepl("^Q041|Q042", Diags), "Arhinencephaly/Holoprosencephaly",
     grepl("^Q110|Q111|Q112", Diags), "Anophtalmos/Microphtalmos",
     grepl("^Q160|Q172", Diags), "Anotia/Microtia",
-    grepl("^Q30", Diags), "Choanal atresia",
+    grepl("^Q300", Diags), "Choanal atresia",
     grepl("^Q200", Diags), "Commom truncus",
-    grepl("^Q2030|Q2031|Q2032|Q2038", Diags), "Discordant ventriculoarterial connection",
+    grepl("^Q201|Q203|Q205", Diags), "Transposition of great vessels",
     grepl("^Q212", Diags), "Atrioventricular septal defect",
     grepl("^Q213", Diags), "Tetralogy of Fallot",
     grepl("^Q234", Diags), "Hypoplastic left heart syndrome",
     grepl("^Q251", Diags), "Coarctation of aorta",
-    grepl("^Q35", Diags), "Cleft palate",
-    grepl("^Q36", Diags), "Cleft lip",
+    grepl("^Q35", Diags), "Cleft palate only",
+    grepl("^Q36", Diags), "Cleft lip only",
     grepl("^Q37", Diags), "Cleft palate with cleft lip",
     grepl("^Q390|Q391|Q392|Q393|Q394", Diags), "Oesophageal atresia/stenosis, tracheoesophageal fistula",
     grepl("^Q41", Diags), "Small intestine absence/atresia/stenosis",
@@ -247,15 +287,16 @@ anom_ind_matage <- unique(cd_anom[,
     grepl("^Q531|Q532|Q539", Diags), "Cryptorchidism/undescended testicles",
     grepl("Q54|Q540|Q541|Q542|Q543|
           Q545|Q546|Q547|Q548|Q549", Diags), "Hypospadias",
-    grepl("^Q56", Diags), "Indeterminate sex and pseudohermaphroditism",
+    grepl("^Q56", Diags), "Indeterminate sex",
     grepl("^Q640", Diags), "Epispadias",
     grepl("^Q600|Q601|Q602", Diags), "Renal agenesis",
     grepl("^Q611|Q612|Q613|Q614|
           Q615|Q618|Q619", Diags), "Cystic kidney",
-    grepl("^Q641", Diags), "Bladder and cloacal exstroph",
+    grepl("^Q641", Diags), "Bladder and cloacal exstrophy",
     grepl("^Q642|Q643", Diags), "Lower urinary tract obstruction",
     grepl("^Q65", Diags), "Hip dysplasia",
     grepl("^Q71|Q72|Q73", Diags), "Limb deficiency defects",
+    grepl("^Q790", Diags), "Diaphragmatic hernia",
     grepl("^Q792", Diags), "Omphalocele/Exomphalos",
     grepl("^Q793", Diags), "Gastroschisis",
     grepl("^Q90", Diags), "Down Syndrome",
@@ -264,26 +305,27 @@ anom_ind_matage <- unique(cd_anom[,
     grepl("^Q96", Diags), "Turner syndrome",
     default = "Other"
   ))] %>%
-  # remove q54 not hypospadias
-  .[!Diags %in% c("Q544")] %>%
+  # remove q54.4, Q35.7
+  .[!Diags %in% c("Q544","Q357")] %>%
+  .[!is.na(DMMATAGE)] %>%
   .[,`:=` (qcode = stringr::str_c(unique(Diags), collapse="|"),
            qcodecat = fcase(
              grepl("^anencephaly", tolower(cat)), "Q00",
              grepl("^encephalocele", tolower(cat)), "Q01",
-             grepl("^spina bifida", tolower(cat)), "Q05-Q76.0",
+             grepl("^spina bifida", tolower(cat)), "Q05",
              grepl("^microcephaly", tolower(cat)), "Q02",
              grepl("^congenital hydrocephalus", tolower(cat)), "Q03",
              grepl("^arhinencephaly", tolower(cat)), "Q04.1, Q04.2",
              grepl("^anophtalmos", tolower(cat)), "Q11.0-Q11.2",
              grepl("^anotia", tolower(cat)), "Q16.0, Q17.2",
-             grepl("^choanal", tolower(cat)), "Q30",
+             grepl("^choanal", tolower(cat)), "Q30.0",
              grepl("^commom", tolower(cat)), "Q20.0",
-             grepl("^discordant", tolower(cat)), "Q20.30-Q20.32, Q20.38",
+             grepl("^vessels", tolower(cat)), "Q20.1, Q20.3, Q20.5",
              grepl("^atrioventricular septal", tolower(cat)), "Q21.2",
              grepl("^tetralogy", tolower(cat)), "Q21.3",
              grepl("^hypoplastic", tolower(cat)), "Q23.4",
              grepl("^coarctation", tolower(cat)), "Q25.1",
-             grepl("^cleft palate$", tolower(cat)), "Q35",
+             grepl("^cleft palate$", tolower(cat)), "Q35, excludes Q35.7",
              grepl("^cleft lip$", tolower(cat)), "Q36",
              grepl("^cleft palate with cleft lip$", tolower(cat)), "Q37",
              grepl("^oesophageal", tolower(cat)), "Q39.0-Q39.4",
@@ -292,7 +334,7 @@ anom_ind_matage <- unique(cd_anom[,
              grepl("^hirschsprung", tolower(cat)), "Q43.1",
              grepl("^atresia", tolower(cat)), "Q44.2",
              grepl("^cryptorchidism", tolower(cat)), "Q53.1, Q53.2, Q53.9",
-             grepl("^hypospadias", tolower(cat)), "Q54:excludes Q54.4",
+             grepl("^hypospadias", tolower(cat)), "Q54, excludes Q54.4",
              grepl("^indeterminate", tolower(cat)), "Q56",
              grepl("^epispadias", tolower(cat)), "Q64.0",
              grepl("^renal", tolower(cat)), "Q60.0-Q60.2",
@@ -301,6 +343,7 @@ anom_ind_matage <- unique(cd_anom[,
              grepl("^lower", tolower(cat)), "Q64.2, Q64.3",
              grepl("^hip dysplasia", tolower(cat)), "Q65",
              grepl("^limb", tolower(cat)), "Q71-Q73",
+             grepl("^diaphragmatic", tolower(cat)), "Q79.0",
              grepl("^omphalocele", tolower(cat)), "Q79.2",
              grepl("^gastroschisis", tolower(cat)), "Q79.3",
              grepl("^down", tolower(cat)), "Q90",
@@ -309,42 +352,48 @@ anom_ind_matage <- unique(cd_anom[,
              grepl("^turner", tolower(cat)), "Q96",
              default = "Other"
            ),
-           matage_format = fcase(
-             matage %in% "1", "age < 20",
-             matage %in% "2", "20 \u2264 age < 25",
-             matage %in% "3", "25 \u2264 age < 30",
-             matage %in% "4", "30 \u2264 age < 35",
-             matage %in% "5", "35 \u2264 age < 40",
-             matage %in% "6", "age \u2265 40"
-           )),
+           matage_format = factor(fcase(
+             DMMATAGE < 25, "< 25",
+             # data.table::between(DMMATAGE, 20, 24.999), "20-24",
+             data.table::between(DMMATAGE, 25, 29.999), "25-34",
+             # data.table::between(DMMATAGE, 30, 34.999), "30-34",
+             DMMATAGE >= 35, "\u2265 35",
+             # data.table::between(DMMATAGE, 40, 44.999), "40-44",
+             # DMMATAGE >= 45, "\u2265 45",
+             default = "-1"
+           ), levels = c("< 25", #"20-24", "25-29",
+                         "25-34",# "35-39", "40-44",
+                         "\u2265 35", "-1"))),
     by = .(cat)] %>% 
   .[,`:=` (count_anom = .N),
     by = .(BrthYear, cat, matage_format)] %>%
   .[,.(BrthYear, cat, qcode, qcodecat,
-       matage, matage_format, count_anom)] %>% 
+       matage_format, DMMATAGE, count_anom)] %>% 
   unique() %>% 
   .[,`:=` (total_anom = sum(count_anom,
                             na.rm = TRUE)),
     by = .(BrthYear, cat, matage_format)] %>%
   .[,.(BrthYear, cat, qcode, qcodecat,
-       matage, matage_format, total_anom)] %>% 
+       matage_format, total_anom)] %>% 
   unique() %>% 
   .[order(cat, BrthYear)] 
 
+# Grouped - Maternal age --------
 anom_grp_matage <- unique(cd_anom[,
-                           .(CaseID, CD_UID, BrthYear, Diags, matage)]) %>% 
+                           .(CaseID, BIRTHID, MOTHERID,CSDuid, CDuid,
+                             BrthYear, dlv, Diags, DMMATAGE)]) %>% 
   .[,`:=` (cat = fcase(
     grepl("^Q00", Diags), "Neural tube defects",
     grepl("^Q01", Diags), "Neural tube defects",
-    grepl("^Q05|Q760", Diags), "Neural tube defects",
+    grepl("^Q05", Diags), "Neural tube defects",
     grepl("^Q02", Diags), "Selected central nervous system defects",
     grepl("^Q03", Diags), "Selected central nervous system defects",
     grepl("^Q041|Q042", Diags), "Selected central nervous system defects",
     grepl("^Q110|Q111|Q112", Diags), "Selected sense organ defects",
     grepl("^Q160|Q172", Diags), "Selected sense organ defects",
-    grepl("^Q30", Diags), "Selected sense organ defects",
-    grepl("^Q20", Diags), "Selected congenital heart defects",
-    grepl("^Q2030|Q2031|Q2032|Q2038", Diags), "Selected congenital heart defects",
+    grepl("^Q300", Diags), "Selected sense organ defects",
+    grepl("^Q200", Diags), "Selected congenital heart defects",
+    grepl("^Q201|Q203|Q205", Diags), "Selected congenital heart defects",
     grepl("^Q212", Diags), "Selected congenital heart defects",
     grepl("^Q213", Diags), "Selected congenital heart defects",
     grepl("^Q234", Diags), "Selected congenital heart defects",
@@ -369,6 +418,7 @@ anom_grp_matage <- unique(cd_anom[,
     grepl("^Q642|Q643", Diags), "Selected urinary tract defects",
     grepl("^Q65", Diags), "Hip dysplasia",
     grepl("^Q71|Q72|Q73", Diags), "Limb deficiency defects",
+    grepl("^Q790", Diags), "Selected abdominal wall defects",
     grepl("^Q792", Diags), "Selected abdominal wall defects",
     grepl("^Q793", Diags), "Selected abdominal wall defects",
     grepl("^Q90", Diags), "Selected chromosomal defects",
@@ -377,64 +427,69 @@ anom_grp_matage <- unique(cd_anom[,
     grepl("^Q96", Diags), "Selected chromosomal defects",
     default = "Other"
   ))] %>%
-  .[!Diags %in% c("Q544")] %>% 
+  .[!Diags %in% c("Q544","Q357")] %>% 
   .[,`:=` (qcode = stringr::str_c(unique(Diags), collapse="|"),
            qcodecat = fcase(
-             grepl("^neural tube", tolower(cat)), "Q00, Q01, Q05, Q76.0",
+             grepl("^neural tube", tolower(cat)), "Q00, Q01, Q05",
              grepl("^selected central nervous", tolower(cat)), "Q02, Q03, Q04.1, Q04.2",
-             grepl("^selected sense", tolower(cat)), "Q11.0-Q11.2, Q16.0, Q17.2, Q30",
-             grepl("^selected congenital heart", tolower(cat)), "Q20, Q21.2, Q21.3, Q23.4, Q25.1",
-             grepl("^oro-facial", tolower(cat)), "Q35-Q37",
+             grepl("^selected sense", tolower(cat)), "Q11.0-Q11.2, Q16.0, Q17.2, Q30.0",
+             grepl("^selected congenital heart", tolower(cat)), "Q20.0, Q20.1, Q20.3, Q20.5, Q21.2, Q21.3, Q23.4, Q25.1",
+             grepl("^oro-facial", tolower(cat)), "Q35-Q37, excludes Q35.7",
              grepl("^selected gastrointestinal", tolower(cat)), "Q39.0-Q39.4, Q41, Q42.0-Q42.3, Q43.1, Q44.2",
-             grepl("^selected genital", tolower(cat)), "Q53.1, Q53.2, Q53.9,
-             Q54:excludes Q54.4, Q56, Q64.0",
+             grepl("^selected genital", tolower(cat)), "Q53.1, Q53.2, Q53.9, Q54, excludes Q54.4, Q56, Q64.0",
              grepl("^selected urinary", tolower(cat)), "Q60.0-Q60.2, Q61.1-Q61.5, Q61.8, Q61.9, Q64.1-Q64.3",
              grepl("^hip", tolower(cat)), "Q65",
              grepl("^limb", tolower(cat)), "Q71-Q73",
+             grepl("^congenital diaphragmatic", tolower(cat)), "Q79.0",
              grepl("^selected abdominal", tolower(cat)), "Q79.2, Q79.3",
              grepl("^selected chromosomal", tolower(cat)), "Q90, Q91.0-Q91.7, Q96",
              grepl("^other", tolower(cat)), "Other"
            ),
-           matage_format = fcase(
-             matage %in% "1", "age < 20",
-             matage %in% "2", "20 \u2264 age < 25",
-             matage %in% "3", "25 \u2264 age < 30",
-             matage %in% "4", "30 \u2264 age < 35",
-             matage %in% "5", "35 \u2264 age < 40",
-             matage %in% "6", "age \u2265 40"
-           )),
+           matage_format = factor(fcase(
+             DMMATAGE < 25, "< 25",
+             # data.table::between(DMMATAGE, 20, 24.999), "20-24",
+             data.table::between(DMMATAGE, 25, 29.999), "25-34",
+             # data.table::between(DMMATAGE, 30, 34.999), "30-34",
+             DMMATAGE >= 35, "\u2265 35",
+             # data.table::between(DMMATAGE, 40, 44.999), "40-44",
+             # DMMATAGE >= 45, "\u2265 45",
+             default = "-1"
+           ), levels = c("< 25", #"20-24", "25-29",
+                         "25-34",# "35-39", "40-44",
+                         "\u2265 35", "-1"))),
     by = .(cat)] %>%
-  .[,.(CaseID, BrthYear, cat, qcode, qcodecat, matage, matage_format)] %>% 
+  .[,.(CaseID, BrthYear, cat, qcode, qcodecat, matage_format)] %>% 
   unique() %>%
   .[,`:=` (count_anom = .N),
     by = .(BrthYear, cat, matage_format)] %>%
   .[,.(BrthYear, cat, qcode, qcodecat,
-       matage, matage_format, count_anom)] %>% 
+       matage_format, count_anom)] %>% 
   unique() %>% 
   .[,`:=` (total_anom = sum(count_anom,
                             na.rm = TRUE)),
     by = .(BrthYear, cat, matage_format)] %>%
   .[,.(BrthYear, cat, qcode, qcodecat,
-       matage, matage_format, total_anom)] %>% 
+       matage_format, total_anom)] %>% 
   unique() %>% 
   .[order(cat, BrthYear)]
 
-## Anomaly grouped for mapping
+## Anomaly grouped for mapping ------
 
 anom_grp_map <- unique(cd_anom[,
-                           .(CaseID, CD_UID, BrthYear, Diags)]) %>% 
-  .[,`:=` (cat = fcase(
+                           .(CaseID, BIRTHID, MOTHERID, CSDuid, CDuid,
+                             BrthYear, dlv, Diags)]) %>% 
+  .[,`:=` (cat = factor(fcase(
     grepl("^Q00", Diags), "Neural tube defects",
     grepl("^Q01", Diags), "Neural tube defects",
-    grepl("^Q05|Q760", Diags), "Neural tube defects",
+    grepl("^Q05", Diags), "Neural tube defects",
     grepl("^Q02", Diags), "Selected central nervous system defects",
     grepl("^Q03", Diags), "Selected central nervous system defects",
     grepl("^Q041|Q042", Diags), "Selected central nervous system defects",
     grepl("^Q110|Q111|Q112", Diags), "Selected sense organ defects",
     grepl("^Q160|Q172", Diags), "Selected sense organ defects",
-    grepl("^Q30", Diags), "Selected sense organ defects",
-    grepl("^Q20", Diags), "Selected congenital heart defects",
-    grepl("^Q2030|Q2031|Q2032|Q2038", Diags), "Selected congenital heart defects",
+    grepl("^Q300", Diags), "Selected sense organ defects",
+    grepl("^Q200", Diags), "Selected congenital heart defects",
+    grepl("^Q201|Q203|Q205", Diags), "Selected congenital heart defects",
     grepl("^Q212", Diags), "Selected congenital heart defects",
     grepl("^Q213", Diags), "Selected congenital heart defects",
     grepl("^Q234", Diags), "Selected congenital heart defects",
@@ -459,6 +514,7 @@ anom_grp_map <- unique(cd_anom[,
     grepl("^Q642|Q643", Diags), "Selected urinary tract defects",
     grepl("^Q65", Diags), "Hip dysplasia",
     grepl("^Q71|Q72|Q73", Diags), "Limb deficiency defects",
+    grepl("^Q790", Diags), "Selected abdominal wall defects",
     grepl("^Q792", Diags), "Selected abdominal wall defects",
     grepl("^Q793", Diags), "Selected abdominal wall defects",
     grepl("^Q90", Diags), "Selected chromosomal defects",
@@ -466,28 +522,38 @@ anom_grp_map <- unique(cd_anom[,
     grepl("^Q910|Q911|Q912|Q913", Diags), "Selected chromosomal defects",
     grepl("^Q96", Diags), "Selected chromosomal defects",
     default = "Other"
-  ))] %>%
-  .[!Diags %in% c("Q544")] %>% 
+  )))] %>%
+  .[!Diags %in% c("Q544","Q357") &
+      between(BrthYear, 2006, 2020)] %>% 
   .[,`:=` (qcode = stringr::str_c(unique(Diags), collapse="|"),
-           time_cat = cut(BrthYear, breaks = round(length(unique(BrthYear)))/10,
-                          include.lowest = TRUE,
-                          # right = TRUE,
-                          dig.lab = 3),
-           qcodecat = fcase(
-             grepl("^neural tube", tolower(cat)), "Q00, Q01, Q05, Q76.0",
+           # time_cat = cut(BrthYear, breaks = round(length(unique(BrthYear)))/10,
+           #                include.lowest = TRUE,
+           #                # right = TRUE,
+           #                dig.lab = 3),
+           time_cat = factor(fcase(
+             # data.table::between(BrthYear, 2001, 2005), "2001-2005",
+             data.table::between(BrthYear, 2006, 2010), "2006-2010",
+             data.table::between(BrthYear, 2011, 2015), "2011-2015",
+             data.table::between(BrthYear, 2016, 2020), "2016-2020",
+             default = NA
+           ), levels = c(#"2001-2005",
+             "2006-2010","2011-2015","2016-2020")),
+           qcodecat = factor(fcase(
+             grepl("^neural tube", tolower(cat)), "Q00, Q01, Q05",
              grepl("^selected central nervous", tolower(cat)), "Q02, Q03, Q04.1, Q04.2",
-             grepl("^selected sense", tolower(cat)), "Q11.0-Q11.2, Q16.0, Q17.2, Q30",
-             grepl("^selected congenital heart", tolower(cat)), "Q20, Q21.2, Q21.3, Q23.4, Q25.1",
-             grepl("^oro-facial", tolower(cat)), "Q35-Q37",
+             grepl("^selected sense", tolower(cat)), "Q11.0-Q11.2, Q16.0, Q17.2, Q30.0",
+             grepl("^selected congenital heart", tolower(cat)), "Q20.0, Q20.1, Q20.3, Q20.5, Q21.2, Q21.3, Q23.4, Q25.1",
+             grepl("^oro-facial", tolower(cat)), "Q35-Q37, excludes Q35.7",
              grepl("^selected gastrointestinal", tolower(cat)), "Q39.0-Q39.4, Q41, Q42.0-Q42.3, Q43.1, Q44.2",
-             grepl("^selected genital", tolower(cat)), "Q53.1, Q53.2, Q53.9, Q54:excludes Q54.4, Q56, Q64.0",
+             grepl("^selected genital", tolower(cat)), "Q53.1, Q53.2, Q53.9, Q54, excludes Q54.4, Q56, Q64.0",
              grepl("^selected urinary", tolower(cat)), "Q60.0-Q60.2, Q61.1-Q61.5, Q61.8, Q61.9, Q64.1-Q64.3",
              grepl("^hip", tolower(cat)), "Q65",
              grepl("^limb", tolower(cat)), "Q71-Q73",
+             grepl("^congenital diaphragmatic", tolower(cat)), "Q79.0",
              grepl("^selected abdominal", tolower(cat)), "Q79.2, Q79.3",
              grepl("^selected chromosomal", tolower(cat)), "Q90, Q91.0-Q91.7, Q96",
              grepl("^other", tolower(cat)), "Other"
-           )),
+           ))),
     by = .(cat)] %>%
   # .[,`:=` (
   #   # time_lab = fifelse(grepl("\\((.+),.*", time_cat),
@@ -502,41 +568,95 @@ anom_grp_map <- unique(cd_anom[,
   #                     as.numeric(max(BrthYear, na.rm = TRUE)))
   # ),
   # by = .(CD_UID, cat, time_cat)] %>% 
-  .[,.(CaseID, BrthYear, CD_UID, cat, qcode, qcodecat, time_cat)] %>% 
+  .[,.(CaseID, BrthYear, CSDuid, CDuid,
+       cat, qcode, qcodecat,time_cat)] %>% 
   unique() %>%
   .[,`:=` (count_anom = .N),
-    by = .(CD_UID, cat, time_cat)] %>%
-  .[,.(CD_UID,  BrthYear, cat, qcode, qcodecat, time_cat, count_anom)] %>% 
+    by = .(CDuid, cat, time_cat)] %>%
+  .[,.(CDuid, cat, qcode, qcodecat, time_cat, count_anom)] %>% 
   unique()
 
 anom_grp_map <- anom_grp_map %>% 
-  group_by(cat, time_cat) %>% 
-  tidyr::complete(BrthYear = seq(min(BrthYear),
-                                 max(BrthYear),
-                                 by = 1),
-           nesting(CD_UID, qcode, qcodecat),
-           fill = list(count_anom = 0)) %>%
+  # group_by(levels(cat)) %>%
+  tidyr::complete(CDuid = as.character(1201:1218),
+           nesting(cat, qcode, qcodecat, time_cat),
+           fill = list(count_anom = NA)) %>%
   setDT() %>% 
-  .[,`:=` (
-    time_lab = paste0(as.numeric(min(BrthYear, na.rm = TRUE)),
-                      "-",
-                      as.numeric(max(BrthYear, na.rm = TRUE)))
-  ),
-  by = .(CD_UID, cat, time_cat)]
-
-birth <- cd_birth[tolower(dlv) %in% c("lvb","stillbirth"),
-                  `:=` (total_lvb = sum(cd.count_dlv,
-                                        na.rm = TRUE)),
-                  by = .(BrthYear)] %>% 
-  .[!is.na(total_lvb), .(BrthYear, total_lvb)] %>% 
+  .[order(CDuid, time_cat, qcode)] %>% 
   unique()
 
-birth_map <- cd_birth[tolower(dlv) %in% c("lvb","stillbirth"),
-                      `:=` (total_lvb = sum(cd.count_dlv,
-                                            na.rm = TRUE)),
-                      by = .(BrthYear, CD_UID)] %>% 
-  .[!is.na(total_lvb), .(CD_UID, BrthYear, total_lvb)] %>% 
-  unique()
+## Births -------
+
+birth <- unique(
+  unique(cd_birth[tolower(dlv) %in% c("lvb","stillbirth"),
+                  `:=` (count_dlv_yr = .N),
+                  by = list(BrthYear, dlv)
+                  ][,
+                    c("BrthYear", "dlv", "count_dlv_yr")
+                  ])[,
+                     `:=` (total_lvb_yr = sum(count_dlv_yr,
+                                                  na.rm = TRUE)),
+                     by = c("BrthYear")
+                  ][, c("BrthYear", "total_lvb_yr")
+                    ]
+                )[order(BrthYear)]
+
+birth_map <- unique(
+  unique(cd_birth[tolower(dlv) %in% c("lvb","stillbirth"),
+                  `:=` (time_cat = factor(fcase(
+                    # data.table::between(BrthYear, 2001, 2005), "2001-2005",
+                    data.table::between(BrthYear, 2006, 2010), "2006-2010",
+                    data.table::between(BrthYear, 2011, 2015), "2011-2015",
+                    data.table::between(BrthYear, 2016, 2020), "2016-2020",
+                    default = NA
+                  ), levels = c(#"2001-2005",
+                    "2006-2010","2011-2015","2016-2020")))][,
+                `:=` (count_dlv_geo_yr = .N),
+             by = list(time_cat, CDuid, dlv)
+             ][,
+                  c("CDuid", "CDName", "time_cat", "dlv", "count_dlv_geo_yr")]
+         )[, `:=` (total_lvb_geo_yr = sum(count_dlv_geo_yr, na.rm = TRUE)),
+                    by = c("CDuid","time_cat")][,
+                  c("CDuid", "CDName", "time_cat", "total_lvb_geo_yr")
+                  ][, `:=` (total_lvb_yr = sum(total_lvb_geo_yr, na.rm = TRUE)),
+                    by = c("time_cat")
+                    ][,
+                      `:=` (total_lvb_geo = sum(total_lvb_geo_yr, na.rm = TRUE)),
+                      by = c("CDuid")
+                      ][, c("CDuid", "CDName", "time_cat", "total_lvb_geo_yr",
+                            "total_lvb_yr","total_lvb_geo")
+                        ]
+  )[order(CDuid, time_cat)][!is.na(time_cat)]
+
+birth_matage <- unique(
+  unique(
+    cd_birth[tolower(dlv) %in% c("lvb","stillbirth"),
+             `:=` (matage_format = factor(fcase(
+               DMMATAGE < 25, "< 25",
+ # data.table::between(DMMATAGE, 20, 24.999), "20-24",
+ data.table::between(DMMATAGE, 25, 29.999), "25-34",
+ # data.table::between(DMMATAGE, 30, 34.999), "30-34",
+ DMMATAGE >= 35, "\u2265 35",
+ # data.table::between(DMMATAGE, 40, 44.999), "40-44",
+ # DMMATAGE >= 45, "\u2265 45",
+ default = "-1"
+ ), levels = c("< 25", #"20-24", "25-29",
+               "25-34",# "35-39", "40-44",
+               "\u2265 35", "-1")))
+ ][,
+  `:=` (count_dlv_yr = .N),
+  by = list(BrthYear, dlv, matage_format)
+  ][,
+    c("BrthYear", "dlv", "count_dlv_yr", "matage_format")
+    ])[,
+       `:=` (total_lvb_yr = sum(count_dlv_yr,na.rm = TRUE)),
+       by = c("BrthYear","matage_format")
+       ][, c("BrthYear", "matage_format", "total_lvb_yr")]
+ )[
+   order(BrthYear, matage_format)
+   ][
+     !is.na(matage_format) & !matage_format %in% "-1"
+   ]
 
 # bringing total birth to anomaly data
 anom_ind <- merge(anom_ind,
@@ -544,7 +664,7 @@ anom_ind <- merge(anom_ind,
                   by = ("BrthYear")) %>% 
   .[order(cat, BrthYear)] %>% 
   unique() %>% 
-  .[,`:=` (rate = 1000*total_anom/total_lvb)] %>% 
+  .[,`:=` (rate = 1000*total_anom/total_lvb_yr)] %>% 
   .[order(BrthYear, rate)]
 
 # bringing total birth to anomaly data
@@ -553,46 +673,36 @@ anom_grp <- merge(anom_grp,
                   by = ("BrthYear")) %>% 
   .[order(cat, BrthYear)] %>% 
   unique() %>% 
-  .[,`:=` (rate = 1000*total_anom/total_lvb)] %>% 
+  .[,`:=` (rate = 1000*total_anom/total_lvb_yr)] %>% 
   .[order(BrthYear, rate)]
 
+
 anom_ind_matage <- merge(anom_ind_matage,
-                  birth,
-                  by = ("BrthYear")) %>% 
+                  birth_matage,
+                  by = c("BrthYear", "matage_format")) %>% 
   .[order(cat, BrthYear)] %>% 
   unique() %>% 
-  .[,`:=` (rate = 1000*total_anom/total_lvb)] %>% 
+  .[,`:=` (rate = 1000*total_anom/total_lvb_yr)] %>% 
   .[order(BrthYear, rate)]
 
 # bringing total birth to anomaly data
 anom_grp_matage <- merge(anom_grp_matage,
-                  birth,
-                  by = ("BrthYear")) %>% 
+                  birth_matage,
+                  by = c("BrthYear","matage_format")) %>% 
   .[order(cat, BrthYear)] %>% 
   unique() %>% 
-  .[,`:=` (rate = 1000*total_anom/total_lvb)] %>% 
+  .[,`:=` (rate = 1000*total_anom/total_lvb_yr)] %>% 
   .[order(BrthYear, rate)]
 
 anom_grp_map <- merge(anom_grp_map,
            birth_map,
-           by = c("CD_UID", "BrthYear")) %>% 
-  .[order(CD_UID, cat, BrthYear)] %>% 
+           by = c("CDuid", "time_cat")) %>% 
+  .[order(CDuid, cat, time_cat)] %>%
   unique() %>% 
-  .[,.(CD_UID, BrthYear, cat, qcode, qcodecat, time_cat, time_lab, count_anom, total_lvb)] %>% 
-  unique() %>% 
-  .[,`:=` (total_lvb = sum(total_lvb,
-                           na.rm = TRUE)),
-   by = .(CD_UID, cat, time_cat)] %>%
-  .[,.(CD_UID, cat, qcode, qcodecat, time_cat, time_lab, count_anom, total_lvb)] %>% 
-  unique() %>% 
-  .[,`:=` (total_anom = sum(count_anom,
-                            na.rm = TRUE)),
-    by = .(CD_UID, cat, time_cat)] %>%
-  .[,.(CD_UID, cat, qcode, qcodecat, time_cat, time_lab, total_anom, total_lvb)] %>% 
-  unique() %>% 
-  .[order(CD_UID, qcode, time_cat)] %>% 
-  .[,`:=` (rate = 1000*total_anom/total_lvb)] %>% 
-  .[order(CD_UID, time_cat, rate)]
+  .[,`:=` (rate = 1000*count_anom/total_lvb_geo_yr)] %>% 
+  .[order(CDuid, time_cat)] %>% 
+  .[,.(CDuid, time_cat, cat, qcode, qcodecat, count_anom, total_lvb_yr, rate)] %>%
+  unique()
 
 # key to access cancensus datasets
 key = "CensusMapper_f505397ff4bb63467541085d028c9be8"
@@ -603,13 +713,16 @@ cd_shp <- data.table::setDT(cancensus::get_census(
   level = "CD",
   geo_format = "sf",
   api_key = key
-))[,`:=` (name = stringr::str_remove(name, " \\(CTY\\)"),
-          cd_type = "County",
-          area = `Shape Area`)][,
-                               c("GeoUID", "name", "cd_type", "Dwellings 2016","Dwellings", 
-                                 "Population 2016", "Population", "Households 2016",
-                                 "Households", "area", "geometry")]
+))[,
+   `:=` (
+     name = stringr::str_remove(name, " \\(CTY\\)"),
+     cd_type = "County",
+     area = `Shape Area`)][,
+     c("GeoUID", "name", "cd_type", "Dwellings 2016","Dwellings", 
+     "Population 2016", "Population", "Households 2016",
+     "Households", "area", "geometry")
+     ]
 
-cd_names <- data.frame(CD_UID = cd_shp$GeoUID, cd_full = cd_shp$name)
+cd_names <- data.frame(CDuid = cd_shp$GeoUID, CDName = cd_shp$name)
 
 

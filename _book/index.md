@@ -1,8 +1,8 @@
 --- 
 title: 'Nova Scotia Congenital Anomalies Surveillance System'
-subtitle: 'First Report, 1987-2021'
+subtitle: 'First Report, 1987-2022'
 author: 'Reproductive Care Program of Nova Scotia'
-date: '2023-01-12'
+date: '2023-06-05'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 output: bookdown::bs4_book
@@ -15,8 +15,8 @@ colorlinks: yes
 graphics: yes
 description: "The data presented in this report are meant to provide a quick reference to the sentinel indicators of perinatal health and care among Nova Scotia residents. We hope this report will assist with the development and monitoring of standards of care and will trigger research questions that can be pursued by researchers and trainees."
 github-repo: "https://github.com/estevamteixeira/anomaly-report"
-cover-image: "images/cover.pdf"
-pdf-cover-image: "images/cover.pdf"
+cover-image: "images/cover4.pdf"
+pdf-cover-image: "images/cover4.pdf"
 url: http://rcp.nshealth.ca/
 ---
 
@@ -24,7 +24,37 @@ url: http://rcp.nshealth.ca/
 
 
 
+# Acknowledgements {-}
 
+The **Surveillance of Congenital Anomalies in Nova Scotia (SCAN-NS)** would like to thank the Public Health Agency of Canada (PHAC) for the on-going support of data collection within Nova Scotia. SCA-NS is grateful for the ongoing interest and help of
+
+<a href=""><img src="images/cover4.png" width="250" height="375" alt="The SCA-NS report cover" align="right" style="margin: 0 1em 0 1em; border:2px solid #008d8b"/></a>
+
+- [Dr. Scott](https://medicine.dal.ca/departments/department-sites/obstetrics/our-people/our-faculty/heather-scott.html);
+
+- [Dr. Skidmore](https://medicine.dal.ca/departments/department-sites/pediatrics/our-people/our-faculty/david-skidmore.html); and 
+
+- [Dr. Van den Hof](https://medicine.dal.ca/departments/department-sites/obstetrics/our-people/our-faculty/michiel-vandenhof.html)
+
+As our clinical advisors.
+
+Special thanks to Barry Campbell and the many staff within the [Reproductive Care Program of Nova Scotia](http://rcp.nshealth.ca/) for their continued support.
+
+This report has been prepared by:
+
+- Cora Cole.^[Surveillance of Congenital Anomalies Nova Scotia, cora.cole@iwk.nshealth.ca]
+- John Fahey.^[Reproductive Care Program of Nova Scotia, john.fahey@iwk.nshealth.ca]
+- Estevam Teixeira.^[Reproductive Care Program of Nova Scotia, estevam.teixeira@iwk.nshealth.ca]
+
+## Contact {-}
+
+For more information, please contact:
+
+Cora Cole, **Surveillance of Congenital Anomalies Nova Scotia**, [cora.cole@iwk.nshealth.ca](cora.cole@iwk.nshealth.ca)
+
+**Suggested citation:** 
+
+Surveillance of Congenital Anomalies Nova Scotia, Reproductive Care Program of Nova Scotia, The Izaak Walton Killam Health Centre (IWK) 2022.
 
 # Background {-}
 
@@ -74,12 +104,12 @@ The purpose of SCA-NS is to improve Congenital Anomaly case ascertainment, clust
 
 SCA-NS includes all Nova Scotia residents, with ascertainment from other Maritime Provinces for those cases where the mother delivered elsewhere. Information on cases includes the prenatal period up to one year of age including live births, stillbirths and terminations of pregnancies in which a fetal anomaly has been detected.
 
-\mainmatter
 
 
-# Methodology {#chapter-1}
 
-## Case Definitions {#section-11}
+# Methodology {#chapter1}
+
+## Case Definitions {#section11}
 
 A congenital anomaly is an abnormality that is present at birth, even if not diagnosed until months or years later. Most congenital anomalies are present long before the time of birth, some in the embryonic period (up to the end of the seventh week of gestation) and others in the fetal period (eighth week to term). The term "anomaly" covers all the major classes of abnormalities of development, of which there are four major categories as follows:
 
@@ -105,7 +135,7 @@ Other definitions related to pregnancy outcomes for the purposes of this report 
 
 Anomaly definitions are based, for the most part, on those provided by the  International Clearinghouse for Birth Defects Surveillance and Research (ICBDSR) and National Birth Defects Prevention Network (NBDPN).
 
-## Case Acertainment {#section-12}
+## Case Acertainment {#section12}
 
 An infant can be ascertained at any time up to the first birthday. Multiple ascertainment of the same infant can occur and is encouraged, as this frequently improves the quality and reliability of the data.
 
@@ -113,7 +143,7 @@ As several malformations may occur in the same infant, it is advantageous to all
 
 SCA-NS obtains information about infants with congenital anomalies from a variety of independent sources. Acquisition of additional reporting agencies is always a priority since the use of multiple sources of information improves not only the ease but also completeness of ascertainment as well as for verification of the diagnostic data.
 
-## Quality Control Measures and Data Linkage {#section-13}
+## Quality Control Measures and Data Linkage {#section13}
 
 Data quality is ensured through both a coded linking process and by manual chart audits of unmatched anomaly records. The first step in data quality control involves the linking of disparate fetal/infant records between databases. Linking is based on the matching of several unique variables in each record.
 
@@ -121,7 +151,7 @@ Data quality is ensured through both a coded linking process and by manual chart
 
 - If there are records that "fail" the automated matching process they are reviewed manually to determine if that information was only found in one data source or if information was entered incorrectly.
 
-## Confidentiality and Release of Data {#section-14}
+## Confidentiality and Release of Data {#section14}
 
 ### Authority for the Collection, Use, and Disclosure of Personal Information {-}
 
@@ -139,7 +169,9 @@ One of the major limitations of any surveillance system is that on its own, the 
 
 - Unless otherwise stated, all the formulas used to compute prevalence and confidence intervals are calculated following the [National Birth Defects Prevention Network (NBDPN) guidelines, chapter 8](http://www.nbdpn.org/docs/Ch_8_Statistics6-04_2016DEC14.pdf): 
 
-> $$\small{\text{Prevalence at birth}} = 1,000 \times \dfrac{\small{\text{Number of cases with birth defect A in an area and time period}}}{\small{\text{Number of live births and stillbirths in that area and time period}}}$$
+> $$
+\substack{\text{Prevalence} \\ \\ \text{at birth}} = 1,000 \times \dfrac{\text{Number of cases with birth defect A in an area and time period}}{\text{Number of live births and stillbirths in that area and time period}}
+$$
 
 - **Pregnancy outcomes included -** the cases in the **numerator** are derived from all pregnancy outcomes collected by the program and may include:
   * Live births.
@@ -155,28 +187,18 @@ For the **denominator**, we use the total number of live births and stillbirths 
 
 - ***For a prevalence based on a small number of cases -*** For small numbers of cases (arbitrarily defined here as $< 30$ cases), we use the Poisson distribution since birth defects are considered to be rare events. The easiest way to use the Poisson distribution is to refer to a table that provides the upper and lower $95\%$ confidence limits for an observed number of cases. For that, we make use of the relationship between the Poisson and chi-square distribution functions. If $X$ is a single observation from a Poisson distribution with mean $\mu$. Then the "exact" $95\%$ confidence limits for $\mu$ are given by
 
-> $$\small{\left[\dfrac{qchisq\left(0.025, 2X\right)}{2}; \dfrac{qchisq\left(0.975, 2(X+1)\right)}{2}\right]},$$
+> $$
+\small{
+\left[\dfrac{qchisq\left(0.025, 2X\right)}{2}; \dfrac{qchisq\left(0.975, 2(X+1)\right)}{2}\right]},
+$$
 
 where $qchisq()$ is the quantile function for the chi-squared $\left(\chi^{2}\right)$ distribution with $2X$, and $2(X+1)$ degrees of freedom. These limits can be computed using any statistical software or taken from a chi-square table (reproduced below for up to $5$ cases).
 
-\begin{table}
 
-\caption{(\#tab:pois-1)}
-\centering
-\begin{tabular}[t]{rrr}
-\toprule
-Number of Cases & Lower Bound & Upper Bound\\
-\midrule
-0 & 0.000 & 3.689\\
-1 & 0.025 & 5.572\\
-2 & 0.242 & 7.225\\
-3 & 0.619 & 8.767\\
-4 & 1.090 & 10.242\\
-\addlinespace
-5 & 1.623 & 11.668\\
-\bottomrule
-\end{tabular}
-\end{table}
+```{=html}
+<div id="htmlwidget-94acdc04c42f5a98c0cf" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-94acdc04c42f5a98c0cf">{"x":{"filter":"none","vertical":false,"extensions":["Buttons"],"caption":"<caption>Table of 95% confidence limits for number of cases (for 0-5 cases). Based on a Poisson distribution.<\/caption>","data":[[0,1,2,3,4,5],[0,0.0253178079842899,0.242209278543965,0.618672122895601,1.08986537362632,1.62348639011842],[3.68887945411394,5.5716433909389,7.22468766772396,8.76727306974232,10.2415886754037,11.6683320793227]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Number of Cases<\/th>\n      <th>Lower Bound<\/th>\n      <th>Upper Bound<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"B<t>t","extensions":"Buttons","paging":false,"pageLength":5,"ordering":true,"stateSave":true,"buttons":["copy","csv","print"],"columnDefs":[{"targets":1,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[0,1,2]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render"],"jsHooks":[]}</script>
+```
 
 1. Calculate prevalence
   
@@ -189,8 +211,8 @@ Number of Cases & Lower Bound & Upper Bound\\
 > $$
 \scriptsize
 \begin{aligned}
-\text{Lower } 95\% \text{ CL for prevalence} &= 1,000 \times \dfrac{\text{Lower } 95\% \text{ CL for cases with birth defect A in an area and time period}}{\text{Number of live births and stillbirths in that area and time period}}\\
-\text{Upper } 95\% \text{ CL for prevalence} &= 1,000 \times \dfrac{\text{Upper } 95\% \text{ CL for cases with birth defect A in an area and time period}}{\text{Number of live births and stillbirths in that area and time period}} 
+\substack{\text{Lower } 95\% \\ \\ \text{ CL for prevalence}} &= 1,000 \times \dfrac{\text{Lower } 95\% \text{ CL for cases with birth defect A in an area and time period}}{\text{Number of live births and stillbirths in that area and time period}}\\
+\substack{\text{Upper } 95\% \\ \\ \text{ CL for prevalence}} &= 1,000 \times \dfrac{\text{Upper } 95\% \text{ CL for cases with birth defect A in an area and time period}}{\text{Number of live births and stillbirths in that area and time period}} 
 \end{aligned}
 $$
 
@@ -200,8 +222,8 @@ $$
 \small
 \begin{aligned}
 \text{Prevalence} &= 1,000 \times \dfrac{5}{12,500} = 0.4  \\
-\text{Lower } 95\% \text{ CL for prevalence} &= 1,000 \times \dfrac{1.623}{12,500} = 0.13  \\
-\text{Upper } 95\% \text{ CL for prevalence} &= 1,000 \times \dfrac{11.668}{12,500} = 0.93 
+\substack{\text{Lower } 95\% \\ \\ \text{ CL for prevalence}} &= 1,000 \times \dfrac{1.623}{12,500} = 0.13 \\
+\substack{\text{Upper } 95\% \\ \\\text{ CL for prevalence}} &= 1,000 \times \dfrac{11.668}{12,500} = 0.93 
 \end{aligned}
 $$
 
@@ -213,8 +235,8 @@ $$
 > $$
 \small
 \begin{aligned}
-\text{Lower } 95\% \text{ CL for prevalence} &= 1,000 \times \dfrac{\left( 1- \dfrac{1}{9c}-\dfrac{1.96}{3}\sqrt{\dfrac{1}{c}} \right)^{3}}{b}\times c  \\
-\text{Upper } 95\% \text{ CL for prevalence} &= 1,000 \times \dfrac{\left( 1- \dfrac{1}{9\left(c+1\right)}+\dfrac{1.96}{3}\sqrt{\dfrac{1}{\left(c+1\right)}} \right)^{3}}{b}\times \left(c+1\right) 
+\substack{\text{Lower } 95\% \\ \\ \text{ CL for prevalence}} &= 1,000 \times \dfrac{\left( 1- \dfrac{1}{9c}-\dfrac{1.96}{3}\sqrt{\dfrac{1}{c}} \right)^{3}}{b}\times c \\
+\substack{\text{Upper } 95\% \\ \\ \text{ CL for prevalence}} &= 1,000 \times \dfrac{\left( 1- \dfrac{1}{9\left(c+1\right)}+\dfrac{1.96}{3}\sqrt{\dfrac{1}{\left(c+1\right)}} \right)^{3}}{b}\times \left(c+1\right) 
 \end{aligned}
 $$
 
