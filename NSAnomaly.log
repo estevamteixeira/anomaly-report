@@ -1,14 +1,15 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.5.18)  18 MAY 2023 18:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2024.1.11)  16 JAN 2024 17:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **NSAnomaly.tex
 (./NSAnomaly.tex
-LaTeX2e <2022-11-01> patch level 1
-L3 programming layer <2023-05-15> (./krantz.cls
+LaTeX2e <2023-11-01>
+L3 programming layer <2024-01-04>
+(./krantz.cls
 Document Class: krantz 2005/09/16 v1.4f Standard LaTeX document class
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/bk10.clo
-File: bk10.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
+File: bk10.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
 )
 \trimheight=\dimen140
 \trimwidth=\dimen141
@@ -25,21 +26,21 @@ File: bk10.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
 \@cipboxa=\box55
 \@cipboxb=\box56
 \@ciprulewidth=\dimen148
-\c@part=\count185
-\c@chapter=\count186
-\c@section=\count187
-\c@subsection=\count188
-\c@subsubsection=\count189
-\c@paragraph=\count190
-\c@subparagraph=\count191
+\c@part=\count187
+\c@chapter=\count188
+\c@section=\count189
+\c@subsection=\count190
+\c@subsubsection=\count191
+\c@paragraph=\count192
+\c@subparagraph=\count193
 \secwd=\dimen149
 \subsecwd=\dimen150
 \subsubsecwd=\dimen151
-\c@figure=\count192
-\c@table=\count193
+\c@figure=\count194
+\c@table=\count195
 \abovecaptionskip=\skip48
 \belowcaptionskip=\skip49
-\c@numauthors=\count194
+\c@numauthors=\count196
 \section@toc@skip=\skip50
 \SectionTOCWidth=\skip51
 \subsection@toc@skip=\skip52
@@ -61,7 +62,7 @@ File: bk10.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
 \@finalAUboxfromtwo=\box66
 \@finalAUboxfromthree=\box67
 \@finalAUboxfromfour=\box68
-\c@chaptocdepth=\count195
+\c@chaptocdepth=\count197
 \bibindent=\dimen152
 \tempbox=\box69
 \nomenwidth=\dimen153
@@ -104,16 +105,16 @@ Package: pdfpages 2022/12/19 v0.5x Insert pages of external PDF documents (AM)
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/calc.sty
-Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count196
-\calc@Bcount=\count197
+Package: calc 2023/07/08 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count198
+\calc@Bcount=\count199
 \calc@Adimen=\dimen163
 \calc@Bdimen=\dimen164
 \calc@Askip=\skip78
 \calc@Bskip=\skip79
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count198
+\calc@Ccount=\count266
 \calc@Cskip=\skip80
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/eso-pic/eso-pic.sty
 Package: eso-pic 2023/05/03 v3.0c eso-pic (RN)
@@ -121,32 +122,32 @@ Package: eso-pic 2023/05/03 v3.0c eso-pic (RN)
 \ESO@tempdimb=\dimen166
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
-\KV@toks@=\toks16
+\KV@toks@=\toks17
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.sty
-Package: xcolor 2022/06/12 v2.14 LaTeX color extensions (UK)
+Package: xcolor 2023/11/15 v3.01 LaTeX color extensions (UK)
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
-Package xcolor Info: Driver file: pdftex.def on input line 227.
+Package xcolor Info: Driver file: pdftex.def on input line 274.
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-def/pdftex.def
 File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/mathcolor.ltx)
-Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1353.
-Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1357.
-Package xcolor Info: Model `RGB' extended on input line 1369.
-Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1371.
-Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1372.
-Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1373.
-Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1374.
-Package xcolor Info: Model `Gray' substituted by `gray' on input line 1375.
-Package xcolor Info: Model `wave' substituted by `hsb' on input line 1376.
-(c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/dvipsnam.def
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1350.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1354.
+Package xcolor Info: Model `RGB' extended on input line 1366.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1368.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1370.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1371.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1372.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1373.
+) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/dvipsnam.def
 File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xcolor/svgnam.def
-File: svgnam.def 2022/06/12 v2.14 Predefined colors according to SVG 1.1 (UK)
+File: svgnam.def 2023/11/15 v3.01 Predefined colors according to SVG 1.1 (UK)
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xcolor/x11nam.def
-File: x11nam.def 2022/06/12 v2.14 Predefined colors according to Unix/X11 (UK)
-))) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.sty
+File: x11nam.def 2023/11/15 v3.01 Predefined colors according to Unix/X11 (UK)
+)) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
@@ -166,13 +167,13 @@ Package graphics Info: Driver file: pdftex.def on input line 107.
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdfpages/pppdftex.def
 File: pppdftex.def 2022/12/19 v0.5x Pdfpages driver for pdfTeX (AM)
 )
-\pdfpages@includegraphics@status=\count199
+\pdfpages@includegraphics@status=\count267
 \AM@pagebox=\box76
-\AM@global@opts=\toks17
-\AM@pagecnt=\count266
-\AM@toc@title=\toks18
-\AM@lof@heading=\toks19
-\c@AM@survey=\count267
+\AM@global@opts=\toks18
+\AM@pagecnt=\count268
+\AM@toc@title=\toks19
+\AM@lof@heading=\toks20
+\c@AM@survey=\count269
 \AM@templatesizebox=\box77
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/lmodern.sty
 Package: lmodern 2015/05/01 v1.6.1 Latin Modern Fonts
@@ -212,21 +213,21 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
-\@emptytoks=\toks20
+\@emptytoks=\toks21
 \symAMSa=\mathgroup4
 \symAMSb=\mathgroup5
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
 )) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
-Package: amsmath 2022/04/08 v2.17n AMS math features
+Package: amsmath 2023/05/13 v2.17o AMS math features
 \@mathmargin=\skip81
 For additional information on amsmath, use the `?' option.
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2021/08/26 v2.01 AMS text
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
-\@emptytoks=\toks21
+\@emptytoks=\toks22
 \ex@=\dimen172
 )) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
@@ -234,14 +235,14 @@ Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2022/04/08 v2.04 operator names
 )
-\inf@bad=\count268
+\inf@bad=\count270
 LaTeX Info: Redefining \frac on input line 234.
-\uproot@=\count269
-\leftroot@=\count270
+\uproot@=\count271
+\leftroot@=\count272
 LaTeX Info: Redefining \overline on input line 399.
 LaTeX Info: Redefining \colon on input line 410.
-\classnum@=\count271
-\DOTSCASE@=\count272
+\classnum@=\count273
+\DOTSCASE@=\count274
 LaTeX Info: Redefining \ldots on input line 496.
 LaTeX Info: Redefining \dots on input line 499.
 LaTeX Info: Redefining \cdots on input line 620.
@@ -254,31 +255,31 @@ LaTeX Info: Redefining \Bigg on input line 725.
 \big@size=\dimen174
 LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
-\macc@depth=\count273
+\macc@depth=\count275
 LaTeX Info: Redefining \bmod on input line 905.
 LaTeX Info: Redefining \pmod on input line 910.
 LaTeX Info: Redefining \smash on input line 940.
 LaTeX Info: Redefining \relbar on input line 970.
 LaTeX Info: Redefining \Relbar on input line 971.
-\c@MaxMatrixCols=\count274
+\c@MaxMatrixCols=\count276
 \dotsspace@=\muskip16
-\c@parentequation=\count275
-\dspbrk@lvl=\count276
-\tag@help=\toks22
-\row@=\count277
-\column@=\count278
-\maxfields@=\count279
-\andhelp@=\toks23
+\c@parentequation=\count277
+\dspbrk@lvl=\count278
+\tag@help=\toks23
+\row@=\count279
+\column@=\count280
+\maxfields@=\count281
+\andhelp@=\toks24
 \eqnshift@=\dimen175
 \alignsep@=\dimen176
 \tagshift@=\dimen177
 \tagwidth@=\dimen178
 \totwidth@=\dimen179
 \lineht@=\dimen180
-\@envbody=\toks24
+\@envbody=\toks25
 \multlinegap=\skip82
 \multlinetaggap=\skip83
-\mathdisplay@stack=\toks25
+\mathdisplay@stack=\toks26
 LaTeX Info: Redefining \[ on input line 2953.
 LaTeX Info: Redefining \] on input line 2954.
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/ifxetex.sty
@@ -294,36 +295,35 @@ LaTeX Font Info:    Trying to load font information for T1+lmr on input line 112
 File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2021/02/14 v1.3d Input encoding file
-\inpenc@prehook=\toks26
-\inpenc@posthook=\toks27
+\inpenc@prehook=\toks27
+\inpenc@posthook=\toks28
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
 Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
-Package: hyperref 2023-04-22 v7.00x Hypertext links for LaTeX
-(c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
-Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
-) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
-Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
+Package: hyperref 2023-11-26 v7.01g Hypertext links for LaTeX
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/infwarerr/infwarerr.sty
 Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
-)
-Package pdftexcmds Info: \pdf@primitive is available.
-Package pdftexcmds Info: \pdf@ifprimitive is available.
-Package pdftexcmds Info: \pdfdraftmode found.
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
 Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
 Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfescape.sty
 Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
-) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.sty
+(c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
+) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty
 Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/auxhook/auxhook.sty
 Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
-Package: nameref 2022-05-17 v2.50 Cross-referencing by name of section
+Package: nameref 2023-11-26 v2.56 Cross-referencing by name of section
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
@@ -331,74 +331,74 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 ))
-\c@section@level=\count280
+\c@section@level=\count282
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count281
+\etb@tempcnta=\count283
 )
 \@linkdim=\dimen181
-\Hy@linkcounter=\count282
-\Hy@pagecounter=\count283
+\Hy@linkcounter=\count284
+\Hy@pagecounter=\count285
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2023-04-22 v7.00x Hyperref: PDFDocEncoding definition (HO)
+File: pd1enc.def 2023-11-26 v7.01g Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
-\Hy@SavedSpaceFactor=\count284
+\Hy@SavedSpaceFactor=\count286
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
-File: puenc.def 2023-04-22 v7.00x Hyperref: PDF Unicode definition (HO)
+File: puenc.def 2023-11-26 v7.01g Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
-Package hyperref Info: Option `unicode' set `true' on input line 4065.
-Package hyperref Info: Hyper figures OFF on input line 4182.
-Package hyperref Info: Link nesting OFF on input line 4187.
-Package hyperref Info: Hyper index ON on input line 4190.
-Package hyperref Info: Plain pages OFF on input line 4197.
-Package hyperref Info: Backreferencing OFF on input line 4202.
+Package hyperref Info: Option `unicode' set `true' on input line 4064.
+Package hyperref Info: Hyper figures OFF on input line 4181.
+Package hyperref Info: Link nesting OFF on input line 4186.
+Package hyperref Info: Hyper index ON on input line 4189.
+Package hyperref Info: Plain pages OFF on input line 4196.
+Package hyperref Info: Backreferencing OFF on input line 4201.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4449.
-\c@Hy@tempcnt=\count285
+Package hyperref Info: Bookmarks ON on input line 4448.
+\c@Hy@tempcnt=\count287
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip17
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-LaTeX Info: Redefining \url on input line 4787.
+LaTeX Info: Redefining \url on input line 4786.
 \XeTeXLinkMargin=\dimen182
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
 ))
-\Fld@menulength=\count286
+\Fld@menulength=\count288
 \Field@Width=\dimen183
 \Fld@charsize=\dimen184
-Package hyperref Info: Hyper figures OFF on input line 6066.
-Package hyperref Info: Link nesting OFF on input line 6071.
-Package hyperref Info: Hyper index ON on input line 6074.
-Package hyperref Info: backreferencing OFF on input line 6081.
-Package hyperref Info: Link coloring OFF on input line 6086.
-Package hyperref Info: Link coloring with OCG OFF on input line 6091.
-Package hyperref Info: PDF/A mode OFF on input line 6096.
+Package hyperref Info: Hyper figures OFF on input line 6065.
+Package hyperref Info: Link nesting OFF on input line 6070.
+Package hyperref Info: Hyper index ON on input line 6073.
+Package hyperref Info: backreferencing OFF on input line 6080.
+Package hyperref Info: Link coloring OFF on input line 6085.
+Package hyperref Info: Link coloring with OCG OFF on input line 6090.
+Package hyperref Info: PDF/A mode OFF on input line 6095.
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.sty
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
-\Hy@abspage=\count287
-\c@Item=\count288
-\c@Hfootnote=\count289
+\Hy@abspage=\count289
+\c@Item=\count290
+\c@Hfootnote=\count291
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.def
-File: hpdftex.def 2023-04-22 v7.00x Hyperref driver for pdfTeX
+File: hpdftex.def 2023-11-26 v7.01g Hyperref driver for pdfTeX
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atveryend-ltx.sty
 Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend package
 with kernel methods
 )
-\Fld@listcount=\count290
-\c@bookmark@seq@number=\count291
+\Fld@listcount=\count292
+\c@bookmark@seq@number=\count293
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
 Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
@@ -410,23 +410,23 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 28
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 49.
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty
-Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
+Package: longtable 2023-11-01 v4.19 Multi-page Table package (DPC)
 \LTleft=\skip85
 \LTright=\skip86
 \LTpre=\skip87
 \LTpost=\skip88
-\LTchunksize=\count292
+\LTchunksize=\count294
 \LTcapwidth=\dimen185
 \LT@head=\box80
 \LT@firsthead=\box81
 \LT@foot=\box82
 \LT@lastfoot=\box83
 \LT@gbox=\box84
-\LT@cols=\count293
-\LT@rows=\count294
-\c@LT@tables=\count295
-\c@LT@chunks=\count296
-\LT@p@ftn=\toks28
+\LT@cols=\count295
+\LT@rows=\count296
+\c@LT@tables=\count297
+\c@LT@chunks=\count298
+\LT@p@ftn=\toks29
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \heavyrulewidth=\dimen186
@@ -439,51 +439,51 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \cmidrulesep=\dimen193
 \cmidrulekern=\dimen194
 \defaultaddspace=\dimen195
-\@cmidla=\count297
-\@cmidlb=\count298
+\@cmidla=\count299
+\@cmidlb=\count300
 \@aboverulesep=\dimen196
 \@belowrulesep=\dimen197
-\@thisruleclass=\count299
-\@lastruleclass=\count300
+\@thisruleclass=\count301
+\@lastruleclass=\count302
 \@thisrulewidth=\dimen198
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/mdwtools/footnote.sty
 Package: footnote 1997/01/28 1.13 Save footnotes around boxes
 \fn@notes=\box85
 \fn@width=\dimen199
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/array.sty
-Package: array 2022/09/04 v2.5g Tabular extension package (FMi)
+Package: array 2023/10/16 v2.5g Tabular extension package (FMi)
 \col@sep=\dimen256
 \ar@mcellbox=\box86
 \extrarowheight=\dimen257
-\NC@list=\toks29
+\NC@list=\toks30
 \extratabsurround=\skip89
 \backup@length=\skip90
 \ar@cellbox=\box87
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/multirow/multirow.sty
 Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
 \multirow@colwidth=\skip91
-\multirow@cntb=\count301
+\multirow@cntb=\count303
 \multirow@dima=\skip92
 \bigstrutjot=\dimen258
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/wrapfig/wrapfig.sty
 \wrapoverhang=\dimen259
 \WF@size=\dimen260
-\c@WF@wrappedlines=\count302
+\c@WF@wrappedlines=\count304
 \WF@box=\box88
-\WF@everypar=\toks30
+\WF@everypar=\toks31
 Package: wrapfig 2003/01/31  v 3.6
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count303
-\float@exts=\toks31
+\c@float@type=\count305
+\float@exts=\toks32
 \float@box=\box89
-\@float@everytoks=\toks32
+\@float@everytoks=\toks33
 \@floatcapt=\box90
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/colortbl/colortbl.sty
 Package: colortbl 2022/06/20 v1.0f Color table columns (DPC)
-\everycr=\toks33
+\everycr=\toks34
 \minrowclearance=\skip93
-\rownum=\count304
+\rownum=\count306
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdflscape/pdflscape.sty
 Package: pdflscape 2022-10-27 v0.13 Display of landscape pages in PDF
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdflscape/pdflscape-nometadata.sty
@@ -497,16 +497,16 @@ Package: tabu 2019/01/11 v2.9 - flexible LaTeX tabulars (FC+tabu-fixed)
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/varwidth/varwidth.sty
 Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
 \@vwid@box=\box91
-\sift@deathcycles=\count305
+\sift@deathcycles=\count307
 \@vwid@loff=\dimen261
 \@vwid@roff=\dimen262
 )
-\c@taburow=\count306
-\tabu@nbcols=\count307
-\tabu@cnt=\count308
-\tabu@Xcol=\count309
-\tabu@alloc=\count310
-\tabu@nested=\count311
+\c@taburow=\count308
+\tabu@nbcols=\count309
+\tabu@cnt=\count310
+\tabu@Xcol=\count311
+\tabu@alloc=\count312
+\tabu@nested=\count313
 \tabu@target=\dimen263
 \tabu@spreadtarget=\dimen264
 \tabu@naturalX=\dimen265
@@ -516,8 +516,8 @@ Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
 \abovetabulinesep=\dimen269
 \belowtabulinesep=\dimen270
 \tabustrutrule=\dimen271
-\tabu@thebody=\toks34
-\tabu@footnotes=\toks35
+\tabu@thebody=\toks35
+\tabu@footnotes=\toks36
 \tabu@box=\box92
 \tabu@arstrutbox=\box93
 \tabu@hleads=\box94
@@ -538,9 +538,9 @@ Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 \UL@box=\box97
 \UL@hyphenbox=\box98
 \UL@skip=\skip96
-\UL@hook=\toks36
+\UL@hook=\toks37
 \UL@height=\dimen272
-\UL@pe=\count312
+\UL@pe=\count314
 \UL@pixel=\dimen273
 \ULC@box=\box99
 Package: ulem 2019/11/18
@@ -548,34 +548,34 @@ Package: ulem 2019/11/18
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/makecell/makecell.sty
 Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
 \rotheadsize=\dimen275
-\c@nlinenum=\count313
-\TeXr@lab=\toks37
+\c@nlinenum=\count315
+\TeXr@lab=\toks38
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
-File: l3backend-pdftex.def 2023-04-19 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count314
+File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count316
 \l__pdf_internal_box=\box100
 ) (./NSAnomaly.aux)
 \openout1 = `NSAnomaly.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 105.
-LaTeX Font Info:    ... okay on input line 105.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 105.
-LaTeX Font Info:    ... okay on input line 105.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 105.
-LaTeX Font Info:    ... okay on input line 105.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 105.
-LaTeX Font Info:    ... okay on input line 105.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 105.
-LaTeX Font Info:    ... okay on input line 105.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 105.
-LaTeX Font Info:    ... okay on input line 105.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 105.
-LaTeX Font Info:    ... okay on input line 105.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 105.
-LaTeX Font Info:    ... okay on input line 105.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 105.
-LaTeX Font Info:    ... okay on input line 105.
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 105.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 106.
+LaTeX Font Info:    ... okay on input line 106.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 106.
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
@@ -584,85 +584,73 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-Package hyperref Info: Link coloring ON on input line 105.
+Package hyperref Info: Link coloring ON on input line 106.
 (./NSAnomaly.out) (./NSAnomaly.out)
 \@outlinefile=\write3
 \openout3 = `NSAnomaly.out'.
 
 
-Underfull \vbox (badness 10000) detected at line 106
+Underfull \vbox (badness 10000) detected at line 107
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 106
+Overfull \hbox (336.25pt too wide) detected at line 107
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 106
+Underfull \vbox (badness 10000) detected at line 107
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 106
+Overfull \hbox (336.25pt too wide) detected at line 107
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 106
+Underfull \vbox (badness 10000) detected at line 107
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 106
+Overfull \hbox (336.25pt too wide) detected at line 107
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 106
+Underfull \vbox (badness 10000) detected at line 107
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 106
+Overfull \hbox (336.25pt too wide) detected at line 107
 []
  []
 
-
-
-pdfTeX warning: pdflatex.exe (file ./images/cover4.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<images/cover4.pdf, id=160, 614.295pt x 794.97pt>
-File: images/cover4.pdf Graphic file (type pdf)
-<use images/cover4.pdf>
-Package pdftex.def Info: images/cover4.pdf  used on input line 107.
-(pdftex.def)             Requested size: 336.50415pt x 435.47597pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./images/cover4.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-File: images/cover4.pdf Graphic file (type pdf)
-<use images/cover4.pdf>
-Package pdftex.def Info: images/cover4.pdf  used on input line 107.
-(pdftex.def)             Requested size: 336.50415pt x 435.47597pt.
-
-
-pdfTeX warning: pdflatex.exe (file ./images/cover4.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-
-
-pdfTeX warning: pdflatex.exe (file ./images/cover4.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<images/cover4.pdf, id=163, page=1, 614.295pt x 794.97pt>
-File: images/cover4.pdf Graphic file (type pdf)
-<use images/cover4.pdf, page 1>
-Package pdftex.def Info: images/cover4.pdf , page1 used on input line 107.
-(pdftex.def)             Requested size: 614.29349pt x 794.96806pt.
-File: images/cover4.pdf Graphic file (type pdf)
-<use images/cover4.pdf, page 1>
-Package pdftex.def Info: images/cover4.pdf , page1 used on input line 107.
-(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
-File: images/cover4.pdf Graphic file (type pdf)
-<use images/cover4.pdf, page 1>
-Package pdftex.def Info: images/cover4.pdf , page1 used on input line 107.
-(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
-File: images/cover4.pdf Graphic file (type pdf)
-<use images/cover4.pdf, page 1>
-Package pdftex.def Info: images/cover4.pdf , page1 used on input line 107.
-(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+<images/cover5.pdf, id=108, 1061.46562pt x 1693.82813pt>
+File: images/cover5.pdf Graphic file (type pdf)
+<use images/cover5.pdf>
+Package pdftex.def Info: images/cover5.pdf  used on input line 108.
+(pdftex.def)             Requested size: 336.50139pt x 536.97032pt.
+File: images/cover5.pdf Graphic file (type pdf)
+<use images/cover5.pdf>
+Package pdftex.def Info: images/cover5.pdf  used on input line 108.
+(pdftex.def)             Requested size: 336.50139pt x 536.97032pt.
+<images/cover5.pdf, id=111, page=1, 1061.46562pt x 1693.82813pt>
+File: images/cover5.pdf Graphic file (type pdf)
+<use images/cover5.pdf, page 1>
+Package pdftex.def Info: images/cover5.pdf , page1 used on input line 108.
+(pdftex.def)             Requested size: 1061.46303pt x 1693.824pt.
+File: images/cover5.pdf Graphic file (type pdf)
+<use images/cover5.pdf, page 1>
+Package pdftex.def Info: images/cover5.pdf , page1 used on input line 108.
+(pdftex.def)             Requested size: 498.4192pt x 795.34982pt.
+File: images/cover5.pdf Graphic file (type pdf)
+<use images/cover5.pdf, page 1>
+Package pdftex.def Info: images/cover5.pdf , page1 used on input line 108.
+(pdftex.def)             Requested size: 498.4192pt x 795.34982pt.
+File: images/cover5.pdf Graphic file (type pdf)
+<use images/cover5.pdf, page 1>
+Package pdftex.def Info: images/cover5.pdf , page1 used on input line 108.
+(pdftex.def)             Requested size: 498.4192pt x 795.34982pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
@@ -700,14 +688,14 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  [][][][] 
  []
 
-File: images/cover4.pdf Graphic file (type pdf)
-<use images/cover4.pdf, page 1>
-Package pdftex.def Info: images/cover4.pdf , page1 used on input line 107.
-(pdftex.def)             Requested size: 614.58406pt x 795.3441pt.
+File: images/cover5.pdf Graphic file (type pdf)
+<use images/cover5.pdf, page 1>
+Package pdftex.def Info: images/cover5.pdf , page1 used on input line 108.
+(pdftex.def)             Requested size: 498.4192pt x 795.34982pt.
 [1
 
 
- <./images/cover4.pdf>]
+ <./images/cover5.pdf>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -748,7 +736,7 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 pdfTeX warning (ext4): destination with the same identifier (name{page.i}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.110 \thispagestyle
+l.111 \thispagestyle
                     {empty} [1
 
 {c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}]
@@ -791,74 +779,74 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 [2
 
 ]
-Underfull \vbox (badness 10000) detected at line 117
+Underfull \vbox (badness 10000) detected at line 118
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 117
+Overfull \hbox (336.25pt too wide) detected at line 118
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 117
+Underfull \vbox (badness 10000) detected at line 118
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 117
+Overfull \hbox (336.25pt too wide) detected at line 118
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 117
+Underfull \vbox (badness 10000) detected at line 118
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 117
+Overfull \hbox (336.25pt too wide) detected at line 118
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 117
+Underfull \vbox (badness 10000) detected at line 118
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 117
+Overfull \hbox (336.25pt too wide) detected at line 118
 []
  []
 
 
-Underfull \hbox (badness 10000) detected at line 117
+Underfull \hbox (badness 10000) detected at line 118
 []
  []
 
 (./NSAnomaly.toc
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 6.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 5.
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 6.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 5.
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 6.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 5.
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 6.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 5.
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 6.
+(Font)              <10> on input line 5.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 6.
+(Font)              <7> on input line 5.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 6.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 6.
+(Font)              <5> on input line 5.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 5.
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 6.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 5.
 (c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
@@ -871,58 +859,58 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 \openout4 = `NSAnomaly.toc'.
 
 [4]
-Underfull \vbox (badness 10000) detected at line 123
+Underfull \vbox (badness 10000) detected at line 124
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 123
+Overfull \hbox (336.25pt too wide) detected at line 124
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 123
+Underfull \vbox (badness 10000) detected at line 124
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 123
+Overfull \hbox (336.25pt too wide) detected at line 124
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 123
+Underfull \vbox (badness 10000) detected at line 124
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 123
+Overfull \hbox (336.25pt too wide) detected at line 124
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 123
+Underfull \vbox (badness 10000) detected at line 124
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 123
+Overfull \hbox (336.25pt too wide) detected at line 124
 []
  []
 
 
-Underfull \hbox (badness 10000) detected at line 123
+Underfull \hbox (badness 10000) detected at line 124
 []
  []
 
 
 Package hyperref Warning: bookmark level for unknown fm defaults to 0.
 
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 129.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 129.
 
-Underfull \hbox (badness 1975) in paragraph at lines 129--130
+Underfull \hbox (badness 1975) in paragraph at lines 130--131
 []\T1/lmr/m/n/10 To sup-port the de-vel-op-ment and main-te-nance of high qual-ity
  []
 
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <8> on input line 133.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <6> on input line 133.
 
 Underfull \hbox (badness 10000) has occurred while \output is active
  [][][][] 
@@ -932,113 +920,93 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 
 
 {c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}] [6]
-Underfull \vbox (badness 10000) detected at line 139
+Underfull \vbox (badness 10000) detected at line 140
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 139
+Overfull \hbox (336.25pt too wide) detected at line 140
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 139
+Underfull \vbox (badness 10000) detected at line 140
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 139
+Overfull \hbox (336.25pt too wide) detected at line 140
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 139
+Underfull \vbox (badness 10000) detected at line 140
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 139
+Overfull \hbox (336.25pt too wide) detected at line 140
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 139
+Underfull \vbox (badness 10000) detected at line 140
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 139
+Overfull \hbox (336.25pt too wide) detected at line 140
 []
  []
 
 
-Underfull \hbox (badness 10000) detected at line 139
+Underfull \hbox (badness 10000) detected at line 140
 []
  []
 
 
-Underfull \hbox (badness 10000) detected at line 145
+Underfull \hbox (badness 10000) detected at line 146
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 145
+Underfull \hbox (badness 10000) detected at line 146
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 147
+Underfull \hbox (badness 10000) detected at line 148
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 147
+Underfull \hbox (badness 10000) detected at line 148
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 149
+Underfull \hbox (badness 10000) detected at line 150
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 149
+Underfull \hbox (badness 10000) detected at line 150
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 151
+Underfull \hbox (badness 10000) detected at line 152
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 151
+Underfull \hbox (badness 10000) detected at line 152
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 153
+Underfull \hbox (badness 10000) detected at line 154
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 153
-[][][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 174
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 174
-[][][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 176
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 176
+Underfull \hbox (badness 10000) detected at line 154
 [][][]
  []
 
@@ -1061,12 +1029,7 @@ Non-PDF special ignored!
 <special> color cmyk 0 0 0 1.0
 Non-PDF special ignored!
 <special> color cmyk 0 0 0 1.0
-{c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}
-Non-PDF special ignored!
-<special> color cmyk 0 0 0 1.0
-Non-PDF special ignored!
-<special> color cmyk 0 0 0 1.0
-]
+{c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -1106,43 +1069,43 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 [8
 
 ]
-Underfull \vbox (badness 10000) detected at line 180
+Underfull \vbox (badness 10000) detected at line 172
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 180
+Overfull \hbox (336.25pt too wide) detected at line 172
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 180
+Underfull \vbox (badness 10000) detected at line 172
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 180
+Overfull \hbox (336.25pt too wide) detected at line 172
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 180
+Underfull \vbox (badness 10000) detected at line 172
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 180
+Overfull \hbox (336.25pt too wide) detected at line 172
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 180
+Underfull \vbox (badness 10000) detected at line 172
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 180
+Overfull \hbox (336.25pt too wide) detected at line 172
 []
  []
 
 
-Underfull \hbox (badness 10000) detected at line 180
+Underfull \hbox (badness 10000) detected at line 172
 []
  []
 
@@ -1193,38 +1156,38 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 [10
 
 ]
-Underfull \vbox (badness 10000) detected at line 208
+Underfull \vbox (badness 10000) detected at line 189
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 208
+Overfull \hbox (336.25pt too wide) detected at line 189
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 208
+Underfull \vbox (badness 10000) detected at line 189
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 208
+Overfull \hbox (336.25pt too wide) detected at line 189
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 208
+Underfull \vbox (badness 10000) detected at line 189
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 208
+Overfull \hbox (336.25pt too wide) detected at line 189
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 208
+Underfull \vbox (badness 10000) detected at line 189
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 208
+Overfull \hbox (336.25pt too wide) detected at line 189
 []
  []
 
@@ -1238,36 +1201,36 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 
 
 ] [2] [3]
-Overfull \hbox (51.14238pt too wide) detected at line 298
+Overfull \hbox (51.14238pt too wide) detected at line 282
 [] \OT1/lmr/m/n/10 = 1\OML/lmm/m/it/10 ; \OT1/lmr/m/n/10 000 \OMS/lmsy/m/n/10 ^^B []
  []
 
 [4]
 
-LaTeX Font Warning: Command \small invalid in math mode on input line 333.
+LaTeX Font Warning: Command \small invalid in math mode on input line 317.
 
 
-Underfull \hbox (badness 10000) detected at line 363
+Underfull \hbox (badness 10000) detected at line 347
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 363
+Underfull \hbox (badness 10000) detected at line 347
 [][][]
  []
 
 
-LaTeX Font Warning: Command \small invalid in math mode on input line 367.
+LaTeX Font Warning: Command \small invalid in math mode on input line 351.
 
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 368.
+(Font)              <9> on input line 352.
 
-Underfull \hbox (badness 10000) detected at line 377
+Underfull \hbox (badness 10000) detected at line 361
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 377
+Underfull \hbox (badness 10000) detected at line 361
 [][][]
  []
 
@@ -1275,77 +1238,77 @@ Underfull \hbox (badness 10000) detected at line 377
 pdfTeX warning (ext4): destination with the same identifier (name{table.1.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.378 \end{enumerate}
+l.362 \end{enumerate}
                      {c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}
 Non-PDF special ignored!
 <special> color cmyk 0 0 0 1.0
 ]
 
-LaTeX Font Warning: Command \scriptsize invalid in math mode on input line 382.
+LaTeX Font Warning: Command \scriptsize invalid in math mode on input line 366.
 
 
-Overfull \hbox (28.41449pt too wide) detected at line 387
+Overfull \hbox (28.41449pt too wide) detected at line 371
 [][]
  []
 
 
-LaTeX Font Warning: Command \small invalid in math mode on input line 394.
+LaTeX Font Warning: Command \small invalid in math mode on input line 378.
 
 
-Underfull \hbox (badness 1622) in paragraph at lines 405--407
+Underfull \hbox (badness 1622) in paragraph at lines 389--391
 []\T1/lmr/bx/it/10 For a preva-lence based on a large num-ber of cases - \T1/lmr/m/n/10 For
  []
 
 
-Underfull \hbox (badness 1721) in paragraph at lines 405--407
+Underfull \hbox (badness 1721) in paragraph at lines 389--391
 \T1/lmr/m/n/10 a large num-ber of cases (ar-bi-trar-ily de-fined here as $\OMS/lmsy/m/n/10 ^^U \OT1/lmr/m/n/10 30$ \T1/lmr/m/n/10 cases),
  []
 
 
-Underfull \hbox (badness 1337) in paragraph at lines 405--407
+Underfull \hbox (badness 1337) in paragraph at lines 389--391
 \T1/lmr/m/n/10 use the Nor-mal dis-tri-bu-tion be-cause as the num-ber of cases grows
  []
 
 
-Underfull \hbox (badness 3333) in paragraph at lines 405--407
+Underfull \hbox (badness 3333) in paragraph at lines 389--391
 \T1/lmr/m/n/10 larger, the Pois-son dis-tri-bu-tion ap-prox-i-mates the Nor-mal dis-tri-bu-
  []
 
 
-Underfull \hbox (badness 2189) in paragraph at lines 405--407
+Underfull \hbox (badness 2189) in paragraph at lines 389--391
 \T1/lmr/m/n/10 tion. Let $\OML/lmm/m/it/10 c \OT1/lmr/m/n/10 = []$ \T1/lmr/m/n/10 and $\OML/lmm/m/it/10 b \OT1/lmr/m/n/10 =
  []
 
 
-Underfull \hbox (badness 10000) detected at line 412
+Underfull \hbox (badness 10000) detected at line 396
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 412
+Underfull \hbox (badness 10000) detected at line 396
 [][][]
  []
 
 
-LaTeX Font Warning: Command \small invalid in math mode on input line 418.
+LaTeX Font Warning: Command \small invalid in math mode on input line 402.
 
 
-Underfull \hbox (badness 10000) detected at line 431
+Underfull \hbox (badness 10000) detected at line 415
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 431
+Underfull \hbox (badness 10000) detected at line 415
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 433
+Underfull \hbox (badness 10000) detected at line 417
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 433
+Underfull \hbox (badness 10000) detected at line 417
 [][][]
  []
 
@@ -1359,38 +1322,38 @@ Non-PDF special ignored!
 Non-PDF special ignored!
 <special> color cmyk 0 0 0 1.0
 ] [7] [8]
-Underfull \vbox (badness 10000) detected at line 486
+Underfull \vbox (badness 10000) detected at line 470
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 486
+Overfull \hbox (336.25pt too wide) detected at line 470
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 486
+Underfull \vbox (badness 10000) detected at line 470
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 486
+Overfull \hbox (336.25pt too wide) detected at line 470
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 486
+Underfull \vbox (badness 10000) detected at line 470
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 486
+Overfull \hbox (336.25pt too wide) detected at line 470
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 486
+Underfull \vbox (badness 10000) detected at line 470
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 486
+Overfull \hbox (336.25pt too wide) detected at line 470
 []
  []
 
@@ -1443,55 +1406,47 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 [16
 
 ]
-Underfull \vbox (badness 10000) detected at line 843
+Underfull \vbox (badness 10000) detected at line 827
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 843
+Overfull \hbox (336.25pt too wide) detected at line 827
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 843
+Underfull \vbox (badness 10000) detected at line 827
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 843
+Overfull \hbox (336.25pt too wide) detected at line 827
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 843
+Underfull \vbox (badness 10000) detected at line 827
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 843
+Overfull \hbox (336.25pt too wide) detected at line 827
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 843
+Underfull \vbox (badness 10000) detected at line 827
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 843
+Overfull \hbox (336.25pt too wide) detected at line 827
 []
  []
 
 Chapter 3.
-<02-Trend_files/figure-latex/nt1-1.pdf, id=493, 469.755pt x 325.215pt>
+<02-Trend_files/figure-latex/nt1-1.pdf, id=389, 469.755pt x 325.215pt>
 File: 02-Trend_files/figure-latex/nt1-1.pdf Graphic file (type pdf)
 <use 02-Trend_files/figure-latex/nt1-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/nt1-1.pdf  used on input line 854.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-<02-Trend_files/figure-latex/nt11-1.pdf, id=494, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/nt11-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/nt11-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/nt11-1.pdf  used on input line 871.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
+Package pdftex.def Info: 02-Trend_files/figure-latex/nt1-1.pdf  used on input line 838.
+(pdftex.def)             Requested size: 302.84988pt x 209.6653pt.
 
 Underfull \hbox (badness 10000) has occurred while \output is active
  [][][][] 
@@ -1503,860 +1458,64 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 pdfTeX warning (ext4): destination with the same identifier (name{figure.3.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.882 \end{itemize}
+l.851 \end{itemize}
                     <./02-Trend_files/figure-latex/nt1-1.pdf>]
-<02-Trend_files/figure-latex/nt12-1.pdf, id=510, 469.755pt x 325.215pt>
+<02-Trend_files/figure-latex/nt11-1.pdf, id=405, 469.755pt x 325.215pt>
+File: 02-Trend_files/figure-latex/nt11-1.pdf Graphic file (type pdf)
+<use 02-Trend_files/figure-latex/nt11-1.pdf>
+Package pdftex.def Info: 02-Trend_files/figure-latex/nt11-1.pdf  used on input line 855.
+(pdftex.def)             Requested size: 111.04471pt x 76.8771pt.
+<02-Trend_files/figure-latex/nt12-1.pdf, id=406, 469.755pt x 325.215pt>
 File: 02-Trend_files/figure-latex/nt12-1.pdf Graphic file (type pdf)
 <use 02-Trend_files/figure-latex/nt12-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/nt12-1.pdf  used on input line 886.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-<02-Trend_files/figure-latex/nt13-1.pdf, id=511, 469.755pt x 325.215pt>
+Package pdftex.def Info: 02-Trend_files/figure-latex/nt12-1.pdf  used on input line 870.
+(pdftex.def)             Requested size: 302.84988pt x 209.6653pt.
+<02-Trend_files/figure-latex/nt13-1.pdf, id=407, 469.755pt x 325.215pt>
 File: 02-Trend_files/figure-latex/nt13-1.pdf Graphic file (type pdf)
 <use 02-Trend_files/figure-latex/nt13-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/nt13-1.pdf  used on input line 901.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
+Package pdftex.def Info: 02-Trend_files/figure-latex/nt13-1.pdf  used on input line 885.
+(pdftex.def)             Requested size: 302.84988pt x 209.6653pt.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<02-Trend_files/figure-latex/nt3-1.pdf, id=513, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/nt3-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/nt3-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/nt3-1.pdf  used on input line 916.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
 [18
 pdfTeX warning (ext4): destination with the same identifier (name{figure.3.2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.921 \end{figure}
-                  
+l.892 \clearpage
+                
 pdfTeX warning (ext4): destination with the same identifier (name{figure.3.3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.921 \end{figure}
-                   <./02-Trend_files/figure-latex/nt11-1.pdf> <./02-Trend_files/figure-latex/nt12-1.pdf>] [19
+l.892 \clearpage
+                 <./02-Trend_files/figure-latex/nt11-1.pdf> <./02-Trend_files/figure-latex/nt12-1.pdf>] [19
 pdfTeX warning (ext4): destination with the same identifier (name{figure.3.4}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.923 \clearpage
-                
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.5}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.923 \clearpage
-                 <./02-Trend_files/figure-latex/nt13-1.pdf> <./02-Trend_files/figure-latex/nt3-1.pdf>]
-<02-Trend_files/figure-latex/scn1-1.pdf, id=559, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/scn1-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/scn1-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/scn1-1.pdf  used on input line 934.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-<02-Trend_files/figure-latex/scn11-1.pdf, id=560, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/scn11-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/scn11-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/scn11-1.pdf  used on input line 951.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<02-Trend_files/figure-latex/scn12-1.pdf, id=561, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/scn12-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/scn12-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/scn12-1.pdf  used on input line 966.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<02-Trend_files/figure-latex/scn13-1.pdf, id=562, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/scn13-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/scn13-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/scn13-1.pdf  used on input line 981.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[20
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.6}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.989 
-       <./02-Trend_files/figure-latex/scn1-1.pdf>]
-<02-Trend_files/figure-latex/scn3-1.pdf, id=580, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/scn3-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/scn3-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/scn3-1.pdf  used on input line 994.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[21
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.7}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1001 \clearpage
-                 
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.8}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1001 \clearpage
-                  <./02-Trend_files/figure-latex/scn11-1.pdf> <./02-Trend_files/figure-latex/scn12-1.pdf>] [22
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.9}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1001 \clearpage
-                 
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.10}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1001 \clearpage
-                  <./02-Trend_files/figure-latex/scn13-1.pdf> <./02-Trend_files/figure-latex/scn3-1.pdf>]
-<02-Trend_files/figure-latex/ssod1-1.pdf, id=627, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/ssod1-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/ssod1-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/ssod1-1.pdf  used on input line 1012.
-(pdftex.def)             Requested size: 302.84988pt x 209.6653pt.
-<02-Trend_files/figure-latex/ssod11-1.pdf, id=628, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/ssod11-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/ssod11-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/ssod11-1.pdf  used on input line 1029.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<02-Trend_files/figure-latex/ssod12-1.pdf, id=629, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/ssod12-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/ssod12-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/ssod12-1.pdf  used on input line 1044.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[23
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.11}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1055 \end{itemize}
-                     <./02-Trend_files/figure-latex/ssod1-1.pdf>]
-<02-Trend_files/figure-latex/ssod13-1.pdf, id=645, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/ssod13-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/ssod13-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/ssod13-1.pdf  used on input line 1059.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<02-Trend_files/figure-latex/ssod3-1.pdf, id=647, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/ssod3-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/ssod3-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/ssod3-1.pdf  used on input line 1072.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[24
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.12}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1079 \clearpage
-                 
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.13}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1079 \clearpage
-                  <./02-Trend_files/figure-latex/ssod11-1.pdf> <./02-Trend_files/figure-latex/ssod12-1.pdf>] [25
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.14}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1079 \clearpage
-                 
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.15}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1079 \clearpage
-                  <./02-Trend_files/figure-latex/ssod13-1.pdf> <./02-Trend_files/figure-latex/ssod3-1.pdf>]
-<02-Trend_files/figure-latex/schd1-1.pdf, id=693, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/schd1-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/schd1-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/schd1-1.pdf  used on input line 1090.
-(pdftex.def)             Requested size: 302.84988pt x 209.6653pt.
-[26
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.16}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1108 \end{itemize}
-                     <./02-Trend_files/figure-latex/schd1-1.pdf>]
-<02-Trend_files/figure-latex/schd11-1.pdf, id=710, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/schd11-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/schd11-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/schd11-1.pdf  used on input line 1112.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-<02-Trend_files/figure-latex/schd12-1.pdf, id=711, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/schd12-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/schd12-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/schd12-1.pdf  used on input line 1127.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-<02-Trend_files/figure-latex/schd13-1.pdf, id=712, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/schd13-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/schd13-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/schd13-1.pdf  used on input line 1142.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[27
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.17}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1152 
-       
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.18}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1152 
-        <./02-Trend_files/figure-latex/schd11-1.pdf> <./02-Trend_files/figure-latex/schd12-1.pdf>]
-<02-Trend_files/figure-latex/schd3-1.pdf, id=740, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/schd3-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/schd3-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/schd3-1.pdf  used on input line 1155.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-[28
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.19}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1162 \clearpage
-                 
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.20}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1162 \clearpage
-                  <./02-Trend_files/figure-latex/schd13-1.pdf> <./02-Trend_files/figure-latex/schd3-1.pdf>]
-<02-Trend_files/figure-latex/ofc1-1.pdf, id=761, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/ofc1-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/ofc1-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/ofc1-1.pdf  used on input line 1173.
-(pdftex.def)             Requested size: 302.84988pt x 209.6653pt.
-<02-Trend_files/figure-latex/ofc11-1.pdf, id=762, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/ofc11-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/ofc11-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/ofc11-1.pdf  used on input line 1190.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<02-Trend_files/figure-latex/ofc12-1.pdf, id=763, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/ofc12-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/ofc12-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/ofc12-1.pdf  used on input line 1205.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<02-Trend_files/figure-latex/ofc13-1.pdf, id=764, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/ofc13-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/ofc13-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/ofc13-1.pdf  used on input line 1220.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[29
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.21}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1229 I
-        n the past, oro-facial clefts appeared to be more prevalent in north... <./02-Trend_files/figure-latex/ofc1-1.pdf>]
-<02-Trend_files/figure-latex/ofc3-1.pdf, id=781, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/ofc3-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/ofc3-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/ofc3-1.pdf  used on input line 1233.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[30
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.22}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1240 \clearpage
-                 
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.23}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1240 \clearpage
-                  <./02-Trend_files/figure-latex/ofc11-1.pdf> <./02-Trend_files/figure-latex/ofc12-1.pdf>] [31
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.24}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1240 \clearpage
-                 
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.25}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1240 \clearpage
-                  <./02-Trend_files/figure-latex/ofc13-1.pdf> <./02-Trend_files/figure-latex/ofc3-1.pdf>]
-<02-Trend_files/figure-latex/sgd1-1.pdf, id=827, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/sgd1-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/sgd1-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/sgd1-1.pdf  used on input line 1251.
-(pdftex.def)             Requested size: 302.84988pt x 209.6653pt.
-<02-Trend_files/figure-latex/sgd11-1.pdf, id=828, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/sgd11-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/sgd11-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/sgd11-1.pdf  used on input line 1268.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<02-Trend_files/figure-latex/sgd12-1.pdf, id=829, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/sgd12-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/sgd12-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/sgd12-1.pdf  used on input line 1283.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[32
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.26}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1294 \end{itemize}
-                     <./02-Trend_files/figure-latex/sgd1-1.pdf>]
-<02-Trend_files/figure-latex/sgd13-1.pdf, id=846, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/sgd13-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/sgd13-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/sgd13-1.pdf  used on input line 1298.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<02-Trend_files/figure-latex/sgd14-1.pdf, id=847, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/sgd14-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/sgd14-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/sgd14-1.pdf  used on input line 1313.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<02-Trend_files/figure-latex/sgd15-1.pdf, id=848, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/sgd15-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/sgd15-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/sgd15-1.pdf  used on input line 1328.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<02-Trend_files/figure-latex/sgd3-1.pdf, id=850, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/sgd3-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/sgd3-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/sgd3-1.pdf  used on input line 1341.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[33
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.27}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1348 \clearpage
-                  <./02-Trend_files/figure-latex/sgd11-1.pdf>] [34
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.28}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1348 \clearpage
-                 
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.29}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1348 \clearpage
-                  <./02-Trend_files/figure-latex/sgd12-1.pdf> <./02-Trend_files/figure-latex/sgd13-1.pdf>] [35
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.30}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1348 \clearpage
-                 
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.31}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1348 \clearpage
-                  <./02-Trend_files/figure-latex/sgd14-1.pdf> <./02-Trend_files/figure-latex/sgd15-1.pdf>] [36
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.32}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1348 \clearpage
-                  <./02-Trend_files/figure-latex/sgd3-1.pdf>]
-<02-Trend_files/figure-latex/sga1-1.pdf, id=925, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/sga1-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/sga1-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/sga1-1.pdf  used on input line 1359.
-(pdftex.def)             Requested size: 302.84988pt x 209.6653pt.
-<02-Trend_files/figure-latex/sga11-1.pdf, id=926, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/sga11-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/sga11-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/sga11-1.pdf  used on input line 1376.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<02-Trend_files/figure-latex/sga12-1.pdf, id=927, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/sga12-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/sga12-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/sga12-1.pdf  used on input line 1391.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[37
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.33}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1402 \end{itemize}
-                     <./02-Trend_files/figure-latex/sga1-1.pdf>]
-<02-Trend_files/figure-latex/sga13-1.pdf, id=943, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/sga13-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/sga13-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/sga13-1.pdf  used on input line 1406.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<02-Trend_files/figure-latex/sga14-1.pdf, id=944, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/sga14-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/sga14-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/sga14-1.pdf  used on input line 1421.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<02-Trend_files/figure-latex/sga3-1.pdf, id=946, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/sga3-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/sga3-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/sga3-1.pdf  used on input line 1434.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[38
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.34}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1441 \clearpage
-                 
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.35}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1441 \clearpage
-                  <./02-Trend_files/figure-latex/sga11-1.pdf> <./02-Trend_files/figure-latex/sga12-1.pdf>] [39
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.36}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1441 \clearpage
-                 
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.37}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1441 \clearpage
-                  <./02-Trend_files/figure-latex/sga13-1.pdf> <./02-Trend_files/figure-latex/sga14-1.pdf>] [40
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.38}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1441 \clearpage
-                  <./02-Trend_files/figure-latex/sga3-1.pdf>]
-<02-Trend_files/figure-latex/sutd1-1.pdf, id=1008, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/sutd1-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/sutd1-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/sutd1-1.pdf  used on input line 1452.
-(pdftex.def)             Requested size: 302.84988pt x 209.6653pt.
-<02-Trend_files/figure-latex/sutd11-1.pdf, id=1009, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/sutd11-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/sutd11-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/sutd11-1.pdf  used on input line 1469.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<02-Trend_files/figure-latex/sutd12-1.pdf, id=1010, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/sutd12-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/sutd12-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/sutd12-1.pdf  used on input line 1484.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[41
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.39}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1495 \end{itemize}
-                     <./02-Trend_files/figure-latex/sutd1-1.pdf>]
-<02-Trend_files/figure-latex/sutd13-1.pdf, id=1026, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/sutd13-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/sutd13-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/sutd13-1.pdf  used on input line 1499.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<02-Trend_files/figure-latex/sutd14-1.pdf, id=1027, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/sutd14-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/sutd14-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/sutd14-1.pdf  used on input line 1514.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<02-Trend_files/figure-latex/sutd3-1.pdf, id=1029, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/sutd3-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/sutd3-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/sutd3-1.pdf  used on input line 1527.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[42
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.40}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1534 \clearpage
-                 
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.41}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1534 \clearpage
-                  <./02-Trend_files/figure-latex/sutd11-1.pdf> <./02-Trend_files/figure-latex/sutd12-1.pdf>] [43
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.42}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1534 \clearpage
-                 
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.43}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1534 \clearpage
-                  <./02-Trend_files/figure-latex/sutd13-1.pdf> <./02-Trend_files/figure-latex/sutd14-1.pdf>] [44
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.44}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1534 \clearpage
-                  <./02-Trend_files/figure-latex/sutd3-1.pdf>]
-<02-Trend_files/figure-latex/hip1-1.pdf, id=1090, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/hip1-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/hip1-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/hip1-1.pdf  used on input line 1545.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-<02-Trend_files/figure-latex/hip3-1.pdf, id=1092, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/hip3-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/hip3-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/hip3-1.pdf  used on input line 1558.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[45
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.45}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1565 \clearpage
-                  <./02-Trend_files/figure-latex/hip1-1.pdf>] [46
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.46}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1565 \clearpage
-                  <./02-Trend_files/figure-latex/hip3-1.pdf>]
-<02-Trend_files/figure-latex/ldd1-1.pdf, id=1120, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/ldd1-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/ldd1-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/ldd1-1.pdf  used on input line 1576.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-<02-Trend_files/figure-latex/ldd3-1.pdf, id=1122, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/ldd3-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/ldd3-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/ldd3-1.pdf  used on input line 1589.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[47
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.47}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1596 \clearpage
-                  <./02-Trend_files/figure-latex/ldd1-1.pdf>] [48
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.48}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1596 \clearpage
-                  <./02-Trend_files/figure-latex/ldd3-1.pdf>]
-<02-Trend_files/figure-latex/sawd1-1.pdf, id=1149, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/sawd1-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/sawd1-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/sawd1-1.pdf  used on input line 1607.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-<02-Trend_files/figure-latex/sawd11-1.pdf, id=1150, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/sawd11-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/sawd11-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/sawd11-1.pdf  used on input line 1624.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<02-Trend_files/figure-latex/sawd12-1.pdf, id=1151, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/sawd12-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/sawd12-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/sawd12-1.pdf  used on input line 1641.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<02-Trend_files/figure-latex/sawd13-1.pdf, id=1152, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/sawd13-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/sawd13-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/sawd13-1.pdf  used on input line 1658.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-[49
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.49}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1663 \end{figure}
-                    <./02-Trend_files/figure-latex/sawd1-1.pdf>]
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<02-Trend_files/figure-latex/sawd3-1.pdf, id=1169, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/sawd3-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/sawd3-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/sawd3-1.pdf  used on input line 1673.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[50
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.50}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1680 \clearpage
-                 
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.51}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1680 \clearpage
-                  <./02-Trend_files/figure-latex/sawd11-1.pdf> <./02-Trend_files/figure-latex/sawd12-1.pdf>] [51
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.52}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1680 \clearpage
-                 
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.53}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1680 \clearpage
-                  <./02-Trend_files/figure-latex/sawd13-1.pdf> <./02-Trend_files/figure-latex/sawd3-1.pdf>]
-<02-Trend_files/figure-latex/scd1-1.pdf, id=1216, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/scd1-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/scd1-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/scd1-1.pdf  used on input line 1691.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-<02-Trend_files/figure-latex/scd21-1.pdf, id=1218, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/scd21-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/scd21-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/scd21-1.pdf  used on input line 1710.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<02-Trend_files/figure-latex/scd22-1.pdf, id=1220, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/scd22-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/scd22-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/scd22-1.pdf  used on input line 1727.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<02-Trend_files/figure-latex/scd23-1.pdf, id=1222, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/scd23-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/scd23-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/scd23-1.pdf  used on input line 1744.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-[52
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.54}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1749 \end{figure}
-                    <./02-Trend_files/figure-latex/scd1-1.pdf>]
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<02-Trend_files/figure-latex/scd24-1.pdf, id=1241, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/scd24-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/scd24-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/scd24-1.pdf  used on input line 1761.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<02-Trend_files/figure-latex/scd3-1.pdf, id=1243, 469.755pt x 325.215pt>
-File: 02-Trend_files/figure-latex/scd3-1.pdf Graphic file (type pdf)
-<use 02-Trend_files/figure-latex/scd3-1.pdf>
-Package pdftex.def Info: 02-Trend_files/figure-latex/scd3-1.pdf  used on input line 1774.
-(pdftex.def)             Requested size: 218.72054pt x 151.4219pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[53
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.55}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1782 \chapter*{Appendix}\label{appendix}}
-                                            <./02-Trend_files/figure-latex/scd21-1.pdf>] [54
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.56}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1782 \chapter*{Appendix}\label{appendix}}
-                                           
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.57}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1782 \chapter*{Appendix}\label{appendix}}
-                                            <./02-Trend_files/figure-latex/scd22-1.pdf> <./02-Trend_files/figure-latex/scd23-1.pdf>] [55
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.58}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1782 \chapter*{Appendix}\label{appendix}}
-                                           
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3.59}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1782 \chapter*{Appendix}\label{appendix}}
-                                            <./02-Trend_files/figure-latex/scd24-1.pdf> <./02-Trend_files/figure-latex/scd3-1.pdf>]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (336.25pt too wide) has occurred while \output is active
-[]
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (336.25pt too wide) has occurred while \output is active
-[]
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (336.25pt too wide) has occurred while \output is active
-[]
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (336.25pt too wide) has occurred while \output is active
-[]
- []
-
-
-Underfull \hbox (badness 10000) has occurred while \output is active
- [][][][] 
- []
-
-[56
-
-]
-Underfull \vbox (badness 10000) detected at line 1782
- []
-
-
-Overfull \hbox (336.25pt too wide) detected at line 1782
-[]
- []
-
-
-Underfull \vbox (badness 10000) detected at line 1782
- []
-
-
-Overfull \hbox (336.25pt too wide) detected at line 1782
-[]
- []
-
-
-Underfull \vbox (badness 10000) detected at line 1782
- []
-
-
-Overfull \hbox (336.25pt too wide) detected at line 1782
-[]
- []
-
-
-Underfull \vbox (badness 10000) detected at line 1782
- []
-
-
-Overfull \hbox (336.25pt too wide) detected at line 1782
-[]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 1782
-[]
- []
-
-
-Overfull \hbox (9.87067pt too wide) in paragraph at lines 1814--1814
-[]|\T1/lmr/m/n/7 Arhinencephaly/Holoprosencephaly  
- []
-
-
-Underfull \hbox (badness 10000) has occurred while \output is active
- [][][][] 
- []
-
-[57
-
-] [58] [59] [60
+l.892 \clearpage
+                 <./02-Trend_files/figure-latex/nt13-1.pdf>] [20
 
 ] (./NSAnomaly.aux)
+ ***********
+LaTeX2e <2023-11-01>
+L3 programming layer <2024-01-04>
+ ***********
 Package rerunfilecheck Info: File `NSAnomaly.out' has not changed.
-(rerunfilecheck)             Checksum: 7B7F43A42A6A0D423F5FC6BAC0783C88;8139.
+(rerunfilecheck)             Checksum: A213D18F0C9AE0D50955A8D478E4B42F;5225.
  ) 
 Here is how much of TeX's memory you used:
- 14557 strings out of 478056
- 247995 string characters out of 5838593
- 1925845 words of memory out of 5000000
- 34096 multiletter control sequences out of 15000+600000
- 598325 words of font info for 85 fonts, out of 8000000 for 9000
+ 13583 strings out of 476131
+ 214607 string characters out of 5793228
+ 1944528 words of memory out of 5000000
+ 35247 multiletter control sequences out of 15000+600000
+ 639839 words of font info for 88 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,17n,76p,1291b,579s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxo10.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi7.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi9.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr5.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr9.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri7.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmro17.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy9.pfb>
-Output written on NSAnomaly.pdf (71 pages, 2389978 bytes).
+ 78i,17n,99p,1291b,562s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxi10.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbxo10.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmex10.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi10.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi7.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi9.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr5.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr6.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr9.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmro17.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy7.pfb><c:/Users/teixeiec/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy9.pfb>
+Output written on NSAnomaly.pdf (31 pages, 513238 bytes).
 PDF statistics:
- 1486 PDF objects out of 1728 (max. 8388607)
- 1169 compressed objects within 12 object streams
- 242 named destinations out of 1000 (max. 500000)
- 628 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 578 PDF objects out of 1000 (max. 8388607)
+ 473 compressed objects within 5 object streams
+ 116 named destinations out of 1000 (max. 500000)
+ 249 words of extra memory for PDF output out of 10000 (max. 10000000)
 

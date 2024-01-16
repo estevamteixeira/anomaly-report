@@ -12,10 +12,22 @@ modeling_trend <- function(data,
   
   # Filter the data based on the value
   val <- tolower(value)
-  filtered_data <- data[grepl(val, tolower(data[["qcode"]])), ]
+  filtered_data <- subset(data, tolower(Diag) %in% val)
   
   # Calculate theta value
-  theta <- var(filtered_data$total_anom, na.rm = TRUE) / mean(filtered_data$total_anom, na.rm = TRUE)
+  theta <- var(filtered_data %>%
+                 select(CaseID,Birth_Year) %>%
+                 group_by(Birth_Year) %>% 
+                 mutate(total = n()) %>% 
+                 select(Birth_Year, total) %>% 
+                 distinct() %>% 
+                 pull(), na.rm = TRUE) / mean(filtered_data %>%
+                                                select(CaseID,Birth_Year) %>%
+                                                group_by(Birth_Year) %>% 
+                                                mutate(total = n()) %>% 
+                                                select(Birth_Year, total) %>% 
+                                                distinct() %>% 
+                                                pull(), na.rm = TRUE)
   
   # Perform dispersion test if specified
   test <- NULL
@@ -23,23 +35,37 @@ modeling_trend <- function(data,
     if (!requireNamespace("AER", quietly = TRUE))
       stop("The 'AER' package is required for dispersion test. Please install it.")
     test <- AER::dispersiontest(
-      glm(total_anom ~ BrthYear,
+      glm(total ~ Birth_Year,
           family = poisson,
-          offset = log(total_lvb_yr/1000),
-          data = filtered_data)
+          offset = log(count_brth_yr/10000),
+          data = filtered_data %>%
+            select(CaseID,Birth_Year,count_brth_yr) %>%
+            group_by(Birth_Year) %>% 
+            mutate(total = n()) %>% 
+            select(Birth_Year, total, count_brth_yr) %>% 
+            distinct())
     )[["p.value"]]
   }
   
   # Check thresholds and perform the appropriate modeling
   if (any(theta > thres) || any(test < alpha)) {
-    mod <- MASS::glm.nb(total_anom ~ BrthYear,
-                        offset(log(total_lvb_yr/1000)),
-                        data = filtered_data)
+    mod <- MASS::glm.nb(total ~ Birth_Year + offset(log(count_brth_yr/10000)),
+                        data = filtered_data %>%
+                          select(CaseID,Birth_Year,count_brth_yr) %>%
+                          group_by(Birth_Year) %>% 
+                          mutate(total = n()) %>% 
+                          select(Birth_Year, total, count_brth_yr) %>% 
+                          distinct())
   } else {
-    mod <- glm(total_anom ~ BrthYear,
+    mod <- glm(total ~ Birth_Year,
                family = poisson,
-               offset = log(total_lvb_yr/1000),
-               data = filtered_data)
+               offset = log(count_brth_yr/10000),
+               data = filtered_data %>%
+                 select(CaseID,Birth_Year,count_brth_yr) %>%
+                 group_by(Birth_Year) %>% 
+                 mutate(total = n()) %>% 
+                 select(Birth_Year, total, count_brth_yr) %>% 
+                 distinct())
   }
   
   # Prepare the result dataframe
@@ -48,10 +74,10 @@ modeling_trend <- function(data,
     std = coef(summary(mod))[2, 2],
     rate = exp(coef(summary(mod))[2, 1]),
     anom = paste0(unique(filtered_data$cat), "<br>",
-                  "<span style='font-size:12px'> ICD-10: ", unique(filtered_data$qcodecat), "</span>"),
+                  "<span style='font-size:12px'> ICD-10: ", unique(filtered_data$Diag), "</span>"),
     n = paste0(scales::comma(nrow(filtered_data), accuracy = 1), "<br>",
-               "<span style='font-size:12px'>(", min(filtered_data$BrthYear, na.rm = TRUE),
-               "-", max(filtered_data$BrthYear, na.rm = TRUE), ")</span>"),
+               "<span style='font-size:12px'>(", min(filtered_data$Birth_Year, na.rm = TRUE),
+               "-", max(filtered_data$Birth_Year, na.rm = TRUE), ")</span>"),
     trend = ifelse(coef(summary(mod))[2, 4] >= alpha,
                    paste0("No significant change ", "<br>",
                           "(", fontawesome::fa(name = "arrow-right"), ")"),
@@ -83,10 +109,22 @@ modeling_anal <- function(data,
   
   # Filter the data based on the value
   val <- tolower(value)
-  filtered_data <- data[grepl(val, tolower(data[["qcode"]])), ]
+  filtered_data <- subset(data, tolower(Diag) %in% val)
   
   # Calculate theta value
-  theta <- var(filtered_data$total_anom, na.rm = TRUE) / mean(filtered_data$total_anom, na.rm = TRUE)
+  theta <- var(filtered_data %>%
+                 select(CaseID,Birth_Year) %>%
+                 group_by(Birth_Year) %>% 
+                 mutate(total = n()) %>% 
+                 select(Birth_Year, total) %>% 
+                 distinct() %>% 
+                 pull(), na.rm = TRUE) / mean(filtered_data %>%
+                                                select(CaseID,Birth_Year) %>%
+                                                group_by(Birth_Year) %>% 
+                                                mutate(total = n()) %>% 
+                                                select(Birth_Year, total) %>% 
+                                                distinct() %>% 
+                                                pull(), na.rm = TRUE)
   
   # Perform dispersion test if specified
   test <- NULL
@@ -94,39 +132,51 @@ modeling_anal <- function(data,
     if (!requireNamespace("AER", quietly = TRUE))
       stop("The 'AER' package is required for dispersion test. Please install it.")
     test <- AER::dispersiontest(
-      glm(total_anom ~ BrthYear,
+      glm(total ~ Birth_Year,
           family = poisson,
-          offset = log(total_lvb_yr/1000),
-          data = filtered_data)
+          offset = log(count_brth_yr/10000),
+          data = filtered_data %>%
+            select(CaseID,Birth_Year,count_brth_yr) %>%
+            group_by(Birth_Year) %>% 
+            mutate(total = n()) %>% 
+            select(Birth_Year, total, count_brth_yr) %>% 
+            distinct())
     )[["p.value"]]
   }
   
   if (any(theta > thres) || any(test < alpha)) {
-    mod <- MASS::glm.nb(total_anom ~ BrthYear,
-                        offset(log(total_lvb_yr/1000)),
-                        data = filtered_data)
+    mod <- MASS::glm.nb(total ~ Birth_Year + offset(log(count_brth_yr/10000)),
+                        data = filtered_data %>%
+                          select(CaseID,Birth_Year,count_brth_yr) %>%
+                          group_by(Birth_Year) %>% 
+                          mutate(total = n()) %>% 
+                          select(Birth_Year, total, count_brth_yr) %>% 
+                          distinct())
     
     ## dataset for trend line
-    xy <- data.frame(BrthYear = mod[["model"]][["BrthYear"]],
+    xy <- data.frame(Birth_Year = mod[["model"]][["Birth_Year"]],
                      cat = unique(filtered_data[["cat"]]),
-                     qcode = unique(filtered_data[["qcode"]]),
-                     qcodecat = unique(filtered_data[["qcodecat"]]),
-                     total_anom = mod[["fitted.values"]],
-                     total_lvb_yr = exp(mod[["model"]][["(weights)"]])*1000,
-                     rate = mod[["fitted.values"]]/exp(mod[["model"]][["(weights)"]]),
+                     Diag = unique(filtered_data[["Diag"]]),
+                     total = mod[["fitted.values"]],
+                     count_brth_yr = exp(mod[["model"]][["offset(log(count_brth_yr/10000))"]])*10000,
+                     rate = mod[["fitted.values"]]/exp(mod[["model"]][["offset(log(count_brth_yr/10000))"]]),
                      model = "nb")
   } else{
-    mod <- glm(total_anom ~ BrthYear,
+    mod <- glm(total ~ Birth_Year,
                family = poisson,
-               offset = log(total_lvb_yr/1000),
-               data = filtered_data)
+               offset = log(count_brth_yr/10000),
+               data = filtered_data %>%
+                 select(CaseID,Birth_Year,count_brth_yr) %>%
+                 group_by(Birth_Year) %>% 
+                 mutate(total = n()) %>% 
+                 select(Birth_Year, total, count_brth_yr) %>% 
+                 distinct())
     ## dataset for trend line
-    xy <- data.frame(BrthYear = mod[["model"]][["BrthYear"]],
+    xy <- data.frame(Birth_Year = mod[["model"]][["Birth_Year"]],
                      cat = unique(filtered_data[["cat"]]),
-                     qcode = unique(filtered_data[["qcode"]]),
-                     qcodecat = unique(filtered_data[["qcodecat"]]),
-                     total_anom = mod[["fitted.values"]],
-                     total_lvb_yr = exp(mod[["model"]][["(offset)"]])*1000,
+                     Diag = unique(filtered_data[["Diag"]]),
+                     total = mod[["fitted.values"]],
+                     count_brth_yr = exp(mod[["model"]][["(offset)"]])*10000,
                      rate = mod[["fitted.values"]]/exp(mod[["model"]][["(offset)"]]),
                      model = "pois")
   }

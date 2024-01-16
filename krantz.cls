@@ -350,12 +350,12 @@
 \top@cornermarks
   {\@the@page\RunningHeadFont
     \hfill
-\if@mainmatter\thechapter\enspace\fi\leftmark
+\if@mainmatter\ifnum\value{chapter}>0 \thechapter\enspace\fi\fi\leftmark
     }}
 \def\odd@head{%
 \top@cornermarks
   \hfil{\RunningHeadFont
-\if@mainmatter\thesection\enspace\else\fi\rightmark
+\if@mainmatter\ifnum\value{section}>0 \thechapter\enspace\fi\fi\rightmark
     }
 \hfill
     \@the@page
@@ -375,7 +375,7 @@
 \let\@oddfoot\@empty
 \let\@evenfoot\@empty
     \let\@evenhead\even@head
-    \let\@oddhead\odd@head
+    \def\@oddhead{\RunningHeadFont\if@mainmatter\ifnum\value{section}>0 \enspace\fi\fi\rightmark\hfill\PageNumFont\thepage}%\odd@head
   \fi
   }
 \else
@@ -447,9 +447,10 @@
   \def\chaptermark##1{%
     \markboth{%
       ##1}{}}%
-  \def\sectionmark##1{%
-    \markright{%
-      ##1}}}
+  \def\sectionmark##1{%\pagebreak[3]%
+    %\markright{%
+      %\thechapter\enspace##1}
+      }} %Removes the section name from header \thesection\enspace##1
 \def\pdfon{\@pdftrue}
 \def\pdfoff{\@pdffalse}
 \if@pdf
@@ -565,9 +566,9 @@
 \newcounter {subsubsection}[subsection]
 \newcounter {paragraph}[subsubsection]
 \newcounter {subparagraph}[paragraph]
-\renewcommand \thepart {\@Roman\c@part}
-\renewcommand \thechapter {\@arabic\c@chapter}
-\renewcommand \thesection {\thechapter.\@arabic\c@section}
+\renewcommand\thepart {\@Roman\c@part}
+\renewcommand\thechapter {\@arabic\c@chapter}
+\renewcommand\thesection {\thechapter.\@arabic\c@section}
 \renewcommand\thesubsection   {\thesection.\@arabic\c@subsection}
 \renewcommand\thesubsubsection{\thesubsection .\@arabic\c@subsubsection}
 \renewcommand\theparagraph    {\thesubsubsection.\@arabic\c@paragraph}
@@ -729,70 +730,6 @@
     \noindent\hbox{\vrule height.5pt width84pt}
     \vskip 41\p@}}%
   \def\theequation{\thechapter.\arabic{equation}}}
-
-%%%\def\@startsection#1#2#3#4#5#6{%
-%%%  \if@noskipsec\leavevmode\fi
-%%%  \par
-%%%  \@tempskipa #4\relax
-%%%  \@afterindenttrue
-%%%  \ifdim \@tempskipa <\z@
-%%%    \@tempskipa -\@tempskipa \@afterindentfalse
-%%%  \fi
-%%%  \if@nobreak
-%%%    \everypar{}%
-%%%  \else
-%%%    \addpenalty\@secpenalty\addvspace\@tempskipa
-%%%  \fi
-%%%  \@ifstar
-%%%    {\@ssect{#1}{#3}{#4}{#5}{#6}}%
-%%%    {\@trplarg{\@sect{#1}{#2}{#3}{#4}{#5}{#6}}}}
-%%%\def\@ssect#1#2#3#4#5#6{%
-%%%  \@tempskipa #4\relax
-%%%  \ifdim \@tempskipa>\z@
-%%%    \begingroup
-%%%      #5{%
-%%%        \@hangfrom{\hskip #2}%
-%%%          \interlinepenalty \@M #6\@@par}%
-%%%    \endgroup
-%%%    \csname #1mark\endcsname{#6}%
-%%%  \else
-%%%    \def\@svsechd{#5{\hskip #2\relax #6}\csname #1mark\endcsname{#6}}%
-%%%  \fi
-%%%  \@xsect{#4}}
-%%%\def\@sect#1#2#3#4#5#6[#7][#8]#9{%
-%%%  \ifnum #2>\c@secnumdepth
-%%%    \let\@svsec\@empty
-%%%  \else
-%%%    \refstepcounter{#1}%
-%%%\protected@edef\@svsec{\@seccntformat{#1}\relax}%
-%%%  \fi
-%%%  \@tempskipa #5\relax
-%%%  \ifdim \@tempskipa>\z@
-%%%    \begingroup
-%%%      #6{%
-%%%\@hangfrom{\hskip #3\relax\@svsec}\interlinepenalty \@M %
-%%%          #9\@@par}%
-%%%    \endgroup
-%%%    \csname #1mark\endcsname{%
-%%%      #8}%
-%%%    \addcontentsline{toc}{#1}{%
-%%%      \ifnum #2>\c@secnumdepth \else
-%%%        \protect\numberline{\csname the#1\endcsname}%
-%%%      \fi
-%%%      #7}%
-%%%  \else
-%%%    \def\@svsechd{%
-%%%      #6{\hskip #3\relax
-%%%      \@svsec #9}%
-%%%      \csname #1mark\endcsname{%
-%%%        #8}%
-%%%      \addcontentsline{toc}{#1}{%
-%%%        \ifnum #2>\c@secnumdepth \else
-%%%          \protect\numberline{\csname the#1\endcsname}%
-%%%        \fi
-%%%        #7}}%
-%%%  \fi
-%%%  \@xsect{#5}}
 
 %%Change mydotted also
 \newdimen\secwd
@@ -1048,16 +985,12 @@
     \FMHeadFont \contentsname\par\vskip-12pt
     \noindent\hbox{\vrule height.5pt width84pt}
     \vskip 41\p@}}
-%%%    \chapter*{\contentsname
-%%%        \@mkboth{%
-%%%           \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}%
            \pagestyle{headings}\thispagestyle{folio}
              {\let\break\space
     \let\author\toc@author
     \reset@authors
     \let\toc@draw\relax
     \@starttoc{toc}
-%%    \toc@draw
     }
     \if@restonecol\twocolumn\fi
     }
@@ -1088,54 +1021,41 @@
 \toc@draw
  \gdef\toc@draw{\draw@part{\large #1}{\large #2}}}
 
-\def\l@fm#1#2{%
-  \toc@draw
-  \gdef\toc@draw{\draw@fm{#1}{#2}}}
-\def\@pnumwidth{1.8em}
-\def\draw@fm#1#2{%
-  \addpenalty{-\@highpenalty}%
-  \vskip1em plus\p@
-  \@tempdima1.5em
-  \begingroup
-    \parindent\z@\rightskip\@pnumwidth
-    \parfillskip-\rightskip
-    \bfseries
-    \leavevmode
-    \advance\leftskip\@tempdima
-    \hskip-\leftskip
-    {#1\hfil}\nobreak
-      \if@pdf
-      \else
-        \hfil\nobreak\hb@xt@\@pnumwidth{\hss #2}%
-\fi
-    \par
-    \penalty\@highpenalty\endgroup}
+\newcommand*\l@fm[2]{%
+  \ifnum \c@tocdepth >\m@ne
+    \addpenalty{-\@highpenalty}%
+    \vskip 1.0em \@plus\p@
+    \setlength\@tempdima{1.5em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode \bfseries
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
+      \penalty\@highpenalty
+    \endgroup
+  \fi}
 
 
+\newcommand*\l@chapter[2]{%
+  \ifnum \c@tocdepth >\m@ne
+    \addpenalty{-\@highpenalty}%
+    \vskip 1.0em \@plus\p@
+    \setlength\@tempdima{1.5em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode \bfseries
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
+          {\it\draw@authors}%
+      \penalty\@highpenalty
+    \endgroup
+  \fi}
 
-  \def\l@chapter#1#2{%
-  \toc@draw
-  \gdef\toc@draw{\draw@chapter{#1}{#2}}}
-\def\@pnumwidth{1.8em}
-\def\draw@chapter#1#2{%
-  \addpenalty{-\@highpenalty}%
-  \vskip1em plus\p@
-  \@tempdima1.5em
-  \begingroup
-    \parindent\z@\rightskip\@pnumwidth
-    \parfillskip-\rightskip
-    \bfseries
-    \leavevmode
-    \advance\leftskip\@tempdima
-    \hskip-\leftskip
-    {#1\hfil}\nobreak
-      \if@pdf
-      \else
-        \hfil\nobreak\hb@xt@\@pnumwidth{\hss #2}%
-\fi
-    \par
-    {\it\draw@authors}%
-    \penalty\@highpenalty\endgroup}
+
 \def\toc@author#1#2{%
   \if@firstauthor
     \@firstauthorfalse
@@ -1172,34 +1092,19 @@
 \section@toc@skip1.5em
 \newlength\SectionTOCWidth
 \SectionTOCWidth2.3em
-\def\l@section#1#2{%
-  \toc@draw
-  \gdef\toc@draw{\draw@section{#1}{#2}}}
-\def\draw@section#1#2{%
-  \@dottedtocline{1}{\section@toc@skip}{\SectionTOCWidth}{#1 }{{
-\tocfont #2}}}
+\newcommand*\l@section{\@dottedtocline{1}{1.5em}{2.3em}}
+\newcommand*\l@subsection{\@dottedtocline{2}{3.8em}{3.2em}}
+\newcommand*\l@subsubsection{\@dottedtocline{3}{7.0em}{4.1em}}
 \newlength\subsection@toc@skip
 \subsection@toc@skip\section@toc@skip
 \advance\subsection@toc@skip\SectionTOCWidth
 \newlength\SubSectionTOCWidth
 \SubSectionTOCWidth3.2em
-\def\l@subsection#1#2{%
-  \toc@draw
-  \gdef\toc@draw{\draw@subsection{#1}{#2}}}
-\def\draw@subsection#1#2{%
-  \@dottedtocline{2}{\subsection@toc@skip}{\SubSectionTOCWidth}{#1}{{
-\tocfont #2}}}
 \newlength\subsubsection@toc@skip
 \subsubsection@toc@skip\subsection@toc@skip
 \advance\subsubsection@toc@skip\SubSectionTOCWidth
 \newlength\SubSubSectionTOCWidth
 \SubSubSectionTOCWidth4.1em
-\def\l@subsubsection#1#2{%
-  \toc@draw
-  \gdef\toc@draw{\draw@subsubsection{#1}{#2}}}
-\def\draw@subsubsection#1#2{%
-  \@dottedtocline{3}{\subsubsection@toc@skip}{\SubSubSectionTOCWidth}{#1}{{
-\tocfont #2}}}
 \newlength\paragraph@toc@skip
 \paragraph@toc@skip\subsubsection@toc@skip
 \advance\paragraph@toc@skip\SubSubSectionTOCWidth
@@ -1253,9 +1158,7 @@
   \let\@b\bullet
   \def\bullet{\raisebox{2pt}{$\scriptscriptstyle\@b$}}%
   \let\SubsectionItalicFont\it
-%\ifx\chapter@author\@empty\else
 {\rm\fontsize{10\p@}{10\p@}\bfseries\selectfont
-%\the\c@numauthors
     \ifnum\c@numauthors=1
         \chapter@authorone\vskip6\p@
         {\it\fontsize{10\p@}{10\p@}\selectfont\chapter@affiliationone}\vskip12\p@
@@ -1333,8 +1236,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \def\@ca#1#2{%
-%  \def\chapter@author{#1}%
-%  \def\chapter@affiliation{#2}%
   \if@filesw%
     \write\@auxout{%
 \string\@writefile{toc}{\string\author{#1}{}}%
@@ -1406,7 +1307,7 @@
   \else
     \vskip 2pt plus.2\p@
     \ifnum #1=1\ifnum\c@chaptocdepth>1\addvspace{12pt}\fi\fi
-    {\leftskip #2\relax% \rightskip \@tocrmarg \parfillskip -\rightskip
+    {\leftskip #2\relax
       \interlinepenalty\@M
       \leavevmode
       \@tempdima #3\relax
@@ -1418,14 +1319,11 @@
   \else
 \fontsize{10}{12}\selectfont
 {\leftskip #2\relax \rightskip \@tocrmarg \parfillskip -\rightskip
-     % \parindent #2\relax\@afterindenttrue
       \interlinepenalty\@M
       \leavevmode
       \def\@dotsep{1.2}%
       \@tempdima #3\relax
       \rightskip\z@
-%      \advance\hsize-\secnumwidth
-%      \hskip-\secnumwidth
 \if@sevenbyten
 \hangindent\secnumwidth\hsize372pt\else\hangindent\secnumwidth\hsize312pt\fi
 #4
@@ -1468,7 +1366,6 @@
 \newenvironment{thebibliography}[1]
      {\chapter*{\bibname}%
       \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
-%       \addcontentsline{toc}{chapter}{\bibname}
       \list{\@biblabel{\@arabic\c@enumiv}}%
            {\settowidth\labelwidth{\@biblabel{#1}}%
             \leftmargin\labelwidth
@@ -1576,7 +1473,6 @@
 \addvspace{12pt}
 			\setbox\tempbox\hbox{#1\hskip1em}%
    \global\nomenwidth\wd\tempbox
-   %\section*{Sumbol Description}
 \noindent{\SectionHeadFont Symbol Description}\vskip6pt
 \begin{multicols}{2}}{%
 		\end{multicols}\par\addvspace{12pt}}
@@ -1586,7 +1482,6 @@
 \tabcolsep 5pt
 \arrayrulewidth .5pt
 \doublerulesep 1pt
-%\newcounter{subtable}[table]
 \newif\if@tablerules\@tablerulestrue
 \newif\if@centertable\@centertabletrue
 \newif\if@centertabletitle\@centertabletitletrue
@@ -1609,8 +1504,6 @@
 \def\@@tabletitle{}
 \newif\ifshorttabletitle
 \global\shorttabletitlefalse
-%\def\@xtabletitle#1{\@tabletitlewidth#1\@ytabletitle}
-%
 \def\@xtabletitle[#1]#2{%
   \gdef\@@tabletitle{#1}%
   \gdef\@tabletitle{#2}%
@@ -1619,20 +1512,7 @@
   {\let\footnotemark\@empty
     \let\footnote\@gobble
     \addcontentsline{\ext@table}{table}{\protect\numberline{\thetable}{\@@tabletitle}}}}
-%%%%
-%\long\def\@xtabletitle[#1]#2{%
-%  \setbox\@ttbox\hbox{#1}\global\shorttabletitletrue
-%  \def\@@tabletitle{\ifx\@ttbox\@empty\else#1\fi}%
-%  \def\@tabletitle{#2}%
-%  \let\@Tabletitle\@TableTitle
-%  \refstepcounter{table}%
-%  {\let\footnotemark\@empty
-%    \let\footnote\@gobble
-%    \addcontentsline{\ext@table}{table}{\protect\numberline{\thetable}{%
-%\ifshorttabletitle\@@tabletitle\else\@tabletitle\fi}}}}
 
-%%%
-%
 \long\def\@ytabletitle#1{%
   \def\@tabletitle{#1}%
   \let\@Tabletitle\@TableTitle
@@ -1655,7 +1535,6 @@
   {%
     \vbox{{\TableNumberFont TABLE\ \thetable}}\par\TableTitleFont\@tabletitle}}
 \def\table{%
-  %\long\def\caption##1{\tabletitle{##1}\@TableTitle\par}%
   \@float{table}}
 \@namedef{table*}{%
   \long\def\caption##1{\tabletitle{##1}\@TableTitle\par}%
@@ -1667,12 +1546,17 @@
 \@namedef{tabular*}#1{%
  \setlength\dimen@{#1}%
    \edef\@halignto{to\the\dimen@}\@tabular}
+
+
 \def\tch#1{\TableColHeadFont #1\llstrut\hfill}
 \def\tsh#1{\TableSubheadFont #1\hfill}
 \newcommand\llstrut{\rule[-6pt]{0pt}{14pt}}
 \newcommand\flstrut{\rule{0pt}{10pt}}
 \newcommand\tabletitlestrut{\rule{0pt}{20pt}}
+
 \def\Boxhead#1{\par\addvspace{3pt plus2pt}\noindent{\centering\bfseries#1\par}\vskip3pt}
+
+
 \newbox\tempbox%
 \newdimen\tempdimen%
 %
@@ -1689,9 +1573,12 @@
 \noindent\fboxsep6pt\fboxrule.5pt\hspace*{0pt}\fbox{\box\tempbox}
 \par\addvspace{12pt plus2pt}}%
 %
+
+
 \def\grayink{\special{color cmyk 0 0 0 0.2}}
 \def\blackink{\special{color cmyk 0 0 0 1.0}} %
 \def\whiteink{\special{color cmyk 0 0 0 0}} % 0%
+
 \newenvironment{shadebox}{%
 \setbox\tempbox\hbox\bgroup\vbox\bgroup\leftskip12pt\rightskip\leftskip\vspace*{12pt}}{\par\addvspace{-6pt}
 \egroup\egroup\par\addvspace{15pt}
@@ -1700,6 +1587,7 @@
 \noindent{\hbox to \wd\tempbox{\vbox to \ht\tempbox{\hsize\textwidth{\special{color push}\grayink\noindent\vrule height\tempdimen width\textwidth
 \special{color pop}\blackink}}}}%
 \llap{\unhbox\tempbox}\par\addvspace{20pt}}
+
 %%%%%%%%%% Note %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newbox\tempbox
 \newdimen\notewidth
@@ -1709,6 +1597,7 @@
    \global\notewidth\wd\tempbox
 }{%
 		\par\addvspace{6pt}}
+
 \def\notes#1#2{\par\noindent\@hangfrom{\hbox to \notewidth{\bf #1\hss}}#2\par}
 %%%%%%%%%%%%%%%% wherelist %%%%%%%%%%%%%%%%
 \newbox\wherebox
@@ -1727,7 +1616,6 @@
     \advance\@enumdepth\@ne
     \list{}{%
 \leftmargini27.5pt \leftmarginii17.5pt\leftmarginiv17.5pt
-%    \leftmargin\parindent
     \advance\leftmargin-.2em
     \advance\leftmarginii.2em
     \advance\leftmarginiii.1em
@@ -1761,13 +1649,13 @@
 %
 %
 \def\VT{\par\addvspace{3.5pt}\noindent}
+
 \def\VH#1{{\normalfont\fontsize{12.5}{14.5}\itshape\centering\selectfont #1\par}\addvspace{5.5pt}}
 %
 \newenvironment{VT1}{\VfFont%
 		\par\addvspace{12pt minus2pt}%
 \noindent{\vrule height2pt width\textwidth}\par\vskip7.5pt
   \leftskip3em\rightskip\leftskip
-%\@afterheading
 \parindent0pt
  \noindent\ignorespaces
 }{%
@@ -1780,28 +1668,36 @@
                         \let\makelabel\glosslabel}}
                {\endlist}
 \newcommand\glosslabel[1]{\hspace\labelsep\normalfont\bfseries #1:}
+
 %%%%%%%%%%%%
 \newif\iffnalpha
 \global\fnalphafalse
+
 \newskip\listtextleftmargin\listtextleftmargin 20pt%24pt
 \newskip\listtextleftmarginii\listtextleftmarginii0pt% 24pt
 \newskip\listtextleftmarginiii\listtextleftmarginiii0pt% 24pt
+
 \newskip\listtextrightmargin\listtextrightmargin12pt%.5pc
 \newskip\listlabelleftskip \listlabelleftskip4pt%3.3pt
 \newskip\listlabelleftskipii \listlabelleftskipii0pt%3.3pt
 \newskip\listlabelleftskipiii \listlabelleftskipiii0pt%3.3pt
+
 \newskip\abovelistskipi\abovelistskipi6pt plus2pt
 \newskip\belowlistskipi\belowlistskipi6pt plus2pt
 \newskip\abovelistskipii\abovelistskipii0pt plus2pt
 \newskip\belowlistskipii\belowlistskipii0pt plus2pt
 \newskip\abovelistskipiii\abovelistskipiii0pt plus2pt
 \newskip\belowlistskipiii\belowlistskipiii0pt plus2pt
+
 \newskip\labelsepi \labelsepi6pt
 \newskip\labelsepii \labelsepii6pt
 \newskip\labelsepiii \labelsepiii6pt%\z@
+
 \newskip\itemsepi \itemsepi0pt%10pt
 \newskip\itemsepii \itemsepii0pt
 \newskip\itemsepiii \itemsepiii0pt
+
+
 \newdimen\enumdimwd
 \newif\iflabelrightalign\labelrightaligntrue
 \newdimen\enumdim%
@@ -1840,6 +1736,7 @@
 %
 \def\enumerate{\@ifnextchar[{\@enumerate}{\@enumerate[\csname label\@enumctr\endcsname]}}%%
 %
+
 \def\@enumerate[#1]{\par
       \ifnum \@enumdepth >3 \@toodeep
       \else
@@ -1850,7 +1747,6 @@
             {\csname label\@enumctr\endcsname}{\usecounter{\@enumctr}%
          \topsep\csname abovelistskip\romannumeral\the\@enumdepth\endcsname
          \itemsep\csname itemsep\romannumeral\the\@enumdepth\endcsname
-%         \listfont %\listparindent18.25pt
          \ifnum \@enumdepth=1 \leftmargin32.7pt
             \rightmargin\listtextrightmargin
             \advance\rightmargin\rightskip
@@ -1884,7 +1780,9 @@
 %
 \def\endenumerate{\@topsepadd\csname belowlistskip\romannumeral\the\@enumdepth\endcsname\endlist}%
 %
+
 \def\textlistlabel{}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newdimen\concolwidth
 \newbox\stempbox
@@ -1895,24 +1793,18 @@
   \ifdim\concolwidth>\columnwidth \vspace*{3pt} \else \fi
   \noindent{\vbox{\hangindent12pt\ContributorAffiliationFont #2}}\vskip-1\p@
   \noindent{\vbox{\hangindent12pt\ContributorAffiliationFont #3}}}}
-%%\def\contributors{%
-%%  \twocolumn[\contributorshead]
-%%  \pagestyle{empty}
-%%  \leftskip1pc
-%%  \parindent-1pc}
-%%\def\contributorshead{%
-%%  \vbox{}\vskip2pc
-%%  {\centering\HeadFont CONTRIBUTORS\vskip2\p@}
-%%  \noindent\rule{\textwidth}{1\p@}\vskip25\p@}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
     \hbox{}\thispagestyle{empty}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}
+
 \frenchspacing
 \tolerance=5000
 \raggedbottom
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \@centertabletitlefalse
-%\HeadingsBookChapter
 \HeadingsChapterSection
 \endinput
 %%

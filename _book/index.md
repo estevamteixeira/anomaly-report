@@ -1,22 +1,24 @@
 --- 
-title: 'Nova Scotia Congenital Anomalies Surveillance System'
-subtitle: 'First Report, 1987-2022'
+title: 'Navigating Birth Defects in Nova Scotia'
+subtitle: |
+  | A Ten Year Perspective
+  | 2012-2022
 author: 'Reproductive Care Program of Nova Scotia'
-date: '2023-06-05'
+date: 'Jan, 2024'
 knit: bookdown::render_book
 site: bookdown::bookdown_site
 output: bookdown::bs4_book
 documentclass: krantz
-monofont: "Source Code Pro"
-monofontoptions: "Scale=0.7"
+monofont: 'Source Code Pro'
+monofontoptions: 'Scale=0.7'
 biblio-style: apalike
 link-citations: yes
 colorlinks: yes
 graphics: yes
-description: "The data presented in this report are meant to provide a quick reference to the sentinel indicators of perinatal health and care among Nova Scotia residents. We hope this report will assist with the development and monitoring of standards of care and will trigger research questions that can be pursued by researchers and trainees."
-github-repo: "https://github.com/estevamteixeira/anomaly-report"
-cover-image: "images/cover4.pdf"
-pdf-cover-image: "images/cover4.pdf"
+description: 'The data presented in this report are meant to provide a quick reference to the sentinel indicators of perinatal health and care among Nova Scotia residents. We hope this report will assist with the development and monitoring of standards of care and will trigger research questions that can be pursued by researchers and trainees.'
+github-repo: 'https://github.com/estevamteixeira/anomaly-report'
+cover-image: 'images/cover5.pdf'
+pdf-cover-image: 'images/cover5.pdf'
 url: http://rcp.nshealth.ca/
 ---
 
@@ -24,45 +26,23 @@ url: http://rcp.nshealth.ca/
 
 
 
-# Acknowledgements {-}
 
-The **Surveillance of Congenital Anomalies in Nova Scotia (SCAN-NS)** would like to thank the Public Health Agency of Canada (PHAC) for the on-going support of data collection within Nova Scotia. SCA-NS is grateful for the ongoing interest and help of
-
-<a href=""><img src="images/cover4.png" width="250" height="375" alt="The SCA-NS report cover" align="right" style="margin: 0 1em 0 1em; border:2px solid #008d8b"/></a>
-
-- [Dr. Scott](https://medicine.dal.ca/departments/department-sites/obstetrics/our-people/our-faculty/heather-scott.html);
-
-- [Dr. Skidmore](https://medicine.dal.ca/departments/department-sites/pediatrics/our-people/our-faculty/david-skidmore.html); and 
-
-- [Dr. Van den Hof](https://medicine.dal.ca/departments/department-sites/obstetrics/our-people/our-faculty/michiel-vandenhof.html)
-
-As our clinical advisors.
-
-Special thanks to Barry Campbell and the many staff within the [Reproductive Care Program of Nova Scotia](http://rcp.nshealth.ca/) for their continued support.
-
-This report has been prepared by:
-
-- Cora Cole.^[Surveillance of Congenital Anomalies Nova Scotia, cora.cole@iwk.nshealth.ca]
-- John Fahey.^[Reproductive Care Program of Nova Scotia, john.fahey@iwk.nshealth.ca]
-- Estevam Teixeira.^[Reproductive Care Program of Nova Scotia, estevam.teixeira@iwk.nshealth.ca]
-
-## Contact {-}
-
-For more information, please contact:
-
-Cora Cole, **Surveillance of Congenital Anomalies Nova Scotia**, [cora.cole@iwk.nshealth.ca](cora.cole@iwk.nshealth.ca)
-
-**Suggested citation:** 
-
-Surveillance of Congenital Anomalies Nova Scotia, Reproductive Care Program of Nova Scotia, The Izaak Walton Killam Health Centre (IWK) 2022.
 
 # Background {-}
 
 Gaps exist in the nation's capacity to conduct surveillance for congenital anomalies. In $2002$, the Canadian Congenital Anomalies Surveillance Network (CCASN) was established
 
-> To support the development and maintenance of high quality population-based surveillance systems of congenital anomalies that will provide information to improve the health of Canadian children and their families.^[Public Health Agency of Canada. What is Canadian Congenital Anomalies Surveillance Network (CCASN)](http://www.phac-aspc.gc.ca/ccasn-rcsac/index-eng.php)
+> To support the development and maintenance of high quality population-based surveillance systems of congenital anomalies that will provide information to improve the health of Canadian children and their families.[^ccasn]
 
-The CCASN produced a series of documents regarding the establishment of provincial/territorial surveillance systems for congenital anomalies^[Canadian Congenital Anomalies Surveillance Network. Recommendations concerning the establishment of congenital anomalies surveillance in Canadian jurisdictions.](), coding of congenital anomalies^[Canadian Congenital Anomalies Surveillance Network. Coding of fetal anomalies.](https://health-infobase.canada.ca/congenital-anomalies/), and delineating data elements required for minimal and enhanced surveillance for congenital anomalies^[Canadian Congenital Anomalies Surveillance Network. Recommended data variables for congenital anomalies surveillance in Canadian provinces & territories.](https://www.phac-aspc.gc.ca/ccasn-rcsac/sac-cas/pdf/cas-eng.pdf). 
+[^1]: [Public Health Agency of Canada. What is Canadian Congenital Anomalies Surveillance Network (CCASN)](http://www.phac-aspc.gc.ca/ccasn-rcsac/index-eng.php)
+
+[^2]: [Canadian Congenital Anomalies Surveillance Network. Recommendations concerning the establishment of congenital anomalies surveillance in Canadian jurisdictions.](https://www.canada.ca/en/public-health/services/health-promotion/what-is-ccasn/guidelines.html)
+
+[^3]: [Canadian Congenital Anomalies Surveillance Network. Coding of fetal anomalies.](https://health-infobase.canada.ca/congenital-anomalies/)
+
+[^4]: [Canadian Congenital Anomalies Surveillance Network. Recommended data variables for congenital anomalies surveillance in Canadian provinces & territories.](https://www.phac-aspc.gc.ca/ccasn-rcsac/sac-cas/pdf/cas-eng.pdf)
+
+The CCASN produced a series of documents regarding the establishment of provincial/territorial surveillance systems for congenital anomalies[^2], coding of congenital anomalies[^3], and delineating data elements required for minimal and enhanced surveillance for congenital anomalies[^4]. 
 
 In Nova Scotia, data regarding congenital anomalies diagnosed at birth or during the birth admission have been collected since $1987$ in the Nova Scotia Atlee Perinatal Database (NSAPD) managed by the Reproductive Care Program of Nova Scotia (RCP). The NSAPD collects data about all live born infants and stillbirths for all fetuses delivered $\ge 20$ weeks gestation, or $\ge 500$ grams, or live born and all co-multiples of the aforementioned; the NSAPD also captures information about the mothers of the infants/fetuses mentioned above. The NSAPD does not capture data for congenital anomaly cases identified during admissions that occur after $28$ days of age. The NSAPD also does not capture data for pregnancies ending in termination.
 
@@ -70,41 +50,39 @@ Since $1992$, data regarding congenital anomalies diagnosed antenatally, or post
 
 # SCAN-NS Activity and Report Summary {-}
 
-1. This is the first provincial report on the prevalence of congenital anomalies in Nova Scotia generated by the Surveillance of Congenital Anomalies in Nova Scotia project.
+1. This is the first provincial report on the prevalence of congenital anomalies in Nova Scotia generated by the Surveillance of Congenital Anomalies in Nova Scotia project (SCA-NS).
 
-2. The International Classification of Diseases - $10^{th}$ Edition (ICD-10-CA) has been adopted by the IWK Health Centre as the reporting classification system and SCA-NS uses the Royal College of Paediatrics and Child Health adaptation of ICD-10 as well. The anomalies outlined in this report reflect the "sentinel anomalies list" adopted by the Nova Scotia Congenital Anomaly Advisory Group. Other anomaly data is collected and available upon request.
+2. The International Classification of Diseases - $10^{th}$ Edition [(ICD-10-CA)](https://secure.cihi.ca/estore/productSeries.htm?pc=PCC189) has been adopted by the IWK Health Centre as the reporting classification system and SCA-NS uses the Royal College of Paediatrics and Child Health adaptation of ICD-10 as well. The anomalies outlined in this report reflect the "sentinel anomalies list" adopted by the Nova Scotia Congenital Anomaly Advisory Group. Other anomaly data is collected and available upon request.
 
 3. Nova Scotia continues to participate in the Canadian Congenital Anomalies Surveillance System (CCASS), administered by the Maternal and Infant Health Section of PHAC. 
 
 4. The numerator data include live births, stillbirths, and also fetal losses $< 20$ weeks gestation with congenital anomalies. Denominator data include live births and stillbirths only. By including fetal losses in the numerator, the reported rates should be more representative of true congenital anomaly rates. Fetal losses have been ascertained since $1992$.
 
 5. Data provided in this report is a compilation of several data Nova Scotia databases.
+  - Nova Scotia Atlee Perinatal Database (NSAPD).
+  - Fetal Anomaly Database (FADB).
+  - Canadian Institute for Health Information Discharge Abstract Database.
+  - Vital Statistics Database; Service Nova Scotia.
+  - Medical Services Insurance (MSI) Claims.
 
-- Nova Scotia Atlee Perinatal Database (NSAPD).
-- Fetal Anomaly Database (FADB).
-- Canadian Institute for Health Information Discharge Abstract Database.
-- Vital Statistics Database; Service Nova Scotia.
-- Medical Services Insurance (MSI) Claims.
+<!-- 6. Data within SCA-NS includes the years $1987-2022$ however data for additional years are available for specific inquiries. -->
 
-6. Data within SCA-NS includes the years $1992-2021$ however data for additional years are available for specific inquiries.
-
-7. Congenital anomaly rates have remained relatively stable over the years with fluctuations occurring on a year to year basis and among specific anomalies.
+<!-- 7. Congenital anomaly rates have remained relatively stable over the years with fluctuations occurring on a year to year basis and among specific anomalies. -->
 
 # Introduction {-}
 
 The purpose of SCA-NS is to improve Congenital Anomaly case ascertainment, cluster detection, local and national data comparison and reporting capability. Program objectives
-
-- Provide baseline data on occurrence.
-- Identify populations at increased risk.
-- Monitor changes in occurrence.
-- Investigate clusters.
-- Refer affected children to services.
-- Evaluate prevention programs.
-- Create research opportunities.
+  - Provide baseline data on occurrence.
+  - Identify populations at increased risk.
+  - Monitor changes in occurrence.
+  - Investigate clusters.
+  - Refer affected children to services.
+  - Evaluate prevention programs.
+  - Create research opportunities.
 
 SCA-NS includes all Nova Scotia residents, with ascertainment from other Maritime Provinces for those cases where the mother delivered elsewhere. Information on cases includes the prenatal period up to one year of age including live births, stillbirths and terminations of pregnancies in which a fetal anomaly has been detected.
 
-
+\mainmatter
 
 
 # Methodology {#chapter1}
@@ -125,7 +103,9 @@ Other definitions related to pregnancy outcomes for the purposes of this report 
 
 - **Live birth -** a complete expulsion or extraction from the mother, irrespective of the duration of the pregnancy, of a fetus in which, after expulsion or extraction, there is breathing, beating of the heart, pulsation of the umbilical cord or definite movement of voluntary muscle (Alberta Vital Statistics Annual review, 2000).
 
-- **Stillbirth -** a complete expulsion or extraction from the mother, after at $20$ weeks of pregnancy or more or after attaining a weight of 500 grams or more, of a fetus in which, after the expulsion or extraction, there is no breathing, beating of the heart, pulsation of the umbilical cord or unmistakable movement of voluntary muscle (Alberta Vital Statistics Annual review^[ [Alberta Vital Statistics Annual review](https://open.alberta.ca/publications/1485-3809)]). 
+- **Stillbirth -** a complete expulsion or extraction from the mother, after at $20$ weeks of pregnancy or more or after attaining a weight of 500 grams or more, of a fetus in which, after the expulsion or extraction, there is no breathing, beating of the heart, pulsation of the umbilical cord or unmistakable movement of voluntary muscle (Alberta Vital Statistics Annual review[^5].
+
+[^5]: [Alberta Vital Statistics Annual review](https://open.alberta.ca/publications/1485-3809)
 
 - **Gestation -** completed weeks of pregnancy at delivery.
 
@@ -194,11 +174,24 @@ $$
 
 where $qchisq()$ is the quantile function for the chi-squared $\left(\chi^{2}\right)$ distribution with $2X$, and $2(X+1)$ degrees of freedom. These limits can be computed using any statistical software or taken from a chi-square table (reproduced below for up to $5$ cases).
 
+\begin{table}
 
-```{=html}
-<div id="htmlwidget-94acdc04c42f5a98c0cf" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-94acdc04c42f5a98c0cf">{"x":{"filter":"none","vertical":false,"extensions":["Buttons"],"caption":"<caption>Table of 95% confidence limits for number of cases (for 0-5 cases). Based on a Poisson distribution.<\/caption>","data":[[0,1,2,3,4,5],[0,0.0253178079842899,0.242209278543965,0.618672122895601,1.08986537362632,1.62348639011842],[3.68887945411394,5.5716433909389,7.22468766772396,8.76727306974232,10.2415886754037,11.6683320793227]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Number of Cases<\/th>\n      <th>Lower Bound<\/th>\n      <th>Upper Bound<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"B<t>t","extensions":"Buttons","paging":false,"pageLength":5,"ordering":true,"stateSave":true,"buttons":["copy","csv","print"],"columnDefs":[{"targets":1,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"targets":2,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 3, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[0,1,2]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render"],"jsHooks":[]}</script>
-```
+\caption{(\#tab:pois1)}
+\centering
+\begin{tabular}[t]{rrr}
+\toprule
+Number of Cases & Lower Bound & Upper Bound\\
+\midrule
+0 & 0.000 & 3.689\\
+1 & 0.025 & 5.572\\
+2 & 0.242 & 7.225\\
+3 & 0.619 & 8.767\\
+4 & 1.090 & 10.242\\
+\addlinespace
+5 & 1.623 & 11.668\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 1. Calculate prevalence
   
