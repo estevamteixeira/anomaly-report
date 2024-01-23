@@ -2,12 +2,11 @@ knitr::opts_chunk$set(
   echo = FALSE, 
   message = FALSE, 
   warning = FALSE,
-  fig.pos = "h", 
+  fig.pos = "H", 
   out.extra = "",
-  out.width = '90%',
+  out.width = '100%',
   fig.align = 'center',
-  eval.after = "fig.cap",
-  fig.caption= TRUE)
+  eval.after = "fig.cap")
 
 pckgs <- c('tidyr', 'knitr', 'scales','janitor',
            'kableExtra', 'data.table','dplyr',
@@ -29,8 +28,7 @@ anom <- arrow::read_parquet("./data/Anomaly.parquet", as_data_frame = TRUE) %>%
                        toupper(Diags),
                        gsub(".*?(Q\\d+\\.?\\d*).*", "\\1", cat)),
          Diag = gsub("\\.", "", Diag)
-  ) %>% 
-  filter(between(Birth_Year, 2012, 2022))
+  )
 
 ## Births ----
 
@@ -43,3 +41,20 @@ cd_shp <-  sf::read_sf("H:/RCP/RCP_Data/TeixeiEC/Anomalies/anomaly-app-overview/
   select(GeoUID, name, geometry)
 
 
+## Download btn for `reactable` table
+csvDownloadButton <- function(tableId, label = "Download (.csv)", filename = paste0(tableId,".csv")) {
+  htmltools::tags$button(
+    tagList(
+      fontawesome::fa("download"), label
+    ),
+    onclick = sprintf("Reactable.downloadDataCSV('%s', '%s')", tableId, filename),
+    style = "
+    background-color: #EBF3F2;
+    color: #00706E;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;"
+  )
+}

@@ -1,4 +1,4 @@
-book_filename: NSAnomaly
+book_filename: anomaly-report
 new_session: yes # Each chapter is knitted as its own Rmd file
 delete_merged_file: true
 language:

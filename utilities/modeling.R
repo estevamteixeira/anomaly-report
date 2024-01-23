@@ -12,7 +12,9 @@ modeling_trend <- function(data,
   
   # Filter the data based on the value
   val <- tolower(value)
-  filtered_data <- subset(data, tolower(Diag) %in% val)
+  filtered_data <- subset(data, tolower(Diag) %in% val) %>% 
+    select(CaseID, Birth_Year, Diag, cat, count_brth_yr) %>%
+    distinct()
   
   # Calculate theta value
   theta <- var(filtered_data %>%
@@ -73,11 +75,13 @@ modeling_trend <- function(data,
     coef = coef(summary(mod))[2, 1],
     std = coef(summary(mod))[2, 2],
     rate = exp(coef(summary(mod))[2, 1]),
-    anom = paste0(unique(filtered_data$cat), "<br>",
-                  "<span style='font-size:12px'> ICD-10: ", unique(filtered_data$Diag), "</span>"),
-    n = paste0(scales::comma(nrow(filtered_data), accuracy = 1), "<br>",
-               "<span style='font-size:12px'>(", min(filtered_data$Birth_Year, na.rm = TRUE),
-               "-", max(filtered_data$Birth_Year, na.rm = TRUE), ")</span>"),
+    anom = unique(filtered_data$cat),
+    # anom = paste0(unique(filtered_data$cat), "<br>",
+    #               "<span style='font-size:12px'> ICD-10: ", unique(filtered_data$Diag), "</span>"),
+    n = paste0(scales::comma(nrow(filtered_data), accuracy = 1)#, "<br>",
+               # "<span style='font-size:12px'>(", min(filtered_data$Birth_Year, na.rm = TRUE),
+               # "-", max(filtered_data$Birth_Year, na.rm = TRUE), ")</span>"
+               ),
     trend = ifelse(coef(summary(mod))[2, 4] >= alpha,
                    paste0("No significant change ", "<br>",
                           "(", fontawesome::fa(name = "arrow-right"), ")"),

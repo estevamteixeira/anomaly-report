@@ -413,7 +413,7 @@ plot_line_pdf <- function(data, var, palt = "Dark2"){
   }
   
   plot <- ggplot(dta,
-         aes(x = as.character(Birth_Year),
+         aes(x = Birth_Year,
              y = .data[[var]],
              group = .data[["cat"]])) + 
     geom_point(aes(color = .data[["cat"]],
@@ -446,9 +446,11 @@ plot_line_pdf <- function(data, var, palt = "Dark2"){
       legend.text = element_text(face="bold", size = 8, color = "black"),
       legend.title = element_blank(),
       legend.justification = "center") + 
-    scale_y_continuous(labels = scales::comma_format( accuracy = .1),
+    scale_y_continuous(labels = scales::comma_format(accuracy = .1),
                        breaks = pretty,
                        limits = c(0,NA)) +
+    # Trying to avoid decimal in years
+    scale_x_continuous(breaks = ~ axisTicks(., log = FALSE)) +
     labs(y = 'Prevalence \n (*cases per 10,000 total births)',
          x = "Year") +
     guides(color =  guide_legend(nrol = ifelse(nfac > 3, 

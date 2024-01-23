@@ -37,7 +37,7 @@ is_html = knitr::is_html_output()
 
 The **Surveillance of Congenital Anomalies in Nova Scotia (SCAN-NS)** would like to thank the Public Health Agency of Canada (PHAC) for the on-going support of data collection within Nova Scotia. SCA-NS is grateful for the ongoing interest and help of
 
-<a href=""><img src="../images/cover5.pdf" width="250" height="375" alt="The SCA-NS report cover" align="right" style="margin: 0 1em 0 1em; border:2px solid #008d8b"/></a>
+<a href=""><img src="images/cover5.png" width="250" height="375" alt="The SCA-NS report cover" align="right" style="margin: 0 1em 0 1em; border:2px solid #008d8b"/></a>
 
 - [Dr. Scott](https://medicine.dal.ca/departments/department-sites/obstetrics/our-people/our-faculty/heather-scott.html);
 
@@ -70,7 +70,7 @@ Surveillance of Congenital Anomalies Nova Scotia, Reproductive Care Program of N
 
 Gaps exist in the nation's capacity to conduct surveillance for congenital anomalies. In $2002$, the Canadian Congenital Anomalies Surveillance Network (CCASN) was established
 
-> To support the development and maintenance of high quality population-based surveillance systems of congenital anomalies that will provide information to improve the health of Canadian children and their families.[^ccasn]
+> To support the development and maintenance of high quality population-based surveillance systems of congenital anomalies that will provide information to improve the health of Canadian children and their families.[^1]
 
 [^1]: [Public Health Agency of Canada. What is Canadian Congenital Anomalies Surveillance Network (CCASN)](http://www.phac-aspc.gc.ca/ccasn-rcsac/index-eng.php)
 

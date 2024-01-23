@@ -1,0 +1,469 @@
+---
+fig.caption: yes
+output: pdf_document
+params:
+  year1: 2013
+  year2: 2022
+  multi: 10000
+---
+
+```{r setup, include=FALSE}
+source("utilities/data.R")
+source("utilities/plotLine.R")
+source("utilities/CI.R")
+source("utilities/modeling.R")
+```
+
+# Appendix {.unnumbered}
+
+The following table of selected sentinel anomalies indicate the trends in congenital anomaly prevalence in Nova Scotia from `r min(unique(anom$Birth_Year), na.rm = TRUE)` through `r max(unique(anom$Birth_Year), na.rm = TRUE)`. Sentinel anomalies are those which the International Clearinghouse of Birth Defects Surveillance and Research (ICBDSR), of which we are a member, watches worldwide with the rationale that they are quite easily identified hence more accurately reported. *See Section* \@ref(section21) *for all the anomalies listed in the report.*
+
+## Appendix 1 - Linear trend analysis and p-values, `r paste0(params$year1,"-",params$year2)` {#section-a1}
+
+```{r trend1, fig.cap=""}
+## neural tube defect (ntd) ----
+
+dta <- anom %>%
+  filter(!SrceIDs %in% 5, #remove MSI
+         between(Birth_Year, params$year1, params$year2)) %>%
+  select(CaseID, Birth_Year, Diag, cat, count_brth_yr) %>% distinct()
+
+ntb <- modeling_trend(dta, "gr101")
+
+## (sub categories)
+ntb_sub <- lapply(
+  c("q00",
+    "q01",
+    "q05"),
+  function(x) modeling_trend(dta,
+                             value = x))
+
+ntb_sub <- as.data.frame(do.call(rbind, ntb_sub))
+
+## Central nervous system ----
+
+cns <- modeling_trend(dta, "gr102")
+cns_sub <- lapply(
+  c("q02",
+    "q03",
+    "q041"),
+  function(x) modeling_trend(dta,
+                             value = x))
+
+cns_sub <- as.data.frame(do.call(rbind, cns_sub))
+
+## Sense organ defects ----
+
+sod <- modeling_trend(dta, "gr103")
+
+## (sub categories)
+sod_sub <- lapply(
+  c("q110",
+    "q160",
+    "q300"),
+  function(x) modeling_trend(dta,
+                             value = x))
+
+sod_sub <- as.data.frame(do.call(rbind, sod_sub))
+
+## Congenital heart defects ----
+
+chd <- modeling_trend(dta, "gr104")
+
+## (sub categories)
+chd_sub <- lapply(
+  c("q200",
+    "q201",
+    "q212",
+    "q213",
+    "q234",
+    "q251"),
+  function(x) modeling_trend(dta,
+                             value = x))
+
+chd_sub <- as.data.frame(do.call(rbind, chd_sub))
+
+## Oro-facial clefts ----
+
+ofc <- modeling_trend(dta, "gr105")
+
+## (sub categories)
+ofc_sub <- lapply(
+  c("q35",
+    "q36",
+    "q37"),
+  function(x) modeling_trend(dta,
+                             value = x))
+
+ofc_sub <- unique(as.data.frame(do.call(rbind, ofc_sub)))
+
+## Gastrointestinal defects ----
+
+gid <- modeling_trend(dta, "gr106")
+
+## (sub categories)
+gid_sub <- lapply(
+  c("q390",
+    "q41",
+    "q420",
+    "q431",
+    "q442"),
+  function(x) modeling_trend(dta,
+                             value = x))
+
+gid_sub <- unique(as.data.frame(do.call(rbind, gid_sub)))
+
+## Genital anomalies ----
+
+ga <- modeling_trend(dta, "gr107")
+
+## (sub categories)
+ga_sub <- lapply(
+  c("q531",
+    "q54",
+    "q56",
+    "q640"),
+  function(x) modeling_trend(dta,
+                             value = x))
+
+ga_sub <- unique(as.data.frame(do.call(rbind, ga_sub)))
+
+## Urinary tract defects ----
+
+utd <- modeling_trend(dta, "gr108")
+
+## (sub categories)
+utd_sub <- lapply(
+  c("q600",
+    "q611",
+    "q641",
+    "q642"),
+  function(x) modeling_trend(dta,
+                             value = x))
+
+utd_sub <- unique(as.data.frame(do.call(rbind, utd_sub)))
+
+## Hip dysplasia ----
+
+hip <- modeling_trend(dta, "gr109")
+
+## Limb deficiency defects ----
+
+ldd <- modeling_trend(dta, "gr110")
+
+## Abdominal wall defects ----
+
+awd <- modeling_trend(dta, "gr111")
+
+## (sub categories)
+awd_sub <- lapply(
+  c("q792",
+    "q793"),
+  function(x) modeling_trend(dta,
+                             value = x))
+
+awd_sub <- unique(as.data.frame(do.call(rbind, awd_sub)))
+
+## Chromosomal defects ----
+
+cd <- modeling_trend(dta, "gr112")
+
+## (sub categories)
+cd_sub <- lapply(
+  c("q90",
+    "q914",
+    "q910",
+    "q96"),
+  function(x) modeling_trend(dta,
+                             value = x))
+
+cd_sub <- unique(as.data.frame(do.call(rbind, cd_sub)))
+
+## putting them all together
+dta <- rbind(
+  ntb, ntb_sub,
+  cns, cns_sub,
+  sod, sod_sub,
+  chd, chd_sub,
+  ofc, ofc_sub,
+  gid, gid_sub,
+  ga, ga_sub,
+  utd, utd_sub,
+  hip,
+  ldd,
+  awd, awd_sub,
+  cd, cd_sub
+) %>% 
+  mutate(pvalue = ifelse(pvalue < 0.000199 ,
+                         "< 0.0001",
+                         scales::comma(as.numeric(pvalue), accuracy = 0.001)),
+         statistic = as.numeric(statistic)) %>% 
+  select(-c(coef, std, rate))
+
+if(knitr::is_html_output()){
+## printing table
+DT::datatable(dta,
+              rownames = FALSE,
+              colnames = c(#"Coeficient",
+                           "Selected anomaly",
+                           "Number of cases",
+                           "Trend direction",
+                           "Statistic <br> (\U03C7<sup>2</sup><sub>1</sub>)",
+                           "P-value"),
+              escape = FALSE,
+              # style = "bootstrap",
+        selection = 'single',
+        # caption = "Linear trend analysis selected anomalies 1987-2021 inclusive",
+        # width = "10px",
+        extensions = "Buttons",
+        options = list(
+          # https://datatables.net/reference/option/dom
+          dom = 'B<t>tp',
+          extensions = "Buttons",
+          # search = NULL,
+          searchHighlight = TRUE,
+          paging = TRUE,
+          autoWidth = TRUE,
+          pageLength = 10,
+          ordering = TRUE,
+          stateSave = TRUE,
+          buttons = list('copy', 'print', list(
+            extend = 'collection',
+            buttons = list(
+                list(extend = 'csv', filename = "trend_results")
+                # list(extend = 'excel', filename = "trend_results"),
+                # list(extend = 'pdf', filename = "trend_results")
+                ),
+            text = 'Download'
+          )),
+          columnDefs = list(#list(visible = FALSE,
+                                # targets = c(0)),
+                            list(targets = c(1),
+                                 searchable = TRUE))
+          # language = list(zeroRecords = "")
+        )) %>% 
+  DT::formatRound(
+          columns = c("statistic"),
+          digits = 2,
+          mark = ","
+        )
+} else if(knitr::is_latex_output()){
+  dta %>%
+    mutate(anom = gsub("<br>","\n", anom),
+           anom = gsub("<span style='font-size:12px'>",
+                       " \\\\tiny{", anom),
+           anom = gsub("</span>", "}", anom),
+           anom = linebreak(anom, align = "l"),
+           n = gsub("<br>","\n", n),
+           n = gsub("<span style='font-size:12px'>",
+                       " \\\\tiny{", n),
+           n = gsub("</span>", "}", n),
+           n = linebreak(n, align = "c"),
+           trend = ifelse(grepl("increasing", tolower(trend)),
+                          "Increasing $\\left(\\uparrow \\right)$",
+                   ifelse(grepl("decreasing", tolower(trend)),
+                          "Decreasing $\\left(\\downarrow \\right)$","No significant \n change $\\left(\\rightarrow \\right)$")),
+           trend = linebreak(trend, align = "c")
+           ) %>%
+    kableExtra::kbl(
+      format = "latex",
+      escape = FALSE,
+      booktabs = TRUE,
+      longtable = TRUE,
+      # table.attr = "style='width:65%;'",
+      align = c("l","c","c","c","c"),
+      col.names = c("Selected anomaly",
+                    linebreak("Number of\n cases", align = "c"),
+                    linebreak("Trend \n direction", align = "c"),
+                    linebreak("Statistic \n $\\left(\\chi^{2}_{1}\\right)$", align = "c"),
+                    "P-value")
+      ) %>% 
+    kable_styling(latex_options = c("repeat_header", "stripped"), font_size = 8) %>% 
+    column_spec(1, width = "4cm")
+    
+    
+}
+```
+
+```{asis, echo=knitr::is_latex_output()}
+\clearpage
+```
+
+## Appendix 2 - Total birth, number of cases, anomalies and anomalies per case, `r paste0(params$year1,"-",params$year2)` {#section-a2}
+
+```{r trend2, fig.cap=""}
+
+## Number of cases ----
+dta <- anom %>% 
+  filter(!grepl("gr|q999",tolower(Diag)),
+         !SrceIDs %in% 5, #remove MSI
+         between(Birth_Year, params$year1, params$year2)) %>%
+  select(CaseID, Birth_Year, count_brth_yr, Diag) %>% 
+  select(CaseID, Birth_Year, count_brth_yr) %>%
+  distinct() %>% 
+  group_by(Birth_Year) %>% 
+  mutate(cases = n()) %>% 
+  select(Birth_Year, cases, count_brth_yr) %>% 
+  distinct() %>% 
+  ungroup()
+
+dta1 <- anom %>% 
+  filter(!SrceIDs %in% 5, #remove MSI
+         !grepl("gr|q999",tolower(Diag))) %>%
+  select(CaseID, Birth_Year, Diag) %>% 
+  distinct() %>% 
+  group_by(Birth_Year) %>% 
+  mutate(anom = n()) %>% 
+  select(Birth_Year, anom) %>% 
+  distinct() %>% 
+  ungroup()
+
+dta <- merge(dta,
+             dta1,
+             by = "Birth_Year")
+
+dta <- dta %>% 
+  mutate(
+    case_rate = params$multi*(cases/count_brth_yr),
+    anom_rate = params$multi*(anom/count_brth_yr),
+    avg = anom/cases) %>% 
+  select(Birth_Year, count_brth_yr, cases, case_rate, anom, anom_rate, avg)
+
+if(knitr::is_html_output()){
+## printing table
+DT::datatable(dta,
+              rownames = FALSE,
+              colnames = c("Year",
+                           "Total births",
+                           "Number of cases",
+                           "Case rate <br> per 10,000 total births",
+                           "Number of anomalies",
+                           "Anomaly rate <br> per 10,000 total births",
+                           "Anomaly rate per case"),
+              escape = FALSE,
+              # style = "bootstrap",
+        selection = 'single',
+        # caption = "Linear trend analysis selected anomalies 1987-2021 inclusive",
+        # width = "10px",
+        extensions = "Buttons",
+        options = list(
+          # https://datatables.net/reference/option/dom
+          dom = 'B<t>tp',
+          extensions = "Buttons",
+          # search = NULL,
+          searchHighlight = TRUE,
+          paging = TRUE,
+          autoWidth = TRUE,
+          pageLength = 10,
+          ordering = TRUE,
+          stateSave = TRUE,
+          buttons = list('copy', 'print', list(
+            extend = 'collection',
+            buttons = list(
+                list(extend = 'csv', filename = "anomaly_summary")
+                # list(extend = 'excel', filename = "trend_results"),
+                # list(extend = 'pdf', filename = "trend_results")
+                ),
+            text = 'Download'
+          )),
+          columnDefs = list(#list(visible = FALSE,
+                                # targets = c(0)),
+                            list(targets = c(1),
+                                 searchable = TRUE))
+          # language = list(zeroRecords = "")
+        )) %>% 
+  DT::formatRound(
+          columns = c("case_rate","anom_rate","avg"),
+          digits = 2,
+          mark = ","
+        )
+} else if(knitr::is_latex_output()){
+  dta %>%
+    mutate(cases = scales::comma(cases, accuracy = 1),
+           anom = scales::comma(anom, accuracy = 1),
+           case_rate = scales::comma(case_rate, accuracy = 0.01),
+           anom_rate = scales::comma(anom_rate, accuracy = 0.01),
+           avg = scales::comma(avg, accuracy = 0.01)) %>%
+    kableExtra::kbl(
+      format = "latex",
+      escape = FALSE,
+      booktabs = TRUE,
+      longtable = TRUE,
+      # table.attr = "style='width:65%;'",
+      align = c("c","c","c","c","c","c","c"),
+      col.names = c("Year",
+                    linebreak("Total \n births", align = "c"),
+                    linebreak("Number of \n cases", align = "c"),
+                    linebreak("Case rate per \n 10,000 total births", align = "c"),
+                    linebreak("Number of \n anomalies", align = "c"),
+                    linebreak("Anomaly rate per \n 10,000 total births", align = "c"),
+                    linebreak("Anomaly rate \n per case", align = "c"))
+      ) %>% 
+    kable_styling(latex_options = c("repeat_header", "striped"), font_size = 8)
+}
+```
+
+## Appendix 3 - Prevalence rate per 10,000 total births, aggregated prevalence rate, `r paste0(params$year1,"-",params$year2)` {#section-a23}
+
+```{r trend3, fig.cap=""}
+
+ord <- c("Neural tube defects", "(Q00) - Anencephaly and similar malformations", "(Q01) - Encephalocele", "(Q05) - Spina bifida", "Selected central nervous system defects", "(Q02) - Microcephaly", "(Q03) - Congenital hydrocephalus", "(Q04.1, Q04.2) - Arhinencephaly / Holoprosencephaly", "Selected sense organ defects", "(Q11.0-Q11.2) - Anophtalmos / Microphtalmos", "(Q16.0, Q17.2) - Anotia / Microtia", "(Q30.0) - Choanal atresia", "Selected congenital heart defects", "(Q20.0) - Commom truncus", "(Q20.1, Q20.3, Q20.5) - Transposition of great vessels", "(Q21.2) - Atrioventricular septal defect", "(Q21.3) - Tetralogy of Fallot", "(Q23.4) - Hypoplastic left heart syndrome", "(Q25.1) - Coarctation of aorta", "Oro-facial clefts", "(Q35) - Cleft palate only", "(Q36) - Cleft lip only", "(Q37) - Cleft palate with cleft lip", "Selected gastrointestinal defects", "(Q39.0-Q39.4) - Oesophageal atresia / stenosis, tracheoesophageal fistula", "(Q41) - Small intestine absence / atresia / stenosis", "(Q42.0-Q42.3) - Ano-rectal absence / atresia / stenosis", "(Q43.1) - Hirschsprung disease", "(Q44.2) - Atresia of bile ducts", "Selected genital anomalies", "(Q53.1, Q53.2, Q53.9) - Cryptorchidism / undescended testicles", "(Q54, excluding Q54.4) - Hypospadias", "(Q56) - Indeterminate sex", "(Q64.0) - Epispadias", "Selected urinary tract defects", "(Q60.0-Q60.2) - Renal agenesis", "(Q61.1-Q61.5, Q61.8, Q61.9) - Cystic kidney", "(Q64.1) - Bladder and cloacal exstrophy", "(Q64.2, Q64.3) - Lower urinary tract obstruction", "Hip dysplasia", "(Q65) - Hip dysplasia", "Limb deficiency defects", "(Q79.0) - Diaphragmatic hernia", "(Q71.4-Q71.9, Q72.4-Q72.9, Q73.8, excluding Q71.6, Q71.7, Q72.7) - Limb deficiency defects", "Selected abdominal wall defects", "(Q79.2) - Omphalocele / Exomphalos", "(Q79.3) - Gastroschisis", "Selected chromosomal defects", "(Q90) - Down Syndrome", "(Q91.4-Q91.7) - Trisomy 13 - Patau", "(Q91.0-Q91.3) - Trisomy 18 - Edwards", "(Q96) - Turner syndrome")
+
+## Number of cases ----
+dta <- anom %>% 
+  filter(!SrceIDs %in% 5, #remove MSI
+         between(Birth_Year, params$year1, params$year2),
+         !grepl("q999",tolower(Diag))) %>%
+  select(CaseID, Birth_Year, count_brth_yr, Diag, cat) %>% 
+  distinct() %>% 
+  group_by(Birth_Year, Diag) %>% 
+  mutate(cases = n(),
+         rate = params$mult*cases/count_brth_yr,
+         cat = factor(cat, levels = ord)) %>% 
+  ungroup() %>% 
+  arrange(cat) %>% 
+  select(cat, rate) %>% 
+  distinct()
+
+dta <- split(dta$rate, dta$cat)
+
+dta1 <- anom %>% 
+  filter(!SrceIDs %in% 5, #remove MSI
+         between(Birth_Year, params$year1, params$year2),
+         !grepl("q999",tolower(Diag))) %>%
+  select(CaseID, Birth_Year, count_brth_yr, Diag, cat) %>% 
+  distinct() %>% 
+  group_by(Diag) %>% 
+  mutate(cases = n(),
+         Birth_Year = paste0(params$year1, "-", params$year2),
+         count_brth_yr = sum(count_brth_yr, na.rm = TRUE),
+         rate = params$multi*cases/count_brth_yr,
+         cat = factor(cat, levels = ord),
+         plot = "")%>% 
+  ungroup() %>% 
+  arrange(cat) %>% 
+  select(cat, cases, rate, plot) %>% 
+  distinct()
+
+  dta1 %>%
+    mutate(rate = scales::comma(rate, accuracy = 0.001),
+           cases = scales::comma(cases, accuracy = 1)) %>%
+    kableExtra::kbl(
+      format = "latex",
+      escape = FALSE,
+      booktabs = TRUE,
+      longtable = TRUE,
+      # table.attr = "style='width:65%;'",
+      align = c("l","c","c","c","c","c","c"),
+      col.names = c(
+        linebreak("Selected anomaly", align = "l"),
+        linebreak("Number of \n cases", align = "c"),
+        linebreak("Aggregated prevalence rate per \n 10,000 total births \n (2012-2022)", align = "c"),
+        linebreak("Prevalence rate per \n 10,000 total births \n (2012-2022)", align = "c")
+        )
+      ) %>%
+    kable_styling(latex_options = c("repeat_header", "striped"), font_size = 8) %>% 
+    column_spec(4, image = spec_plot(dta, same_lim = FALSE, type = "l"),
+                latex_valign = "m") %>% 
+    column_spec(1, width = "4cm", latex_valign = "m")
+```

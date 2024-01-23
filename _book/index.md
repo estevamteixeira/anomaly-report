@@ -32,7 +32,7 @@ url: http://rcp.nshealth.ca/
 
 Gaps exist in the nation's capacity to conduct surveillance for congenital anomalies. In $2002$, the Canadian Congenital Anomalies Surveillance Network (CCASN) was established
 
-> To support the development and maintenance of high quality population-based surveillance systems of congenital anomalies that will provide information to improve the health of Canadian children and their families.[^ccasn]
+> To support the development and maintenance of high quality population-based surveillance systems of congenital anomalies that will provide information to improve the health of Canadian children and their families.[^1]
 
 [^1]: [Public Health Agency of Canada. What is Canadian Congenital Anomalies Surveillance Network (CCASN)](http://www.phac-aspc.gc.ca/ccasn-rcsac/index-eng.php)
 
